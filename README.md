@@ -7,6 +7,7 @@ install server dependency then cd into client repo and install client dependency
 npm install
 cd client
 npm install
+cd ..
 ```
 
 ## Development
