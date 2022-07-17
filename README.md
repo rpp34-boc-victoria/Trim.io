@@ -24,7 +24,7 @@ npm run build
 this might take a little while to install and build both the client and server
 
 ```
-node server/server.js
+npm start
 ```
 
-to run the prod application and use `http://localhost:8000/` for production
+to run the production application and use `http://localhost:8000/` for production
