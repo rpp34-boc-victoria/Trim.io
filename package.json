@@ -7,7 +7,7 @@
     "install-all": "cd client && npm install && cd .. && npm install",
     "test": "jest --config ./jest.config.ts && cd client && npm test && cd..",
     "start": "node dist/server.js",
-    "build": "npm build-client && npm build-server",
+    "build": "npm run build-client && npm run build-server",
     "build-server": "tsc --project .",
     "build-client": "cd client && npm run build && cd .. ",
     "server": "nodemon --verbose --watch \"server\" --ext \"ts,json\" --exec ts-node server/server.ts",
