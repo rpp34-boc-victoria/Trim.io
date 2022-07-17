@@ -4,10 +4,7 @@
 
 install server dependency then cd into client repo and install client dependency
 ```
-npm install
-cd client
-npm install
-cd ..
+npm run install-all
 ```
 
 ## Development
@@ -22,9 +19,9 @@ use `http://localhost:3000/` during development
 ## Deploy and build
 
 ```
-npm run build-prod
+npm run build
 ```
-this might take a little bit to build both the client and server
+this might take a little while to install and build both the client and server
 
 ```
 node server/server.js
