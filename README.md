@@ -2,32 +2,26 @@
 
 ## Installation
 
-install server dependency then cd into client repo and install client dependency
 ```
-npm install
-cd client
-npm install
-cd ..
+npm run install-all
 ```
+Install both client and server dependencies.
 
 ## Development
 
 ```
 npm run dev
 ```
-to run development client and server
+Runs client and server in development mode; use `http://localhost:3000/` during development
 
-use `http://localhost:3000/` during development
-
-## Deploy and build
+## Build and Deploy
 
 ```
-npm run build-prod
+npm run build
 ```
-this might take a little bit to build both the client and server
+May take a while to install and build both the client and server
 
 ```
-node server/server.js
+npm start
 ```
-
-to run the prod application and use `http://localhost:8000/` for production
+Run the production application and use `http://localhost:8000/` for production
