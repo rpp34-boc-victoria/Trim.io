@@ -1,29 +1,35 @@
 import mongoose from 'mongoose';
-const dailyEntriesName = 'dailyEntries';
-
-const nutrientSchema = new mongoose.Schema({
-  label: String,
-  ENERC_KCAL: Number,
-});
+const dailyEntriesName = 'daily_entries';
 
 const foodItemsSchema = new mongoose.Schema({
   label: String,
-  nutrients: nutrientSchema,
-});
+  nutrients: { type: mongoose.Schema.Types.Mixed },
+  wholeWeight: {
+    type: Number,
+    default: 100,
+  },
+}, { _id: false });
 
 const dailyEntriesSchema = new mongoose.Schema({
   user_id: {
-    type: mongoose.Types.ObjectId,
+    type: String,
     index: true,
+    required: true,
   },
-  fooditems: [foodItemsSchema],
+  foodItems: [foodItemsSchema],
   entryDate: {
     type: Date,
     default: new Date(),
     index: true,
   },
-  waterAmount: Number,
-  weightAmount: Number,
+  waterAmount: {
+    type: Number,
+    default: 0,
+  },
+  weightAmount: {
+    type: Number,
+    default: 0,
+  },
 });
 
 export const dailyEntriesModel = mongoose.model(dailyEntriesName, dailyEntriesSchema)
