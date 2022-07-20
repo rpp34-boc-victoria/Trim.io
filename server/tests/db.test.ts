@@ -1,5 +1,6 @@
 import mongoConnection from '../db/connect';
-import {dailyEntriesModel} from '../db/schema.models';
+import { dailyEntriesModel } from '../db/schema.models';
+import mongoose from 'mongoose';
 
 
 describe('DB Tests', () => {
@@ -16,10 +17,34 @@ describe('DB Tests', () => {
     }
   });
 
-  // test('Connects to DB', async () => {
-  //   dailyEntriesModel.create({
+  test('Makes Daily Entries', async () => {
+    var entryObject = {
+      user_id: new mongoose.Types.ObjectId().toString(),
+      entryDate: new Date(),
+      foodItems: [{
+        label: 'Big Mac',
+        nutrients: {
+          "ENERC_KCAL": 257,
+          "PROCNT": 11.82,
+          "FAT": 14.96,
+          "CHOCDF": 20.08,
+          "FIBTG": 1.6
+        },
+        wholeWeight: 213,
+      }],
+      waterAmount: 1,
+      weightAmount: 1,
+    };
+    entryObject = JSON.parse(JSON.stringify(entryObject));
+    try {
+      var result = await dailyEntriesModel.create(entryObject);
+      result = JSON.parse(JSON.stringify(result));
+      expect(result).toMatchObject(entryObject);
+    } catch (err) {
+      throw err;
+    }
 
-  //   })
-  // });
+    await dailyEntriesModel.findOneAndDelete({}, { "sort": { "_id": -1 } });
+  });
 
 });
