@@ -15,16 +15,28 @@ npm run dev
 Runs client and server in development mode; use `http://localhost:3000/` during development
 
 ## Connecting to MongoDB
+### Using X.509 Certificate
 Place X509 certificate in the poject parent directory `./`
 
-Create `.env` file and set the following variables
+Set the following in `.env`:
 
 ```
-MONGO_DB={db_Name}
-MONGO_URI={MongoDB_Connection_URI}
-X509_FILE_NAME={X509-cert-name.pem}
+MONGO_DB={your_db_Name}
+MONGO_URI={your_MongoDB_Connection_URI}
+X509_FILE_NAME={your_X509-cert-name.pem}
+AUTH__METHOD=X509
 ```
+### Using SCRAM
 
+Set the following in `.env`:
+
+```
+MONGO_DB={your_db_Name}
+MONGO_SCRAM_PREFIX={mongodb+srv://} -or- {mongodb://}
+MONGO_USER={your_username}
+MONGO_USER_PASSWORD={your_password}
+MONGO_URI_SCRAM={your_uri_without_prefix}
+```
 
 ## Build and Deploy
 Set default port for the server by setting the following `.env` variable, default is `8000`
