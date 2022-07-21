@@ -33,10 +33,9 @@ if (process.env.AUTH__METHOD === 'X509') {
   const password = process.env.MONGO_USER_PASSWORD;
   const prefix = process.env.MONGO_SCRAM_PREFIX
   const mongo_uri = `${prefix}${username}:${password}@${process.env.MONGO_URI_SCRAM}`;
-  console.log('\n**********Using URI*********\n', username.length, '\n\n');
   mongoConnection = async () => {
     try {
-      const connection = await mongoose.connect(mongo_uri, {
+      const connection = await mongoose.connect(prefix + username + ':' + password + '@' + process.env.MONGO_URI_SCRAM, {
         dbName: database,
       });
       // console.log(`Connected to MongoDB Atlas, Database ${database}`);
