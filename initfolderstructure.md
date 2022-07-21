@@ -25,14 +25,14 @@ trim.io/
 │  │  └─ nutritionApi.ts
 │  ├─ db
 |  |  ├─ example.ts
-│  │  └─ example.ts
+│  │  ├─ example.ts
+|  |  └─ example.test.ts
 │  ├─ routes
 │  │  ├─ example.ts
-│  │  └─ example.ts
+│  │  ├─ example.ts
+|  |  └─ example.test.ts
 │  ├─ server.ts
-│  └─ test
-|     ├─ example.test.ts
-│     └─ example.test.ts
+│  └─ server.test.ts
 ├─ .env
 ├─ .gitignore
 ├─ buildScript.js

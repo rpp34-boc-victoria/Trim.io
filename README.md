@@ -15,7 +15,7 @@ npm run dev
 Runs client and server in development mode; use `http://localhost:3000/` during development
 
 ## Connecting to MongoDB
-Place X509 certificate in the project directory `./`
+Place X509 certificate in the poject parent directory `./`
 
 Create `.env` file and set the following variables
 
