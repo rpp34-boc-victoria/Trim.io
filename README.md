@@ -34,7 +34,7 @@ Set the following in `.env`:
 MONGO_DB={your_db_Name}
 MONGO_SCRAM_PREFIX={mongodb+srv://} -or- {mongodb://}
 MONGO_USER={your_username}
-MONGO_USER_PASSWORD={your_password}
+MONGO_USER_PASSWORD={your_password}:!
 MONGO_URI_SCRAM={your_uri_without_prefix}
 ```
 
