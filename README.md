@@ -26,16 +26,12 @@ MONGO_URI={your_MongoDB_Connection_URI}
 X509_FILE_NAME={your_X509-cert-name.pem}
 AUTH__METHOD=X509
 ```
-### Using SCRAM
+### Using SCRAM (username and password)
 
-Set the following in `.env`:
+Set the following in `.env` with the proper URI format:
 
 ```
-MONGO_DB={your_db_Name}
-MONGO_SCRAM_PREFIX={mongodb+srv://} -or- {mongodb://}
-MONGO_USER={your_username}
-MONGO_USER_PASSWORD={your_password}:!
-MONGO_URI_SCRAM={your_uri_without_prefix}
+MONGO_FULL_URI=mongodb+srv://{username}:{password}@{host}/
 ```
 
 ## Build and Deploy
