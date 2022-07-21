@@ -5,10 +5,9 @@ dotenv.config();
 
 const database = process.env.MONGO_DB;
 
-var mongoConnection: Function;
+var mongoConnection;
 
 if (process.env.AUTH__METHOD === 'X509') {
-  console.log('MongoDB Auth Using X509 Certificate Authentication');
   const mongo_uri = process.env.MONGO_URI_X509;
   const certificate = process.env.X509_FILE_NAME;
   const credentials = path.join(__dirname, `../../${certificate}`);

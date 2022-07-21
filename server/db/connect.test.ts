@@ -2,19 +2,29 @@ import mongoConnection from './connect';
 import { dailyEntriesModel } from './schema.models';
 import mongoose from 'mongoose';
 
-
-describe('DB Tests', () => {
+describe('Connects to DB', () => {
   test('Connects to DB', async () => {
     try {
       const connection = await mongoConnection();
 
       // Successful connection will call this code.
       expect(true).toBeTruthy();
+      await mongoose.connection.close();
     } catch (err) {
       console.log(err.message);
       // Error in connection will call this code.
       expect(false).toBeTruthy();
     }
+  });
+});
+
+describe('Connects to DB', () => {
+  beforeAll(async () => {
+    await mongoConnection();
+  });
+
+  afterAll(async () => {
+    await mongoose.connection.close();;
   });
 
   test('Makes Daily Entries', async () => {
@@ -48,3 +58,4 @@ describe('DB Tests', () => {
   });
 
 });
+
