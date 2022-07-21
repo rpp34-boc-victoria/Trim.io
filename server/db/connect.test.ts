@@ -1,5 +1,5 @@
-import mongoConnection from '../db/connect';
-import { dailyEntriesModel } from '../db/schema.models';
+import mongoConnection from './connect';
+import { dailyEntriesModel } from './schema.models';
 import mongoose from 'mongoose';
 
 
