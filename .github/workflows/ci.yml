@@ -20,12 +20,8 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     env:
-      MONGO_DB: trim-io
+      MONGO_DB: ${{ secrets.MONGO_DB }}
       MONGO_FULL_URI: ${{ secrets.MONGO_FULL_URI }}
-      MONGO_SCRAM_PREFIX: ${{ secrets.MONGO_SCRAM_PREFIX }}
-      MONGO_USER: ${{ secrets.MONGO_URI_SCRAM }}
-      MONGO_USER_PASSWORD: ${{ secrets.MONGO_USER }}
-      MONGO_URI_SCRAM: ${{ secrets.MONGO_USER_PASSWORD }}
 
     steps:
     - uses: actions/checkout@v3
