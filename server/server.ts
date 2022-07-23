@@ -7,7 +7,7 @@ import {
   dailyEntriesModel,
   foodEntriesModel,
 } from "./db/schema.models";
-import db from "../server/db/connect";
+import db from "./db/connect";
 import dayjs from "dayjs";
 import cors from 'cors';
 dotenv.config();
