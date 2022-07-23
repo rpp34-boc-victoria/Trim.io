@@ -55,6 +55,6 @@ jobs:
             git reset --hard origin/CD-Aws &&
             git pull origin CD-Aws &&
             pwd &&
-            bash deploy.init.sh
+            npm -v
             '
 
