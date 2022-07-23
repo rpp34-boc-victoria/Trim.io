@@ -45,6 +45,7 @@ jobs:
             HOSTNAME : ${{ secrets.AWS_HOSTNAME }}
             USERNAME : ${{ secrets.AWS_USERNAME }}
 
+          # must have installed: sudo apt-get install -y npm?
           run: |
             echo "$PRIVATE_KEY" > private_key && chmod 400 private_key
             ssh -o StrictHostKeyChecking=no -i private_key ${USERNAME}@${HOSTNAME} '
