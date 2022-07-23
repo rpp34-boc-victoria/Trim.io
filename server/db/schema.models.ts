@@ -12,8 +12,8 @@ const foodItemsSchema = new mongoose.Schema(
       type: Number,
       default: 100,
     },
-    createTime:{type:Date, default:new Date()},
-    updateTime:{type:Date, default:new Date()},
+    // createTime:{type:Date, default:new Date()},
+    // updateTime:{type:Date, default:new Date()},
   },
   { _id: false }
 );
@@ -38,8 +38,12 @@ const dailyEntriesSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-  createdTime:{type:Date, default:new Date()},
-  updatedTime:{type:Date, default:new Date()},
+  caloriesAmount:{
+    type: Number,
+    default: 0,
+  }
+  // createdTime:{type:Date, default:new Date()},
+  // updatedTime:{type:Date, default:new Date()},
 });
 
 const userSchema = new mongoose.Schema({
@@ -51,8 +55,8 @@ const userSchema = new mongoose.Schema({
   caloriesGoal: {type:Number, default:0, remark:"dailyCaloriesGoal"},
   waterGoal:  {type:Number, default:0, remark:"dailyWaterGoal"},
   gender: {type: Number, default:0, remark : '0 is female, 1 is male'},
-  createdTime:{type:Date, default:new Date()},
-  updatedTime:{type:Date, default:new Date()},
+  // createdTime:{type:Date, default:new Date()},
+  // updatedTime:{type:Date, default:new Date()},
 });
 
 export const dailyEntriesModel = mongoose.model(

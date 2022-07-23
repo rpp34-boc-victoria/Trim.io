@@ -4,23 +4,27 @@ import Typography from "@mui/material/Typography";
 import MyBarChart from "./MyBarChart";
 import MyLineChart from "./MyLineChart";
 import "./History.scss";
+import { apiGet } from "../../api";
+import dayjs from "dayjs";
 
 interface IDaliy {
   user_id: string;
   waterAmount: number;
   weightAmount: number;
+  caloriesAmount: number;
   foodItems?: any;
   entryDate?: Date;
-  bmi?: number;
-  bfp?: number;
+  bmi: number;
+  bfp: number;
   age?: number;
+
 }
 
 type TGender = 0 | 1;
 
 enum EGender {
-  female=0,
-  male=1,
+  female = 0,
+  male = 1,
 }
 
 interface IUser {
@@ -41,56 +45,57 @@ const Weekly = () => {
     waterGoal: 8,
     age: 27,
   });
-  const [weeklyData, setWeeklyData] = useState<IDaliy[]>([
-    { user_id: "62da3e404afcce3152212f47", waterAmount: 8, weightAmount: 49 },
-    { user_id: "62da3e404afcce3152212f47", waterAmount: 5, weightAmount: 49 },
-    { user_id: "62da3e404afcce3152212f47", waterAmount: 8, weightAmount: 48 },
-    { user_id: "62da3e404afcce3152212f47", waterAmount: 3, weightAmount: 49 },
-  ]);
+  const [weeklyData, setWeeklyData] = useState<IDaliy[]>([]);
 
   useEffect(() => {
     //发起请求 ， 成功后根据获取的数据计算bmi，bfp
-    const tempData = [...weeklyData];
-    const { weight, height, gender, age } = userInfo;
-    tempData.forEach((item) => {
-      item.bmi = Number((weight / (height * height)).toFixed(2));
-      if (gender === EGender.female) {
-        item.bfp = 1.2 * item.bmi + 0.23 * age - 5.4;
-      } else if (gender === EGender.male) {
-        item.bfp = 1.2 * item.bmi + 0.23 * age - 16.2;
-      }
-
+    apiGet("/api/getWeekly").then((res) => {
+      const tempData = [...res.data];
+      const { weight, height, gender, age } = userInfo;
+      tempData.forEach((item) => {
+        item.entryDate = dayjs(item.entryDate).format('MM/DD')
+        item.bmi = Number((weight / (height * height)).toFixed(2));
+        if (gender === EGender.female) {
+          item.bfp = 1.2 * item.bmi + 0.23 * age - 5.4;
+        } else if (gender === EGender.male) {
+          item.bfp = 1.2 * item.bmi + 0.23 * age - 16.2;
+        }
+      });
+      console.log(tempData)
+      setWeeklyData(tempData);
     });
-
-    console.log(weeklyData)
-    setWeeklyData(tempData)
-    console.log(weeklyData)
-  },[]);
+  }, []);
 
   return (
     <Box className="weekly">
       <Box className="calories chart_item">
         <Typography className="title">Calories</Typography>
-        <Box className="chart_wrap">
-          <MyBarChart />
+        <Box className="chart_wrap" >
+          <MyBarChart data={weeklyData.map(item => ({value: item.caloriesAmount}))}/>
         </Box>
       </Box>
       <Box className="water chart_item">
         <Typography className="title">Water</Typography>
         <Box className="chart_wrap">
-          <MyBarChart />
+          <MyBarChart data ={weeklyData.map(item => ({value: item.waterAmount}))}/>
         </Box>
       </Box>
       <Box className="weight chart_item ">
         <Typography className="title">Weight</Typography>
         <Box className="chart_wrap">
-          <MyLineChart />
+          <MyLineChart data={weeklyData.map(item => ({value: item.weightAmount,date: item.entryDate}))}/>
         </Box>
       </Box>
       <Box className="BMI chart_item ">
         <Typography className="title">BMI</Typography>
         <Box className="chart_wrap">
-          <MyLineChart />
+          <MyLineChart data={weeklyData.map(item => ({value: item.bmi,date: item.entryDate}))}/>
+        </Box>
+      </Box>
+      <Box className="BFP chart_item ">
+        <Typography className="title">BFP</Typography>
+        <Box className="chart_wrap">
+          <MyLineChart data={weeklyData.map(item => ({value: item.bfp,date: item.entryDate}))}/>
         </Box>
       </Box>
     </Box>
