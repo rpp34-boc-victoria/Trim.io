@@ -50,14 +50,10 @@ jobs:
             ssh -o StrictHostKeyChecking=no -i private_key ${USERNAME}@${HOSTNAME} '
 
             cd /home/ubuntu/Trim.io
-            git checkout main &&
+            git checkout CD-Aws &&
             git fetch --all &&
-            git reset --hard origin/main &&
-            git pull origin main &&
+            git reset --hard origin/CD-Aws &&
+            git pull origin CD-Aws &&
             pwd &&
-
-            npm ci &&
-            npm run install-all &&
-            npm run build &&
-            npm start
+            bash deploy.init.sh
             '
