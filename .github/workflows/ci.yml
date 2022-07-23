@@ -40,7 +40,7 @@ jobs:
         - uses: actions/checkout@v3
         - name: Deploy in EC2
           env:
-            # Does the Key need to have the taggs aswell?
+            # PEM file need to be saved in it's entirty!
             PRIVATE_KEY: ${{ secrets.AWS_PRIVATE_KEY }}
             HOSTNAME : ${{ secrets.AWS_HOSTNAME }}
             USERNAME : ${{ secrets.AWS_USERNAME }}
@@ -52,8 +52,8 @@ jobs:
             cd /home/ubuntu/Trim.io
             git checkout main &&
             git fetch --all &&
-            git reset --hard origin/master &&
-            git pull origin master &&
+            git reset --hard origin/main &&
+            git pull origin main &&
 
             npm ci
             npm run install-all
