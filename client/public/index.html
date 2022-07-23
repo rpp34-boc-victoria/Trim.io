@@ -5,11 +5,22 @@
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script>
+      function handleCredentialResponse (data) {
+        console.log('hi', data)
+      }
+    </script>
+    <div id="g_id_onload"
+         data-client_id="941892249996-jep1u5vs00gs1lt1pkhn4gsb73hi7mik.apps.googleusercontent.com"
+         data-callback="handleCredentialResponse">
+    </div>
+    <div class="g_id_signin" data-type="standard"></div>
     <meta
       name="description"
       content="Web site created using create-react-app"
     />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <!-- <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" /> -->
     <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
@@ -29,6 +40,30 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <!-- <script>
+      function init() {
+        gapi.load('auth2', function() {
+    /* Ready. Make a call to gapi.auth2.init or some other API */
+        });
+      }
+      function onSignIn(googleUser) {
+        // get user profile information
+        console.log(googleUser.getBasicProfile())
+      }
+      </script>
+      <script>
+        console.log('hi')
+        function onSignIn(googleUser) {
+          console.log('hi')
+          var profile = googleUser.getBasicProfile();
+          console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+          console.log('Name: ' + profile.getName());
+          console.log('Image URL: ' + profile.getImageUrl());
+          console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+        }
+      </script>
+
+      <div class="g-signin2" data-onsuccess="onSignIn"></div> -->
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
