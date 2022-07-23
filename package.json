@@ -12,7 +12,8 @@
     "build-client": "cd client && npm run build && cd .. ",
     "server": "nodemon --verbose --watch \"server\" --ext \"ts,json\" --exec ts-node server/server.ts",
     "client": "cd client && npm start && cd ..",
-    "dev": "concurrently \"npm run client\" \"npm run server\""
+    "dev": "concurrently \"npm run client\" \"npm run server\"",
+    "init-server": "bash server.config.sh"
   },
   "repository": {
     "type": "git",
