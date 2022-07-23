@@ -59,7 +59,7 @@ const Weekly = () => {
       } else if (gender === EGender.male) {
         item.bfp = 1.2 * item.bmi + 0.23 * age - 16.2;
       }
-      
+
     });
 
     console.log(weeklyData)
