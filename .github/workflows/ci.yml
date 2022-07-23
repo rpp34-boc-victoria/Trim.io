@@ -54,9 +54,10 @@ jobs:
             git fetch --all &&
             git reset --hard origin/main &&
             git pull origin main &&
+            pwd &&
 
-            npm ci
-            npm run install-all
-            npm run build
+            npm ci &&
+            npm run install-all &&
+            npm run build &&
             npm start
             '
