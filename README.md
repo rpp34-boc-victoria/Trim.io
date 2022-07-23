@@ -58,3 +58,6 @@ npm start
 ```
 Run the production application and use `http://localhost:8000/` or user specified port for production
 
+### Side notes
+
+turn on notification for your brower
