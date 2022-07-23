@@ -20,7 +20,7 @@ interface IDaliy {
 
 }
 
-type TGender = 0 | 1;
+
 
 enum EGender {
   female = 0,
@@ -37,7 +37,7 @@ interface IUser {
 }
 
 const Weekly = () => {
-  const [userInfo, setUserInfo] = useState<IUser>({
+  const [userInfo] = useState<IUser>({
     gender: EGender.female,
     weight: 50,
     height: 1.7,
@@ -64,7 +64,7 @@ const Weekly = () => {
       console.log(tempData)
       setWeeklyData(tempData);
     });
-  }, []);
+  }, [userInfo]);
 
   return (
     <Box className="weekly">
