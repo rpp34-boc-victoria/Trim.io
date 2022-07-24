@@ -64,8 +64,7 @@ jobs:
             git fetch --all &&
             git reset --hard origin/CD-Aws &&
             git pull origin CD-Aws &&
-            pwd'
-        - run: npm -v
-        - run: node -v
-        - run: pwd
+            pwd &&
+            git -version &&
+            ls'
 
