@@ -61,8 +61,7 @@ jobs:
             git fetch --all
             git reset --hard origin/CD-Aws
             git pull origin CD-Aws
-            pm2 -v
             npm run install-all
             npm run build
-            npm run start
+            npm run reload
             '
