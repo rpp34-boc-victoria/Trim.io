@@ -69,5 +69,9 @@ jobs:
             ls &&
             node --version &&
             npm --version
+            npm install -g npm@latest
+            npm --v
+            npm install -g n
+            node --v
             '
 
