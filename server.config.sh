@@ -19,12 +19,13 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-
-
-# This version must be specifed, and matching the one intended for use as it is called out in the cd.yml workflow.
-# 16.16 comes with 8.11.0 for npm which will need to be specified for the yml workflow
 nvm install 16.16.0
 node -e "console.log('Running Node.js ' + process.version)"
+
+# Alternate way to install node where it can be run correctly using SSH??
+# curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+# sudo apt-get install -y nodejs
+
 
 # Setting up pm2 to run the server as a service on start up
 npm install pm2@latest -g

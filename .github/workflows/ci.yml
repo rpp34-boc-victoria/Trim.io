@@ -54,15 +54,12 @@ jobs:
           # can run `which -a node` and `which -a npm` to determine the path to availiable binary builds.
           # then run `<PATH> --version` to determine which is the correct version to run below in the script
           run: |
-            echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+            echo "$PRIVATE_KEY" > private_key && chmod 400 private_key
             ssh -o StrictHostKeyChecking=no -i private_key ${USERNAME}@${HOSTNAME} '
-            #!/bin/bash
             cd /home/ubuntu/Trim.io
             git checkout CD-Aws
             git fetch --all
             git reset --hard origin/CD-Aws
             git pull origin CD-Aws
-            cd /home/ubuntu/.nvm/versions/node/v16.16.0/bin/
-            pwd
             npm -v
             '
