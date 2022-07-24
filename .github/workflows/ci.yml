@@ -62,6 +62,6 @@ jobs:
             git fetch --all
             git reset --hard origin/CD-Aws
             git pull origin CD-Aws
-            cd /home/ubuntu/.nvm
+            cd /home/ubuntu/.nvm/versions/node/v16.16.0/bin/
             pwd
             '
