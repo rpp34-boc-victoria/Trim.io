@@ -43,7 +43,7 @@ sudo chmod 600 /swapfile
 ls -lh /swapfile
 sudo mkswap /swapfile
 sudo swapon /swapfile
-# Logging the swap file
+# Logging the swap file in 2 different ways below
 sudo swapon --show
 free -h
 # Making it permanet on boot up
