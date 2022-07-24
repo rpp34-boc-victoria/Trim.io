@@ -13,18 +13,18 @@ sudo apt-get update
 sudo apt-get install -y mongodb-mongosh
 
 # Install NVM and specified Node Version
-sudo curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash;
-source ~/.bashrc
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# sudo curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash;
+# source ~/.bashrc
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-nvm install 16.16.0
-node -e "console.log('Running Node.js ' + process.version)"
+# nvm install 16.16.0
+# node -e "console.log('Running Node.js ' + process.version)"
 
-# Alternate way to install node where it can be run correctly using SSH??
-# curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-# sudo apt-get install -y nodejs
+# Alternate way to install node where it can be run correctly using SSH!!
+curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+sudo apt-get install -y nodejs
 
 
 # Setting up pm2 to run the server as a service on start up

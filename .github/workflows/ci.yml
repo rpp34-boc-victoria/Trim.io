@@ -50,9 +50,9 @@ jobs:
       steps:
         - uses: actions/checkout@v3
         - name: Deploy in EC2
-          # Must specify the path to the correct node binary to run the correct version of NPM SSH does not pick up the correct version by default
-          # can run `which -a node` and `which -a npm` to determine the path to availiable binary builds.
-          # then run `<PATH> --version` to determine which is the correct version to run below in the script
+          # NPM and Node must be installed via bianry for the npm script to work.
+          # curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+          # apt-get install -y nodejs
           run: |
             echo "$PRIVATE_KEY" > private_key && chmod 400 private_key
             ssh -o StrictHostKeyChecking=no -i private_key ${USERNAME}@${HOSTNAME} '
@@ -61,8 +61,8 @@ jobs:
             git fetch --all
             git reset --hard origin/CD-Aws
             git pull origin CD-Aws
+            pm2 -v
             npm run install-all
             npm run build
             npm run start
-            pm2 -v
             '
