@@ -30,7 +30,7 @@ sudo apt-get install -y nodejs
 # Setting up pm2 to run the server as a service on start up
 npm install pm2@latest -g
 pm2 start dist/server.js
-pm2 startup # generate the correct command
+pm2 startup # generate the correct command to set as startup process
 # this may change as your version varies
 sudo env PATH=$PATH:/home/ubuntu/.nvm/versions/node/v16.16.0/bin /home/ubuntu/.nvm/versions/node/v16.16.0/lib/node_modules/pm2/bin/pm2 startup systemd -u ubuntu --hp /home/ubuntu
 pm2 save
