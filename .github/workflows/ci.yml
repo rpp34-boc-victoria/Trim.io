@@ -62,7 +62,9 @@ jobs:
             git reset --hard origin/CD-Aws &&
             git pull origin CD-Aws &&
             whoami &&
-            npx node -v &&
-            npx npm -v
+            npx npm -v &&
+            cd /home/ubuntu/.nvm/versions/node/v16.16.0/bin/ &&
+            ls &&
+            npx node -v
             '
 
