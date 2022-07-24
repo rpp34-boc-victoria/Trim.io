@@ -45,7 +45,7 @@ jobs:
           # PEM file need to be saved in it's entirty!
           PRIVATE_KEY: ${{ secrets.AWS_PRIVATE_KEY }}
           HOSTNAME : ${{ secrets.AWS_HOSTNAME }}
-          USERNAME : ${{ secrets.AWS_USERNAME }}
+          #USERNAME : ${{ secrets.AWS_USERNAME }}
 
       steps:
         - uses: actions/checkout@v3
@@ -55,7 +55,7 @@ jobs:
           # then run `<PATH> --version` to determine which is the correct version to run below in the script
           run: |
             echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-            ssh -o StrictHostKeyChecking=no -i private_key ${USERNAME}@${HOSTNAME} '
+            ssh -o StrictHostKeyChecking=no -i private_key ubuntu@${HOSTNAME} '
             cd /home/ubuntu/Trim.io
             git checkout CD-Aws &&
             git fetch --all &&
