@@ -65,8 +65,6 @@ jobs:
             git reset --hard origin/CD-Aws &&
             git pull origin CD-Aws &&
             pwd &&'
-        - run: | '
-            npm -v
-            node -v
-            '
+        - run: npm -v
+        - run: node -v
 
