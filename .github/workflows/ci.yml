@@ -67,4 +67,5 @@ jobs:
             pwd'
         - run: npm -v
         - run: node -v
+        - run: pwd
 
