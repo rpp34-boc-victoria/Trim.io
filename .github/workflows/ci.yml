@@ -55,7 +55,7 @@ jobs:
             node-version: ${{ matrix.node-version }}
             cache: 'npm'
 
-          # must have installed: sudo apt-get install -y npm?
+          # Must specify the path to the correct node binary to run the correct version of NPM SSH does not pick up the correct version by default
         - run: |
             echo "$PRIVATE_KEY" > private_key && chmod 400 private_key
             ssh -o StrictHostKeyChecking=no -i private_key ${USERNAME}@${HOSTNAME} '
@@ -64,14 +64,7 @@ jobs:
             git fetch --all &&
             git reset --hard origin/CD-Aws &&
             git pull origin CD-Aws &&
-            pwd &&
-            git --version &&
-            ls &&
             node --version &&
             npm --version &&
-            sudo npm install -g npm@latest &&
-            npm --v &&
-            sudo npm install -g n &&
-            node --v
             '
 

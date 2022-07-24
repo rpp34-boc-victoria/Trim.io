@@ -18,13 +18,14 @@ source ~/.bashrc
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-nvm install 16.15.1
+nvm install 16.16.0
+# This version must be specifed, and matching the one intended for use as it is called out in the cd.yml workflow.
 node -e "console.log('Running Node.js ' + process.version)"
 
 # Setting up pm2 to run the server as a service on start up
 npm install pm2@latest -g
 # pm2 start dist/server.js
-# sudo env PATH=$PATH:/home/ubuntu/.nvm/versions/node/v16.15.1/bin /home/ubuntu/.nvm/versions/node/v16.15.1/lib/node_modules/pm2/bin/pm2 startup systemd -u ubuntu --hp /home/ubuntu
+# sudo env PATH=$PATH:/home/ubuntu/.nvm/versions/node/v16.16.0/bin /home/ubuntu/.nvm/versions/node/v16.15.1/lib/node_modules/pm2/bin/pm2 startup systemd -u ubuntu --hp /home/ubuntu
 # pm2 save
 # pm2 status
 
