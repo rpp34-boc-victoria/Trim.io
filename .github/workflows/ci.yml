@@ -55,7 +55,7 @@ jobs:
           # then run `<PATH> --version` to determine which is the correct version to run below in the script
           run: |
             echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-            ssh -o StrictHostKeyChecking=no -i private_key ${USERNAME}@${HOSTNAME} '
+            ssh -i private_key ${USERNAME}@${HOSTNAME} '
             cd /home/ubuntu/Trim.io
             git checkout CD-Aws &&
             git fetch --all &&
