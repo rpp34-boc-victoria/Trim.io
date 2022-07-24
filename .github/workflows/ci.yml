@@ -50,11 +50,6 @@ jobs:
       steps:
         - uses: actions/checkout@v3
         - name: Deploy in EC2
-          uses: actions/setup-node@v3
-          with:
-            node-version: ${{ matrix.node-version }}
-            cache: 'npm'
-
           # Must specify the path to the correct node binary to run the correct version of NPM SSH does not pick up the correct version by default
         - run: |
             echo "$PRIVATE_KEY" > private_key && chmod 400 private_key
