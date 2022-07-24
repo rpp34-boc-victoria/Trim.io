@@ -35,10 +35,19 @@ jobs:
   Deploy:
       # needs: Test
       runs-on: ubuntu-latest
+      strategy:
+        matrix:
+        node-version: [16.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
       steps:
         - uses: actions/checkout@v3
         - name: Deploy in EC2
+        - uses: actions/setup-node@v3
+          with:
+            node-version: ${{ matrix.node-version }}
+            cache: 'npm'
+
           env:
             # PEM file need to be saved in it's entirty!
             PRIVATE_KEY: ${{ secrets.AWS_PRIVATE_KEY }}
