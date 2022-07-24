@@ -30,10 +30,10 @@ jobs:
           echo "$PRIVATE_KEY" > private_key && chmod 400 private_key
           ssh -o StrictHostKeyChecking=no -i private_key ${USERNAME}@${HOSTNAME} '
           cd /home/ubuntu/Trim.io
-          git checkout CD-Aws
+          git checkout main
           git fetch --all
-          git reset --hard origin/CD-Aws
-          git pull origin CD-Aws
+          git reset --hard origin/main
+          git pull origin main
           npm run install-all
           npm run build
           npm run reload
