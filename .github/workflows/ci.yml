@@ -66,5 +66,8 @@ jobs:
             git pull origin CD-Aws &&
             pwd &&
             git --version &&
-            ls'
+            ls &&
+            node --version &&
+            npm --version
+            '
 
