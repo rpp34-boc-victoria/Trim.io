@@ -1,9 +1,6 @@
-console.log(process.env.REACT_APP_PUBLIC_VAPID_KEY);
-console.log(process.env.REACT_APP_REACT_APP_API_URL);
+const convertedVapidKey = urlBase64ToUint8Array(process.env.REACT_APP_PUBLIC_VAPID_KEY as string)
 
-const convertedVapidKey = urlBase64ToUint8Array(process.env.REACT_APP_PUBLIC_VAPID_KEY)
-
-function urlBase64ToUint8Array(base64String) {
+function urlBase64ToUint8Array(base64String: string) {
   const padding = "=".repeat((4 - base64String.length % 4) % 4)
   // eslint-disable-next-line
   const base64 = (base64String + padding).replace(/\-/g, "+").replace(/_/g, "/")
@@ -17,7 +14,7 @@ function urlBase64ToUint8Array(base64String) {
   return outputArray
 }
 
-function sendSubscription(subscription) {
+function sendSubscription(subscription : any) {
   return fetch(`${process.env.REACT_APP_API_URL}/notifications/subscribe`, {
     method: 'POST',
     body: JSON.stringify(subscription),
