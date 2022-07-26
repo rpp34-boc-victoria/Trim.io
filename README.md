@@ -18,10 +18,14 @@ Runs client and server in development mode; use `http://localhost:3000/` during 
 ### Using X.509 Certificate
 Place X509 certificate in the project parent directory `./`
 
-See `example.env` to and fill in the following:
+See `.env.example` to and complete the `{/*FILL ME IN*/}`:
 ```
-X509_FILE_NAME=
-MONGO_URI=
+PORT=8000
+MONGO_DB=trim-io
+AUTH__METHOD=X509
+ENVIRONMENT=DEV
+MONGO_URI_X509={/*FILL ME IN*/}
+X509_FILE_NAME={/*FILL ME IN*/}
 ```
 
 

@@ -1,6 +1,6 @@
 import express from "express";
 import path from "path";
-// import connection from "./db/connect"
+import dbConnection from "./db/connect"
 import * as dotenv from "dotenv";
 import {
   userEntriesModel,
@@ -12,19 +12,22 @@ import dayjs from "dayjs";
 import cors from 'cors';
 dotenv.config();
 const PORT = process.env.PORT || 8000;
+dbConnection();
 
-const { exec } = require("child_process");
+if (process.env.ENVIRONMENT !== 'DEV') {
+  const { exec } = require("child_process");
   exec('sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 8000', (error, stdout, stderr) => {
-      if (error) {
-          console.log(`error: ${error.message}`);
-          return;
-      }
-      if (stderr) {
-          console.log(`stderr: ${stderr}`);
-          return;
-      }
-      console.log(`stdout: forwarding TCP port 80 to ${PORT}. ${stdout}`);
+    if (error) {
+      console.log(`error: ${error.message}`);
+      return;
+    }
+    if (stderr) {
+      console.log(`stderr: ${stderr}`);
+      return;
+    }
+    console.log(`stdout: forwarding TCP port 80 to ${PORT}. ${stdout}`);
   });
+}
 
 const app = express();
 app.use(cors());
@@ -32,7 +35,6 @@ app.use(express.json());
 
 app.use(express.static(path.join(__dirname, "../client/build")));
 
-db();
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
@@ -64,7 +66,7 @@ app.get("/api/getWeekly", async (req, res) => {
       essmsg: "success",
       data: results,
     });
-  }else{
+  } else {
     res.send({
       code: 201,
       essmsg: "data query failure",
