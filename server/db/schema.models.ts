@@ -71,5 +71,5 @@ export const userEntriesModel = mongoose.model(
 
 export const foodEntriesModel = mongoose.model(
   foodName,
-  userSchema,
+  foodItemsSchema,
 )
