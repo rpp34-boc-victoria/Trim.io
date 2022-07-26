@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 const dailyEntriesName = "daily_entries";
 const userName = "user_entries";
 const foodName = "food_entries";
+const authName = "auth_entries";
 
 
 const foodItemsSchema = new mongoose.Schema(
@@ -73,3 +74,14 @@ export const foodEntriesModel = mongoose.model(
   foodName,
   userSchema,
 )
+
+const authSchema = new mongoose.Schema({
+  username: { type: String, required: true },
+  salt: { type: Number, required: true },
+  hashpass: { type: String, required: true }
+});
+
+export const authModel = mongoose.model(
+  authName,
+  authSchema,
+);

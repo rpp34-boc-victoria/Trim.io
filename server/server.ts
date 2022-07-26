@@ -11,10 +11,13 @@ import db from "../server/db/connect";
 import dayjs from "dayjs";
 import cors from 'cors';
 dotenv.config();
+// var bodyParser = require('body-parser');
+import bodyParser from "body-parser";
 
 const PORT = process.env.PORT || 8000;
 
 const app = express();
+app.use(bodyParser.json());
 app.use(cors());
 app.use(express.json());
 
@@ -75,4 +78,12 @@ app.get("/api/register", (req, res) => {
   });
   daily.save();
   res.send({ message: "Hello" });
+});
+
+app.post("/auth/login", (req, res) => {
+  let username = req.body.username;
+
+
+
+  res.sendStatus(200)
 });
