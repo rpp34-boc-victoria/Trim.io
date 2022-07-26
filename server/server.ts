@@ -24,15 +24,18 @@ app.post('/notifications/subscribe', (req, res) => {
   const subscription = req.body
 
   console.log('SUB', subscription)
-
+  // add subscrition to database
   res.status(200).json({'success': true})
 });
 
+// loop through all subscript and process/send out custom notifications
 const job = schedule.scheduleJob('*/10 * * * * *', async () => {
+
   const payload = JSON.stringify({
     title: 'Hello!',
     description: 'It ',
   })
+
   const sub = {
     endpoint: 'https://fcm.googleapis.com/fcm/send/fG20vaUTLFw:APA91bFZj5P2gR3tOAr-Gv8lVSUy5kmM_4V1WPHy3y2fnWPENOzRkm87TOhLJLWaaIcAPSS3iMdjkfcCNRNU13IVLJ4xyXUNdbpma9Ntpy-f4BOqVjPU3rm7hRXKBZyivBRn2_P_N91p',
     expirationTime: null,
@@ -41,6 +44,7 @@ const job = schedule.scheduleJob('*/10 * * * * *', async () => {
       auth: 'z8kYHIdEL3Oby22LQ6fcFw'
     }
   }
+
   webpush.sendNotification(sub, payload)
     .then(result => console.log('AYOOO', result))
     .catch(e => console.log(e.stack))
