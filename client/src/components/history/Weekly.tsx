@@ -54,11 +54,11 @@ const Weekly = () => {
     const result = await apiGet("/api/getWeekly");
     console.log(result);
     if (result) {
-      const tempData = [...result.data];
+      const tempData = [...result];
       const { weight, height, gender, age } = userInfo;
       tempData.forEach((item) => {
         item.entryDate = dayjs(item.entryDate).format("MM/DD");
-        item.bmi = Number((weight / (height * height)).toFixed(2));
+        item.bmi = Number((item.weightAmount / (height * height)).toFixed(2));
         if (gender === EGender.female) {
           item.bfp = 1.2 * item.bmi + 0.23 * age - 5.4;
         } else if (gender === EGender.male) {
