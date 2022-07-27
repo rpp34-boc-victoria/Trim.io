@@ -1,10 +1,5 @@
 import axios from "axios";
 
-interface IResponse {
-  code: number;
-  data: any;
-  essmsg: string;
-}
 
 export const apiGet = async (path: string, params: any = {}) => {
   try {

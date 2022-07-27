@@ -55,7 +55,7 @@ const Weekly = () => {
     console.log(result);
     if (result) {
       const tempData = [...result];
-      const { weight, height, gender, age } = userInfo;
+      const {height, gender, age } = userInfo;
       tempData.forEach((item) => {
         item.entryDate = dayjs(item.entryDate).format("MM/DD");
         item.bmi = Number((item.weightAmount / (height * height)).toFixed(2));
