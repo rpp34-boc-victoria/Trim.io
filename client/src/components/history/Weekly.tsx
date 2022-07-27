@@ -46,6 +46,7 @@ const Weekly = () => {
 
   useEffect(() => {
     getWeekly();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userInfo]);
 
   const getWeekly = async () => {
