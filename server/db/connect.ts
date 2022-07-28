@@ -19,7 +19,9 @@ if (process.env.AUTH__METHOD === 'X509') {
         sslCert: credentials,
         dbName: database,
       });
-      // console.log(`Connected to MongoDB Atlas, Database ${database}`);
+
+      console.log(`Connected to MongoDB Atlas, Database ${database}`);
+
       return connection;
     } catch (err) {
       console.log('Failed to connect to MongoDB Atlas')
@@ -33,7 +35,9 @@ if (process.env.AUTH__METHOD === 'X509') {
       const connection = await mongoose.connect(process.env.MONGO_FULL_URI, {
         dbName: database,
       });
-      // console.log(`Connected to MongoDB Atlas, Database ${database}`);
+
+      console.log(`Connected to MongoDB Atlas, Database ${database}`);
+
       return connection;
     } catch (err) {
       console.log('Failed to connect to MongoDB Atlas')

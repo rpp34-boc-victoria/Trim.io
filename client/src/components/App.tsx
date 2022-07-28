@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import ProTip from './ProTip';
+import History from './history/History';
 
 function Copyright() {
 
@@ -26,6 +27,7 @@ export default function App() {
           Create React App example with TypeScript
         </Typography>
         <ProTip />
+        <History />
         <Copyright />
       </Box>
     </Container>
