@@ -5,6 +5,8 @@ import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import ProTip from './ProTip';
 import History from './history/History';
+import UserReg from './UserProfileComponents/userRegistration';
+
 
 function Copyright() {
 
@@ -28,6 +30,7 @@ export default function App() {
         </Typography>
         <ProTip />
         <History />
+        <UserReg />
         <Copyright />
       </Box>
     </Container>
