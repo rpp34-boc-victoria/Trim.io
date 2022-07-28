@@ -64,6 +64,7 @@ app.get("/api/getWeekly", async (req, res) => {
     if (results.length >= 1) {
       res.status(200);
       res.send(results);
+      
     }
     else {
       throw new Error('data query failure')
