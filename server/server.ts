@@ -52,11 +52,6 @@ app.get("/", (req, res) => {
   res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
 });
 
-app.listen(PORT, () => {
-  console.log(`Server listening on ${PORT}`);
-});
-
-startSchedule();
 app.get("/api/getWeekly", async (req, res) => {
   // console.log(req, res)
   console.log(1);
@@ -99,3 +94,9 @@ app.get("/api/register", (req, res) => {
   daily.save();
   res.send({ message: "Hello" });
 });
+
+app.listen(PORT, () => {
+  console.log(`Server listening on ${PORT}`);
+});
+
+startSchedule();
