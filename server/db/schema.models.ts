@@ -24,7 +24,11 @@ const dailyEntriesSchema = new mongoose.Schema({
     index: true,
     required: true,
   },
-  foodItems: [foodItemsSchema],
+  foodItem_ids: {
+    type: String,
+    index: true,
+    default: "",
+  },
   entryDate: {
     type: Date,
     default: new Date(),

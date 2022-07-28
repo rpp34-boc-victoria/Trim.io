@@ -10,6 +10,7 @@ import {
 import db from "./db/connect";
 import dayjs from "dayjs";
 import cors from "cors";
+import { METHODS } from "http";
 dotenv.config();
 const PORT = process.env.PORT || 8000;
 
@@ -68,11 +69,37 @@ app.get("/api/getWeekly", async (req, res) => {
       throw new Error('data query failure')
     }
   } catch (error) {
-    res.status(201)
+    res.status(404)
     res.send(error.message);
   }
 });
 
 app.get("/api/register", (req, res) => {
+  let user = new userEntriesModel({
+    height: 1.7,
+    weight: 60,
+    firstName: "Spruce",
+    lastName: "Ya",
+    age:20,
+    caloriesGoal: 1500,
+    waterGoal: 7,
+    gender: 1
+  })
+  user.save()
   res.send({ message: "Hello" });
 });
+
+app.get("/api/generateDaily",(req, res) => {
+  for (let i = 0; i < 100; i++) {
+    let daily = {
+      user_id : "62e0ed5f9c63f6892fcbaa68",
+      foodItem_ids: "",
+      entryDate: dayjs().subtract(i, "day").toISOString(),
+      waterAmount: Math.floor(Math.random()*10),
+      weightAmount: Math.floor(Math.random()*(150 - 40) + 40),
+      caloriesAmount: Math.floor(Math.random()*(2200 - 3) + 3),
+    }
+    new dailyEntriesModel(daily).save();
+  }
+  res.send({message:"generated 100 datas!"});
+})
