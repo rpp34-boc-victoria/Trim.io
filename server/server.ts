@@ -61,7 +61,7 @@ app.get("/api/getWeekly", async (req, res) => {
   // 再使用mongodb查询调用这个query作为查询条件
   try {
     const results = await dailyEntriesModel.find(query);
-    if (results.length) {
+    if (results.length >= 1) {
       res.status(200);
       res.send(results);
     }
