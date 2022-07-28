@@ -32,21 +32,9 @@ if (process.env.ENVIRONMENT !== 'DEV') {
 const app = express();
 app.use(cors());
 app.use(express.json());
-
 app.use(express.static(path.join(__dirname, "../client/build")));
 
-
-app.listen(PORT, () => {
-  console.log(`Server listening on ${PORT}`);
-});
-
-app.get("/api/hello", (req, res) => {
-  res.send({ message: "Hello" });
-});
-
-app.get("/", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-});
+/*************** HISTORY / WEEKLY ROUTES ********************/
 
 app.get("/api/getWeekly", async (req, res) => {
   // console.log(req, res)
@@ -76,17 +64,9 @@ app.get("/api/getWeekly", async (req, res) => {
 });
 
 app.get("/api/register", (req, res) => {
-  let foodItems = new foodEntriesModel({
-    label: "apply",
-    nutrients: "test",
-  });
-  let daily = new dailyEntriesModel({
-    user_id: "62da35785754355239a691f3",
-    foodItems,
-    waterAmount: 8,
-    weightAmount: 45,
-    entryDate: new Date("2022-07-18T02:34:03.326+00:00"),
-  });
-  daily.save();
   res.send({ message: "Hello" });
+});
+
+app.listen(PORT, () => {
+  console.log(`Server listening on ${PORT}`);
 });
