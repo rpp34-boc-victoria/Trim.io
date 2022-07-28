@@ -14,8 +14,7 @@ const foodItemsSchema = new mongoose.Schema(
     },
     // createTime:{type:Date, default:new Date()},
     // updateTime:{type:Date, default:new Date()},
-  },
-  { _id: false }
+  }
 );
 
 const dailyEntriesSchema = new mongoose.Schema({
