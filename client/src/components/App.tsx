@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
 import ProTip from "./ProTip";
 import Weekly from "./history/Weekly";
-
+import UserReg from './UserProfileComponents/userRegistration';
 import './App.scss'
 
 function Copyright() {
@@ -58,6 +58,7 @@ export default function App() {
           </Box>
           {activeIndex === "daliy" ? <Box /> : <Weekly />}
         </Box>
+        <UserReg />
         <Copyright />
       </Box>
     </Container>
