@@ -42,6 +42,7 @@ app.get("/api/getWeekly", async (req, res) => {
       $gt: start.toISOString(),
       $lt: new Date(),
     },
+    // user_id: {}, // Will need to be given the user_id by authentication middleware
   };
   // 再使用mongodb查询调用这个query作为查询条件
   const results = await dailyEntriesModel.find(query).limit(7).sort({_id: -1});
@@ -120,7 +121,7 @@ app.get("/api/generateDaily", async (req, res) => {
     var daily = {
       user_id: "62e0ed5f9c63f6892fcbaa68",
       foodItems,
-      entryDate: dayjs().subtract(numDaysAgo - i, "day").toISOString(),
+      entryDate: dayjs().subtract(i, "day").toISOString(),
       waterAmount: Math.floor(Math.random() * 10),
       weightAmount: Math.floor(Math.random() * (150 - 40) + 40),
       caloriesAmount: Math.floor(Math.random() * (2200 - 3) + 3),
@@ -134,7 +135,7 @@ app.get("/api/generateDaily", async (req, res) => {
     await dailyEntriesModel.insertMany(randData);
     console.log('Sucessful Randon data Generated');
     res.status(201);
-    res.send({ message: "Generated 100 random data entries!" });
+    res.send({ message: `Generated ${numDaysAgo} random data entries!` });
   } catch (err) {
     console.log(err.message);
     res.status(500);
