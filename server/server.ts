@@ -46,7 +46,6 @@ app.get("/api/getWeekly", async (req, res) => {
   };
   // 再使用mongodb查询调用这个query作为查询条件
   const results = await dailyEntriesModel.find(query).limit(7).sort({_id: -1});
-  console.log(results);
   if (results.length) {
     res.send({
       code: 200,
@@ -64,7 +63,7 @@ app.get("/api/getWeekly", async (req, res) => {
 
 /******************** Daily Get Route ***********************/
 
-app.get('/daily', async (req, res) => {
+app.get('/api/daily', async (req, res) => {
   let today = new Date();
   today.setHours(0, 0, 0, 0);
   let query = {
@@ -72,7 +71,7 @@ app.get('/daily', async (req, res) => {
     // user_id: {}, // Will need to be given the user_id by authentication middleware
   }
   try {
-    let result = await dailyEntriesModel.find(query);
+    let result = await dailyEntriesModel.find(query).limit(1);
     res.status(200);
     res.send(result);
   } catch (err) {
@@ -81,7 +80,7 @@ app.get('/daily', async (req, res) => {
   }
 });
 
-app.get('/daily/latest', async (req, res) => {
+app.get('/api/latestEntry', async (req, res) => {
   let query = {
     // user_id: {}, // Will need to be given the user_id by authentication middleware
   }

@@ -20,8 +20,6 @@ interface IDaliy {
 
 }
 
-
-
 enum EGender {
   female = 0,
   male = 1,
