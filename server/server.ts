@@ -9,22 +9,26 @@ import {
 } from "./db/schema.models";
 import db from "./db/connect";
 import dayjs from "dayjs";
-import cors from 'cors';
+import cors from "cors";
+import { METHODS } from "http";
 dotenv.config();
 const PORT = process.env.PORT || 8000;
 
 const { exec } = require("child_process");
-  exec('sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 8000', (error, stdout, stderr) => {
-      if (error) {
-          console.log(`error: ${error.message}`);
-          return;
-      }
-      if (stderr) {
-          console.log(`stderr: ${stderr}`);
-          return;
-      }
-      console.log(`stdout: forwarding TCP port 80 to ${PORT}. ${stdout}`);
-  });
+exec(
+  "sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 8000",
+  (error, stdout, stderr) => {
+    if (error) {
+      console.log(`error: ${error.message}`);
+      return;
+    }
+    if (stderr) {
+      console.log(`stderr: ${stderr}`);
+      return;
+    }
+    console.log(`stdout: forwarding TCP port 80 to ${PORT}. ${stdout}`);
+  }
+);
 
 const app = express();
 app.use(cors());
@@ -47,8 +51,6 @@ app.get("/", (req, res) => {
 });
 
 app.get("/api/getWeekly", async (req, res) => {
-  // console.log(req, res)
-  console.log(1);
   const start = dayjs().subtract(7, "day");
   var query = {
     entryDate: {
@@ -57,34 +59,48 @@ app.get("/api/getWeekly", async (req, res) => {
     },
   };
   // 再使用mongodb查询调用这个query作为查询条件
-  const results = await dailyEntriesModel.find(query);
-  if (results.length) {
-    res.send({
-      code: 200,
-      essmsg: "success",
-      data: results,
-    });
-  }else{
-    res.send({
-      code: 201,
-      essmsg: "data query failure",
-      data: null,
-    });
+  try {
+    const results = await dailyEntriesModel.find(query);
+    if (results.length >= 1) {
+      res.status(200);
+      res.send(results);
+      
+    }
+    else {
+      throw new Error('data query failure')
+    }
+  } catch (error) {
+    res.status(404)
+    res.send(error.message);
   }
 });
 
 app.get("/api/register", (req, res) => {
-  let foodItems = new foodEntriesModel({
-    label: "apply",
-    nutrients: "test",
-  });
-  let daily = new dailyEntriesModel({
-    user_id: "62da35785754355239a691f3",
-    foodItems,
-    waterAmount: 8,
-    weightAmount: 45,
-    entryDate: new Date("2022-07-18T02:34:03.326+00:00"),
-  });
-  daily.save();
+  let user = new userEntriesModel({
+    height: 1.7,
+    weight: 60,
+    firstName: "Spruce",
+    lastName: "Ya",
+    age:20,
+    caloriesGoal: 1500,
+    waterGoal: 7,
+    gender: 1
+  })
+  user.save()
   res.send({ message: "Hello" });
 });
+
+app.get("/api/generateDaily",(req, res) => {
+  for (let i = 0; i < 100; i++) {
+    let daily = {
+      user_id : "62e0ed5f9c63f6892fcbaa68",
+      foodItem_ids: "",
+      entryDate: dayjs().subtract(i, "day").toISOString(),
+      waterAmount: Math.floor(Math.random()*10),
+      weightAmount: Math.floor(Math.random()*(150 - 40) + 40),
+      caloriesAmount: Math.floor(Math.random()*(2200 - 3) + 3),
+    }
+    new dailyEntriesModel(daily).save();
+  }
+  res.send({message:"generated 100 datas!"});
+})
