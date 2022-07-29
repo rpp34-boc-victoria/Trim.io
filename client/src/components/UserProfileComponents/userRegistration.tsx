@@ -1,5 +1,6 @@
 import * as React from 'react';
-import axios from 'axios';
+import { apiPost } from "../../api";
+import './userRegistration.scss';
 import {
     Typography,
     AppBar,
@@ -24,12 +25,14 @@ interface IFormInput {
     targetWeight: number;
 }
 
-
 export default function UserRegistration() {
     const { control, handleSubmit } = useForm<IFormInput>();
 
     const onSubmit: SubmitHandler<IFormInput> = data => {
         console.log(data);
+        apiPost("/api/register").then((res) => {
+            console.log(res);
+        })
     };
 
     return (
