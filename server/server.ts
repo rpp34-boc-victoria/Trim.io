@@ -129,11 +129,8 @@ app.get("/api/generateDaily", async (req, res) => {
     randData.push(daily);
   }
 
-  console.log('Random daily:', randData)
-
   try {
     await dailyEntriesModel.insertMany(randData);
-    console.log('Sucessful Randon data Generated');
     res.status(201);
     res.send({ message: `Generated ${numDaysAgo} random data entries!` });
   } catch (err) {
