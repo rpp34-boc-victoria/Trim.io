@@ -3,13 +3,8 @@ import { apiPost } from "../../api";
 import './userRegistration.scss';
 import {
     Typography,
-    AppBar,
-    Toolbar,
-    TextField,
-    Button,
-    Box,
-    MenuItem,
     Input,
+    Box,
 } from "@mui/material";
 import Select from "react-select";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
@@ -22,7 +17,8 @@ interface IFormInput {
     gender: { label: string; value: string };
     height: number;
     weight: number;
-    targetWeight: number;
+    targetCalories: number;
+    targetWater: number;
 }
 
 export default function UserRegistration() {
@@ -31,14 +27,14 @@ export default function UserRegistration() {
     const onSubmit: SubmitHandler<IFormInput> = data => {
         console.log(data);
         apiPost("/api/register").then((res) => {
-            console.log(res);
+            console.log("user successfully posted something, :", res);
         })
     };
 
     return (
-        <div>
-            <Typography>
-                <h1>SIGNUP FORM </h1>
+        <Box className="hi">
+            <Typography variant="h4">
+                SIGN UP
             </Typography>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Typography>
@@ -108,15 +104,23 @@ export default function UserRegistration() {
                     render={({ field }) => <Input {...field} />}
                 />
                 <Typography>
-                    <sub>Target weight (kg)</sub>
+                    <sub>Target Daily Calories Goal (kcal)</sub>
                 </Typography>
                 <Controller
-                    name="targetWeight"
+                    name="targetCalories"
+                    control={control}
+                    render={({ field }) => <Input {...field} />}
+                />
+                <Typography>
+                    <sub>Target Daily Water Intake Goal (cup)</sub>
+                </Typography>
+                <Controller
+                    name="targetWater"
                     control={control}
                     render={({ field }) => <Input {...field} />}
                 />
                 <input type="submit" />
             </form>
-        </div>
+        </Box>
     );
 }

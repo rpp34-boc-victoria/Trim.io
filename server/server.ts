@@ -97,7 +97,6 @@ app.get("/api/register", (req, res) => {
   res.send({ message: "Hello" });
 });
 
-
 app.get("/api/generateDaily",(req, res) => {
   for (let i = 0; i < 100; i++) {
     let daily = {
@@ -118,3 +117,17 @@ app.listen(PORT, () => {
 });
 
 startSchedule();
+
+//Below is a post request for the users to register
+app.post("/api/register", (req, res) => {
+  let daily = new dailyEntriesModel({
+    user_id: "62da35785754355239a691f3",
+
+  });
+  //daily.save();
+  //res.send('posted');
+  res.send({
+    code: 200,
+    essmsg: "user successfully post a request"
+  });
+});
