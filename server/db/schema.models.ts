@@ -15,7 +15,7 @@ const foodItemsSchema = new mongoose.Schema(
     // createTime:{type:Date, default:new Date()},
     // updateTime:{type:Date, default:new Date()},
   },
-  { _id: false }
+
 );
 
 const dailyEntriesSchema = new mongoose.Schema({
@@ -24,11 +24,7 @@ const dailyEntriesSchema = new mongoose.Schema({
     index: true,
     required: true,
   },
-  foodItem_ids: {
-    type: String,
-    index: true,
-    default: "",
-  },
+  foodItems: [foodItemsSchema],
   entryDate: {
     type: Date,
     default: new Date(),
