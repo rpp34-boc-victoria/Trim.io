@@ -8,7 +8,8 @@ import {
   foodEntriesModel,
 } from "./db/schema.models";
 import dayjs from "dayjs";
-import cors from 'cors';
+import cors from "cors";
+import { METHODS } from "http";
 dotenv.config();
 const PORT = process.env.PORT || 8000;
 dbConnection();
@@ -44,20 +45,20 @@ app.get("/api/getWeekly", async (req, res) => {
     },
     // user_id: {}, // Will need to be given the user_id by authentication middleware
   };
-  // 再使用mongodb查询调用这个query作为查询条件
-  const results = await dailyEntriesModel.find(query).limit(7).sort({_id: -1});
-  if (results.length) {
-    res.send({
-      code: 200,
-      essmsg: "success",
-      data: results,
-    });
-  } else {
-    res.send({
-      code: 201,
-      essmsg: "data query failure",
-      data: null,
-    });
+
+  try {
+    const results = await dailyEntriesModel.find(query).limit(7).sort({_id: -1});
+    if (results.length >= 1) {
+      res.status(200);
+      res.send(results);
+
+    }
+    else {
+      throw new Error('data query failure')
+    }
+  } catch (error) {
+    res.status(404)
+    res.send(error.message);
   }
 });
 
@@ -140,6 +141,18 @@ app.get("/api/generateDaily", async (req, res) => {
 })
 
 app.get("/api/register", (req, res) => {
+
+  let user = new userEntriesModel({
+    height: 1.7,
+    weight: 60,
+    firstName: "Spruce",
+    lastName: "Ya",
+    age:20,
+    caloriesGoal: 1500,
+    waterGoal: 7,
+    gender: 1
+  })
+  user.save();
   res.send({ message: "Hello" });
 });
 
