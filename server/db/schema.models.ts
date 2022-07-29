@@ -11,6 +11,7 @@ const foodItemsSchema = new mongoose.Schema(
     wholeWeight: {
       type: Number,
       default: 100,
+      remark: 'The actual total mass of the Meal',
     },
     // createTime:{type:Date, default:new Date()},
     // updateTime:{type:Date, default:new Date()},
@@ -37,7 +38,7 @@ const dailyEntriesSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-  caloriesAmount:{
+  caloriesAmount: {
     type: Number,
     default: 0,
   }
@@ -51,9 +52,9 @@ const userSchema = new mongoose.Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   age: { type: Number, required: true },
-  caloriesGoal: {type:Number, default:0, remark:"dailyCaloriesGoal"},
-  waterGoal:  {type:Number, default:0, remark:"dailyWaterGoal"},
-  gender: {type: Number, default:0, remark : '0 is female, 1 is male'},
+  caloriesGoal: { type: Number, default: 0, remark: "dailyCaloriesGoal" },
+  waterGoal: { type: Number, default: 0, remark: "dailyWaterGoal" },
+  gender: { type: Number, default: 0, remark: '0 is female, 1 is male' },
   // createdTime:{type:Date, default:new Date()},
   // updatedTime:{type:Date, default:new Date()},
 });

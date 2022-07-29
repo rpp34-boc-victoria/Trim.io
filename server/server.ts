@@ -40,11 +40,12 @@ app.get("/api/getWeekly", async (req, res) => {
   var query = {
     entryDate: {
       $gt: start.toISOString(),
-      $lt: new Date(new Date().toISOString()),
+      $lt: new Date(),
     },
   };
   // 再使用mongodb查询调用这个query作为查询条件
-  const results = await dailyEntriesModel.find(query);
+  const results = await dailyEntriesModel.find(query).limit(7).sort({_id: -1});
+  console.log(results);
   if (results.length) {
     res.send({
       code: 200,
@@ -92,6 +93,54 @@ app.get('/daily/latest', async (req, res) => {
     res.send(err);
   }
 });
+
+app.get("/api/generateDaily", async (req, res) => {
+
+  let foodItems = []
+  for (let i = 0; i < 5; i++) {
+    foodItems.push(
+      {
+        label: 'Big Mac',
+        nutrients: {
+          "ENERC_KCAL": 257,
+          "PROCNT": 11.82,
+          "FAT": 14.96,
+          "CHOCDF": 20.08,
+          "FIBTG": 1.6
+        },
+        wholeWeight: 213,
+      }
+    );
+  }
+
+  let randData = [];
+  const numDaysAgo = 10;
+
+  for (let i = 0; i < numDaysAgo; i++) {
+    var daily = {
+      user_id: "62e0ed5f9c63f6892fcbaa68",
+      foodItems,
+      entryDate: dayjs().subtract(numDaysAgo - i, "day").toISOString(),
+      waterAmount: Math.floor(Math.random() * 10),
+      weightAmount: Math.floor(Math.random() * (150 - 40) + 40),
+      caloriesAmount: Math.floor(Math.random() * (2200 - 3) + 3),
+    }
+    randData.push(daily);
+  }
+
+  console.log('Random daily:', randData)
+
+  try {
+    await dailyEntriesModel.insertMany(randData);
+    console.log('Sucessful Randon data Generated');
+    res.status(201);
+    res.send({ message: "Generated 100 random data entries!" });
+  } catch (err) {
+    console.log(err.message);
+    res.status(500);
+    res.send(err);
+  }
+})
 
 app.get("/api/register", (req, res) => {
   res.send({ message: "Hello" });
