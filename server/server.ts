@@ -89,7 +89,16 @@ app.get("/api/register", (req, res) => {
   res.send({ message: "Hello" });
 });
 
-//Below will be invoked when use submit a signup form
+//Below is a post request for the users to register
 app.post("/api/register", (req, res) => {
+  let daily = new dailyEntriesModel({
+    user_id: "62da35785754355239a691f3",
 
-})
+  });
+  //daily.save();
+  //res.send('posted');
+  res.send({
+    code: 200,
+    essmsg: "user successfully post a request"
+  });
+});
