@@ -88,3 +88,8 @@ app.get("/api/register", (req, res) => {
   daily.save();
   res.send({ message: "Hello" });
 });
+
+//Below will be invoked when use submit a signup form
+app.post("/api/register", (req, res) => {
+
+})
