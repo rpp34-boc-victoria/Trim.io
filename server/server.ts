@@ -90,6 +90,7 @@ app.get("/api/register", (req, res) => {
   res.send({ message: "Hello" });
 });
 
+<<<<<<< HEAD
 app.get("/api/generateDaily",(req, res) => {
   for (let i = 0; i < 100; i++) {
     let daily = {
@@ -104,3 +105,18 @@ app.get("/api/generateDaily",(req, res) => {
   }
   res.send({message:"generated 100 datas!"});
 })
+=======
+//Below is a post request for the users to register
+app.post("/api/register", (req, res) => {
+  let daily = new dailyEntriesModel({
+    user_id: "62da35785754355239a691f3",
+
+  });
+  //daily.save();
+  //res.send('posted');
+  res.send({
+    code: 200,
+    essmsg: "user successfully post a request"
+  });
+});
+>>>>>>> e448f9f (connected front end to server)
