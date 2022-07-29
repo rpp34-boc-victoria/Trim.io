@@ -7,7 +7,6 @@ import {
   dailyEntriesModel,
   foodEntriesModel,
 } from "./db/schema.models";
-import db from "./db/connect";
 import dayjs from "dayjs";
 import cors from 'cors';
 dotenv.config();
@@ -37,8 +36,6 @@ app.use(express.static(path.join(__dirname, "../client/build")));
 /*************** HISTORY / WEEKLY ROUTES ********************/
 
 app.get("/api/getWeekly", async (req, res) => {
-  // console.log(req, res)
-  console.log(1);
   const start = dayjs().subtract(7, "day");
   var query = {
     entryDate: {
@@ -60,6 +57,39 @@ app.get("/api/getWeekly", async (req, res) => {
       essmsg: "data query failure",
       data: null,
     });
+  }
+});
+
+/******************** Daily Get Route ***********************/
+
+app.get('/daily', async (req, res) => {
+  let today = new Date();
+  today.setHours(0, 0, 0, 0);
+  let query = {
+    entryDate: { $gte: today },
+    // user_id: {}, // Will need to be given the user_id by authentication middleware
+  }
+  try {
+    let result = await dailyEntriesModel.find(query);
+    res.status(200);
+    res.send(result);
+  } catch (err) {
+    res.status(500);
+    res.send(err);
+  }
+});
+
+app.get('/daily/latest', async (req, res) => {
+  let query = {
+    // user_id: {}, // Will need to be given the user_id by authentication middleware
+  }
+  try {
+    let result = await dailyEntriesModel.find(query).sort({ _id: -1 }).limit(1);
+    res.status(200);
+    res.send(result);
+  } catch (err) {
+    res.status(500);
+    res.send(err);
   }
 });
 
