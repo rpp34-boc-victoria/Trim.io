@@ -74,7 +74,7 @@ app.get('/api/daily', async (req, res) => {
     // user_id: String, // Will need to be given the user_id by authentication middleware
   }
   try {
-    let result = await dailyEntriesModel.find(query).limit(1);
+    let result = await dailyEntriesModel.findOne(query);
     res.status(200);
     res.send(result);
   } catch (err) {
@@ -88,9 +88,9 @@ app.get('/api/latestEntry', async (req, res) => {
     // user_id: String, // Will need to be given the user_id by authentication middleware
   }
   try {
-    let result = await dailyEntriesModel.find(query).sort({ _id: -1 }).limit(1);
+    let result = await dailyEntriesModel.findOne(query).sort({ _id: -1 });
     res.status(200);
-    res.send(result);
+    res.send(result[0]);
   } catch (err) {
     res.status(500);
     res.send(err);
@@ -103,6 +103,7 @@ app.post('/api/daily', async (req, res) => {
     // user_id: String, // Will need to be given the user_id by authentication middleware
   }
   let payload = req.body;
+  console.log(req.body);
   try {
     let result = await dailyEntriesModel.findOneAndUpdate(
       query,
@@ -111,6 +112,7 @@ app.post('/api/daily', async (req, res) => {
         upsert: true,
         new: true
       });
+    console.log(result);
     res.status(200);
     res.send(result);
   } catch (err) {

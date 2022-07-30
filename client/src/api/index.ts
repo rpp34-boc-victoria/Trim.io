@@ -30,16 +30,16 @@ export const getDaily = async () => {
     console.log('first try data:', result.data);
     if (result.data.length < 1) {
       result = await axios.get('/api/latestEntry');
+      console.log('Getting Latest data', result.data);
       let entry = {
-        weight: result.data[0].weightAmount
+        weight: result.data?.weightAmount ? result.data?.weightAmount : 0
       };
-      result = await axios.post('api/daily',{
-        data: entry,
-      });
+      result = await axios.post('/api/daily', entry);
+      console.log('result after post', result.data);
     }
-    console.log('Returning Data', result.data[0]);
+    console.log('Returning Data', result.data);
     return result.data[0];
   } catch (error: any) {
-    throw new Error(error.mesage);
+    throw error;
   }
 }

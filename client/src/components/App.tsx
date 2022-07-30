@@ -42,7 +42,7 @@ export default function App() {
       let data = await getDaily();
       setDailyData(data);
     } catch (err: any) {
-      throw new Error(err.message);
+      throw err;
     }
   }
 

@@ -9,15 +9,17 @@ const Daily = (props: any) => {
 
   useEffect(() => {
     handleDailyUpdate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 
 
   return (
     <Box className='daily'>
-      <Typography>
+      <Typography className="title">Calories</Typography>
+      <div>
         {`${dailyData?.caloriesAmount}`}
-      </Typography>
+      </div>
     </Box>
   )
 }
