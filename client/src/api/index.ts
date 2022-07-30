@@ -37,7 +37,7 @@ export const getDaily = async () => {
       result = await axios.post('/api/daily', entry);
       // console.log('result after post:', result.data);
     }
-    // console.log('Returning Data:', result.data);
+    console.log('Returning Data:', result.data);
     return result.data;
   } catch (error: any) {
     throw error;
