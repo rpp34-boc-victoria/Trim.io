@@ -90,7 +90,7 @@ app.get('/api/latestEntry', async (req, res) => {
   try {
     let result = await dailyEntriesModel.findOne(query).sort({ _id: -1 });
     res.status(200);
-    res.send(result[0]);
+    res.send(result);
   } catch (err) {
     res.status(500);
     res.send(err);
@@ -150,7 +150,7 @@ app.get("/api/generateDaily", async (req, res) => {
     var daily = {
       user_id: "62e0ed5f9c63f6892fcbaa68",
       foodItems,
-      entryDate: dayjs().startOf('day').subtract(i, "day").toISOString(),
+      entryDate: dayjs().startOf('day').subtract(numDaysAgo - i, "day").toISOString(),
       waterAmount: Math.floor(Math.random() * 10),
       weightAmount: Math.floor(Math.random() * (150 - 40) + 40),
       caloriesAmount: Math.floor(Math.random() * (2200 - 3) + 3),

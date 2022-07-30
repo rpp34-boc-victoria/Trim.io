@@ -27,18 +27,18 @@ export const apiPost = async (path: string, data: any = {}) => {
 export const getDaily = async () => {
   try {
     let result = await axios.get('/api/daily');
-    console.log('first try data:', result.data);
-    if (result.data.length < 1) {
+    // console.log('first try data:', result.data);
+    if (result.data._id === undefined) {
       result = await axios.get('/api/latestEntry');
-      console.log('Getting Latest data', result.data);
+      // console.log('Getting Latest data', result.data);
       let entry = {
-        weight: result.data?.weightAmount ? result.data?.weightAmount : 0
+        weightAmount: result.data?.weightAmount ? result.data.weightAmount : 0
       };
       result = await axios.post('/api/daily', entry);
-      console.log('result after post', result.data);
+      // console.log('result after post:', result.data);
     }
-    console.log('Returning Data', result.data);
-    return result.data[0];
+    // console.log('Returning Data:', result.data);
+    return result.data;
   } catch (error: any) {
     throw error;
   }
