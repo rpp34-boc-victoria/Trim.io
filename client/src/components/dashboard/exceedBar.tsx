@@ -25,7 +25,7 @@ export default function ExceedBar(props: IProps) {
   const point = props.data[0];
   let max = Math.max(point.value, point.goal);
   let spacer = max / 100;
-  let over = point.value > point.goal;
+  let over = point.value >= point.goal;
   let value = over ? point.goal : point.value;
   let padding1 = over ? 0 : point.goal - point.value;
   let padding2 = Math.abs(point.goal - point.value);
