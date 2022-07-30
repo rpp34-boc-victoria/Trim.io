@@ -14,6 +14,21 @@ npm run dev
 ```
 Runs client and server in development mode; use `http://localhost:3000/` during development
 
+## Notification Service Set up
+
+Fill out the following in the `./client/.env`
+
+```
+REACT_APP_PUBLIC_VAPID_KEY={/*FILL ME IN*/}
+```
+
+Fill out the followinf in the `./.env` in the parent directory
+```
+PUBLIC_VAPID_KEY={/*FILL ME IN*/}
+PRIVATE_VAPID_KEY={/*FILL ME IN*/}
+WEB_PUSH_CONTACT={/*FILL ME IN*/}
+```
+
 ## Connecting to MongoDB
 ### Using X.509 Certificate
 Place X509 certificate in the project parent directory `./`
@@ -27,7 +42,7 @@ ENVIRONMENT=DEV
 MONGO_URI_X509={/*FILL ME IN*/}
 X509_FILE_NAME={/*FILL ME IN*/}
 ```
-
+NOTE: `ENVIRONMENT=DEV` should only be used for development environment. Deployed instance should not have this variable.
 
 ### Create Your Own DB Configuration:
 Set the following in `.env`
