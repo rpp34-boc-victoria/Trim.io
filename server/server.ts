@@ -112,23 +112,17 @@ app.get("/api/generateDaily",(req, res) => {
   res.send({message:"generated 100 datas!"});
 })
 
-<<<<<<< HEAD
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
 
 startSchedule();
 
-=======
->>>>>>> bc6f25a (added userReg API post request)
 //Below is a post request for the users to register
-app.post("/api/register", (req, res) => {
+app.post("/api/register", async (req, res) => {
   //console.log('req here:!!', req.body);
   let userData = req.body;
-  //will implemnetnt caloriesRecommanded cals on next PR
   userData.caloriesRecommanded = "2000";
-  console.log(+userData.caloriesRecommanded);
-  //will implemnetnt caloriesRecommanded cals on next PR
   let userReg = new userEntriesModel({
     firstName: userData.firstName,
     lastName: userData.lastName,
@@ -138,13 +132,13 @@ app.post("/api/register", (req, res) => {
     phoneNumber: +userData.phoneNumber,
     height: +userData.height,
     weight: +userData.weight,
-    caloriesGoal: +userData.targetCalories,    
+    caloriesGoal: +userData.targetCalories,
     caloriesRecommanded: +userData.caloriesRecommanded,
     waterGoal: +userData.targetWater,
     createdTime: new Date(),
   });
   try {
-    userReg.save();
+    await userReg.save();
     res.sendStatus(201);
   } catch (err) {
     res.status(501);
