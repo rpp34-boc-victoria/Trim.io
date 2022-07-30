@@ -125,6 +125,10 @@ startSchedule();
 app.post("/api/register", (req, res) => {
   //console.log('req here:!!', req.body);
   let userData = req.body;
+  //will implemnetnt caloriesRecommanded cals on next PR
+  userData.caloriesRecommanded = "2000";
+  console.log(+userData.caloriesRecommanded);
+  //will implemnetnt caloriesRecommanded cals on next PR
   let userReg = new userEntriesModel({
     firstName: userData.firstName,
     lastName: userData.lastName,
@@ -134,14 +138,16 @@ app.post("/api/register", (req, res) => {
     phoneNumber: +userData.phoneNumber,
     height: +userData.height,
     weight: +userData.weight,
-    caloriesGoal: +userData.targetCalories,
+    caloriesGoal: +userData.targetCalories,    
+    caloriesRecommanded: +userData.caloriesRecommanded,
     waterGoal: +userData.targetWater,
     createdTime: new Date(),
-    updatedTime:{},
   });
-  //userReg.save();
-  res.send({
-    code: 200,
-    essmsg: "user successfully post a request"
-  });
+  try {
+    userReg.save();
+    res.sendStatus(201);
+  } catch (err) {
+    res.status(501);
+    res.send(err);
+  }
 });

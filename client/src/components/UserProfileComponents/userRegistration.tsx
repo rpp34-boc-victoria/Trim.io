@@ -65,7 +65,7 @@ export default function UserRegistration() {
         <Controller
           name="gender"
           control={control}
-          defaultValue={ {value: "", label: "" } }
+          defaultValue={{ value: "", label: "" }}
           render={({ field }) => (
             <Select
               {...field}
@@ -122,6 +122,11 @@ export default function UserRegistration() {
           defaultValue={0}
           render={({ field }) => <Input {...field} />}
         />
+        <Typography>
+          <sub><i>Recommanded </i></sub> 
+          <sub><i>1000</i></sub>
+          <sub><i> kcal Daily Calories intake based on your BMI</i></sub>
+        </Typography>
         <Typography>
           <sub>Target Daily Water Intake Goal (cup)</sub>
         </Typography>
