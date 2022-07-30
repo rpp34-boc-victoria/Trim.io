@@ -58,3 +58,8 @@ npm start
 ```
 Run the production application and use `http://localhost:8000/` or user specified port for production
 
+### Side notes
+
+chrome dev tools -> application -> service workers -> click update on reload
+
+turn on notification for your brower

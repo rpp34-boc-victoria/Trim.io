@@ -1,3 +1,4 @@
+import { startSchedule } from './scheduleNotification';
 import express from "express";
 import path from "path";
 // import connection from "./db/connect"
@@ -9,8 +10,10 @@ import {
 } from "./db/schema.models";
 import db from "./db/connect";
 import dayjs from "dayjs";
+
 import cors from "cors";
 import { METHODS } from "http";
+
 dotenv.config();
 const PORT = process.env.PORT || 8000;
 
@@ -38,12 +41,16 @@ app.use(express.static(path.join(__dirname, "../client/build")));
 
 db();
 
-app.listen(PORT, () => {
-  console.log(`Server listening on ${PORT}`);
-});
-
 app.get("/api/hello", (req, res) => {
   res.send({ message: "Hello" });
+});
+
+app.post('/notifications/subscribe', (req, res) => {
+  const subscription = req.body
+
+  console.log('SUB', subscription)
+  // add subscrition to database
+  res.status(200).json({'success': true})
 });
 
 app.get("/", (req, res) => {
@@ -90,6 +97,7 @@ app.get("/api/register", (req, res) => {
   res.send({ message: "Hello" });
 });
 
+
 app.get("/api/generateDaily",(req, res) => {
   for (let i = 0; i < 100; i++) {
     let daily = {
@@ -104,3 +112,9 @@ app.get("/api/generateDaily",(req, res) => {
   }
   res.send({message:"generated 100 datas!"});
 })
+
+app.listen(PORT, () => {
+  console.log(`Server listening on ${PORT}`);
+});
+
+startSchedule();
