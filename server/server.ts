@@ -112,12 +112,15 @@ app.get("/api/generateDaily",(req, res) => {
   res.send({message:"generated 100 datas!"});
 })
 
+<<<<<<< HEAD
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
 
 startSchedule();
 
+=======
+>>>>>>> bc6f25a (added userReg API post request)
 //Below is a post request for the users to register
 app.post("/api/register", (req, res) => {
   //console.log('req here:!!', req.body);
