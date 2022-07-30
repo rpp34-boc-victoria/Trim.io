@@ -12,7 +12,7 @@ interface IProps {
 
 const goodColor = "#a5f08d";
 const medColor = '#f2d285';
-const badColor = "#e87676";
+// const badColor = "#e87676";
 const nonColor = '#f2f2f2';
 const spacerColor = '#404040';
 
@@ -21,7 +21,7 @@ const spacerColor = '#404040';
  * @param props  props.data: { value: any, goal: any }[],
  * @returns
  */
-export default function CalorieBar(props: IProps) {
+export default function ExceedBar(props: IProps) {
   const point = props.data[0];
   let max = Math.max(point.value, point.goal);
   let spacer = max / 100;
@@ -35,8 +35,8 @@ export default function CalorieBar(props: IProps) {
     padding2: (padding2 - spacer / 2),
     over,
     spacer,
-    valColor: over ? medColor : goodColor,
-    pad2Color: over ? badColor : nonColor,
+    valColor: over ? goodColor : medColor,
+    pad2Color: over ? goodColor : nonColor,
     max,
   }
   console.log(dataPoint);
