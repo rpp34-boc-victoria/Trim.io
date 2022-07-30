@@ -6,7 +6,6 @@ import * as dotenv from "dotenv";
 import {
   userEntriesModel,
   dailyEntriesModel,
-  foodEntriesModel,
   todayMidnight,
 } from "./db/schema.models";
 import dayjs from "dayjs";
@@ -16,6 +15,7 @@ import cors from "cors";
 dotenv.config();
 const PORT = process.env.PORT || 8000;
 dbConnection();
+startSchedule();
 
 if (process.env.ENVIRONMENT !== 'DEV') {
   const { exec } = require("child_process");
@@ -188,6 +188,7 @@ app.get("/api/generateDaily", async (req, res) => {
   }
 })
 
+// Not sure what this is for......????
 app.get("/api/register", (req, res) => {
 
   let user = new userEntriesModel({
@@ -202,6 +203,35 @@ app.get("/api/register", (req, res) => {
   })
   user.save();
   res.send({ message: "Hello" });
+});
+
+
+//Below is a post request for the users to register
+app.post("/api/register", async (req, res) => {
+  //console.log('req here:!!', req.body);
+  let userData = req.body;
+  userData.caloriesRecommanded = "2000";
+  let userReg = new userEntriesModel({
+    firstName: userData.firstName,
+    lastName: userData.lastName,
+    age: +userData.age,
+    gender: userData.gender.value,
+    email: userData.email,
+    phoneNumber: +userData.phoneNumber,
+    height: +userData.height,
+    weight: +userData.weight,
+    caloriesGoal: +userData.targetCalories,
+    caloriesRecommanded: +userData.caloriesRecommanded,
+    waterGoal: +userData.targetWater,
+    createdTime: new Date(),
+  });
+  try {
+    await userReg.save();
+    res.sendStatus(201);
+  } catch (err) {
+    res.status(501);
+    res.send(err);
+  }
 });
 
 app.listen(PORT, () => {

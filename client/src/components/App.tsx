@@ -7,8 +7,8 @@ import Link from "@mui/material/Link";
 import Weekly from "./history/Weekly";
 import { getDaily } from '../api';
 import Daily from "./dashboard/Daily";
-import './App.scss';
-
+import UserReg from './UserProfileComponents/userRegistration';
+import './App.scss'
 
 function Copyright() {
   return (
@@ -79,6 +79,9 @@ export default function App() {
             <Daily dailyData={dailyData} handleDailyUpdate={handleDailyUpdate} /> :
             <Weekly />
           }
+        </Box>
+        <Box>
+          <UserReg />
         </Box>
         <Copyright />
       </Box>

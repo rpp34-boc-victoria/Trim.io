@@ -56,16 +56,23 @@ const dailyEntriesSchema = new mongoose.Schema({
 });
 
 const userSchema = new mongoose.Schema({
-  height: { type: Number, required: true },
-  weight: { type: Number, required: true },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   age: { type: Number, required: true },
-  caloriesGoal: { type: Number, default: 0, remark: "dailyCaloriesGoal" },
-  waterGoal: { type: Number, default: 0, remark: "dailyWaterGoal" },
-  gender: { type: Number, default: 0, remark: '0 is female, 1 is male' },
-  // createdTime:{type:Date, default:new Date()},
-  // updatedTime:{type:Date, default:new Date()},
+  gender: {
+    type: String,
+    enum: "M" || "F" || "N",
+    remark: 'F is female, M is male, N is non-binary'
+  },
+  email: { type: String, required: true },
+  phoneNumber: { type: Number, required: true },
+  height: { type: Number, required: true, remark: "height in cm" },
+  weight: { type: Number, required: true, remark: "weight in kg" },
+  caloriesGoal: { type: Number, default: 0, remark: "daily Calories Goal in kcal" },
+  caloriesRecommanded: { type: Number, default: 0, remark: "Recommanded daily Calories in kcal" },
+  waterGoal: { type: Number, default: 0, remark: "daily Water intake Goal in cups" },
+  createdTime:{type:Date, default:new Date()},
+  //updatedTime:{type:Date, default:new Date()},
 });
 
 export const dailyEntriesModel = mongoose.model(
@@ -76,11 +83,6 @@ export const dailyEntriesModel = mongoose.model(
 export const userEntriesModel = mongoose.model(
   userName,
   userSchema,
-)
-
-export const foodEntriesModel = mongoose.model(
-  foodName,
-  foodItemsSchema,
 )
 
 export { todayMidnight };
