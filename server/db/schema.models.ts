@@ -15,7 +15,7 @@ const foodItemsSchema = new mongoose.Schema(
     // createTime:{type:Date, default:new Date()},
     // updateTime:{type:Date, default:new Date()},
   },
-  { _id: false }
+
 );
 
 const dailyEntriesSchema = new mongoose.Schema({
@@ -71,5 +71,5 @@ export const userEntriesModel = mongoose.model(
 
 export const foodEntriesModel = mongoose.model(
   foodName,
-  userSchema,
+  foodItemsSchema,
 )

@@ -1,0 +1,21 @@
+.tab_wrap {
+  display: flex;
+  justify-content: center;
+  .tab {
+    display: flex;
+
+    padding: 4px;
+    background-color: #ebebeb;
+    border-radius: 22px;
+
+    .tab_item {
+      padding: 8px 16px;
+    }
+
+    .active {
+      background-color: #fff;
+      border-radius: 22px;
+      font-weight: 600;
+    }
+  }
+}
