@@ -28,7 +28,7 @@ export default function App() {
 
   /********************* State Hooks At App Level ******************/
 
-  const [dailyData, setDailyData] = useState(() => undefined);
+  const [dailyData, setDailyData] = useState(async () => undefined);
   const [activeIndex, setActiveIndex] = useState("daliy");
 
   /*****************************************************************/

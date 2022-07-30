@@ -74,7 +74,7 @@ app.get('/api/daily', async (req, res) => {
     // user_id: String, // Will need to be given the user_id by authentication middleware
   }
   try {
-    let result = await dailyEntriesModel.findOne(query);
+    let result = await dailyEntriesModel.findOne(query).sort({ _id: -1 });
     res.status(200);
     res.send(result);
   } catch (err) {

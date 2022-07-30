@@ -25,22 +25,25 @@ export default function CalorieBar(props: IProps) {
   let padding2 = Math.abs(point.goal - point.value);
   const dataPoint = {
     value,
-    padding1: (padding1 - spacer/2),
-    padding2: (padding2 - spacer/2),
+    padding1: (padding1 - spacer / 2),
+    padding2: (padding2 - spacer / 2),
     over,
     spacer,
+    valColor: over ? medColor : goodColor,
+    pad2Color: over ? badColor : nonColor,
+    max: Math.max(point.value, point.goal),
   }
-  console.log(dataPoint)
+  console.log(dataPoint);
   return (
     <ResponsiveContainer width="100%" height="100%">
-      <BarChart layout='vertical' data={[dataPoint]} barCategoryGap={1}>
+      <BarChart layout='vertical' data={[dataPoint]}>
         <XAxis type='number'
-          domain={[0, Math.max(point.value, point.goal)]}
+          domain={[0, dataPoint.max]}
           interval='preserveStartEnd'
           allowDataOverflow={true} />
         <YAxis type='category' hide />
         <Bar dataKey="value"
-          fill={dataPoint.over ? medColor : goodColor}
+          fill={dataPoint.valColor}
           stackId='a' />
         <Bar dataKey="padding1"
           fill={nonColor}
@@ -49,9 +52,8 @@ export default function CalorieBar(props: IProps) {
           fill={spacerColor}
           stackId='a' />
         <Bar dataKey="padding2"
-          fill={dataPoint.over ? badColor : nonColor}
-          stackId='a'
-        />
+          fill={dataPoint.pad2Color}
+          stackId='a' />
       </BarChart>
     </ResponsiveContainer>
   );
