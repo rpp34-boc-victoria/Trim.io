@@ -1,3 +1,4 @@
+import { startSchedule } from './scheduleNotification';
 import express from "express";
 import path from "path";
 import dbConnection from "./db/connect"
@@ -9,6 +10,7 @@ import {
   todayMidnight,
 } from "./db/schema.models";
 import dayjs from "dayjs";
+
 import cors from "cors";
 
 dotenv.config();
@@ -37,6 +39,23 @@ app.use(express.static(path.join(__dirname, "../client/build")));
 
 /**************** Utility Functions *************************/
 
+
+
+app.get("/api/hello", (req, res) => {
+  res.send({ message: "Hello" });
+});
+
+app.post('/notifications/subscribe', (req, res) => {
+  const subscription = req.body
+
+  console.log('SUB', subscription)
+  // add subscrition to database
+  res.status(200).json({'success': true})
+});
+
+app.get("/", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+});
 
 /*************** HISTORY / WEEKLY ROUTES ********************/
 
