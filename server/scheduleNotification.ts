@@ -11,8 +11,8 @@ export function startSchedule() {
   const job = schedule.scheduleJob('* * * * *', async () => {
 
     const payload = JSON.stringify({
-      title: 'Hello!',
-      description: 'Test noti',
+      title: 'Different',
+      description: 'Big Diff',
     })
 
     const sub = {
