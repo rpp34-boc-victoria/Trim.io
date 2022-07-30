@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
 import ProTip from "./ProTip";
 import Weekly from "./history/Weekly";
-
+import UserReg from './UserProfileComponents/userRegistration';
 import './App.scss'
 
 function Copyright() {
@@ -35,21 +35,20 @@ export default function App() {
         </Typography>
         <ProTip />
         {/* <History /> */}
+        <UserReg />
         <Box className="history">
           <Box className="tab_wrap">
             <Box className="tab">
               <Typography
-                className={`tab_item ${
-                  activeIndex === "daliy" ? "active" : ""
-                }`}
+                className={`tab_item ${activeIndex === "daliy" ? "active" : ""
+                  }`}
                 onClick={() => handleChangeTab("daliy")}
               >
                 Daliy
               </Typography>
               <Typography
-                className={`tab_item ${
-                  activeIndex === "weekly" ? "active" : ""
-                }`}
+                className={`tab_item ${activeIndex === "weekly" ? "active" : ""
+                  }`}
                 onClick={() => handleChangeTab("weekly")}
               >
                 Weekly

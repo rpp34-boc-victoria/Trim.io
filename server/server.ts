@@ -97,7 +97,6 @@ app.get("/api/register", (req, res) => {
   res.send({ message: "Hello" });
 });
 
-
 app.get("/api/generateDaily",(req, res) => {
   for (let i = 0; i < 100; i++) {
     let daily = {
@@ -118,3 +117,31 @@ app.listen(PORT, () => {
 });
 
 startSchedule();
+
+//Below is a post request for the users to register
+app.post("/api/register", async (req, res) => {
+  //console.log('req here:!!', req.body);
+  let userData = req.body;
+  userData.caloriesRecommanded = "2000";
+  let userReg = new userEntriesModel({
+    firstName: userData.firstName,
+    lastName: userData.lastName,
+    age: +userData.age,
+    gender: userData.gender.value,
+    email: userData.email,
+    phoneNumber: +userData.phoneNumber,
+    height: +userData.height,
+    weight: +userData.weight,
+    caloriesGoal: +userData.targetCalories,
+    caloriesRecommanded: +userData.caloriesRecommanded,
+    waterGoal: +userData.targetWater,
+    createdTime: new Date(),
+  });
+  try {
+    await userReg.save();
+    res.sendStatus(201);
+  } catch (err) {
+    res.status(501);
+    res.send(err);
+  }
+});
