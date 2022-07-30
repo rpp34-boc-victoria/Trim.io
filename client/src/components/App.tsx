@@ -15,7 +15,7 @@ function Copyright() {
     <Typography variant="body2" color="text.secondary" align="center">
       {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        Trim.io
       </Link>{" "}
       {new Date().getFullYear()}.
     </Typography>
@@ -50,7 +50,8 @@ export default function App() {
   return (
     <Container maxWidth="sm">
       <Box sx={{ my: 4 }}>
-        <Typography variant="h3" component="h1" gutterBottom align="center">
+        <Typography variant="h3" component="h1"
+          gutterBottom align="center" font-weight="bold">
           Trim.io
         </Typography>
         {/* <ProTip /> */}
