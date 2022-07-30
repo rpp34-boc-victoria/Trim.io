@@ -56,12 +56,13 @@ const userSchema = new mongoose.Schema({
     remark: 'F is female, M is male, N is non-binary'
   },
   email: { type: String, required: true },
+  phoneNumber: { type: Number, required: true },
   height: { type: Number, required: true, remark: "height in cm" },
   weight: { type: Number, required: true, remark: "weight in kg" },
   caloriesGoal: { type: Number, default: 0, remark: "daily Calories Goal in kcal" },
   waterGoal: { type: Number, default: 0, remark: "daily Water intake Goal in cups" },
-  // createdTime:{type:Date, default:new Date()},
-  // updatedTime:{type:Date, default:new Date()},
+  createdTime:{type:Date, default:new Date()},
+  updatedTime:{type:Date, default:new Date()},
 });
 
 export const dailyEntriesModel = mongoose.model(

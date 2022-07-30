@@ -120,12 +120,23 @@ startSchedule();
 
 //Below is a post request for the users to register
 app.post("/api/register", (req, res) => {
-  let daily = new dailyEntriesModel({
-    user_id: "62da35785754355239a691f3",
-
+  //console.log('req here:!!', req.body);
+  let userData = req.body;
+  let userReg = new userEntriesModel({
+    firstName: userData.firstName,
+    lastName: userData.lastName,
+    age: +userData.age,
+    gender: userData.gender.value,
+    email: userData.email,
+    phoneNumber: +userData.phoneNumber,
+    height: +userData.height,
+    weight: +userData.weight,
+    caloriesGoal: +userData.targetCalories,
+    waterGoal: +userData.targetWater,
+    createdTime: new Date(),
+    updatedTime:"",
   });
-  //daily.save();
-  //res.send('posted');
+  //userReg.save();
   res.send({
     code: 200,
     essmsg: "user successfully post a request"
