@@ -6,10 +6,11 @@ import {
   userEntriesModel,
   dailyEntriesModel,
   foodEntriesModel,
+  todayMidnight,
 } from "./db/schema.models";
 import dayjs from "dayjs";
 import cors from "cors";
-import { METHODS } from "http";
+
 dotenv.config();
 const PORT = process.env.PORT || 8000;
 dbConnection();
@@ -34,6 +35,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "../client/build")));
 
+/**************** Utility Functions *************************/
+
+
 /*************** HISTORY / WEEKLY ROUTES ********************/
 
 app.get("/api/getWeekly", async (req, res) => {
@@ -47,7 +51,7 @@ app.get("/api/getWeekly", async (req, res) => {
   };
 
   try {
-    const results = await dailyEntriesModel.find(query).limit(7).sort({_id: -1});
+    const results = await dailyEntriesModel.find(query).limit(7).sort({ _id: -1 });
     if (results.length >= 1) {
       res.status(200);
       res.send(results);
@@ -65,11 +69,9 @@ app.get("/api/getWeekly", async (req, res) => {
 /******************** Daily Get Route ***********************/
 
 app.get('/api/daily', async (req, res) => {
-  let today = new Date();
-  today.setHours(0, 0, 0, 0);
   let query = {
-    entryDate: { $gte: today },
-    // user_id: {}, // Will need to be given the user_id by authentication middleware
+    entryDate: { $gte: todayMidnight() },
+    // user_id: String, // Will need to be given the user_id by authentication middleware
   }
   try {
     let result = await dailyEntriesModel.find(query).limit(1);
@@ -83,7 +85,7 @@ app.get('/api/daily', async (req, res) => {
 
 app.get('/api/latestEntry', async (req, res) => {
   let query = {
-    // user_id: {}, // Will need to be given the user_id by authentication middleware
+    // user_id: String, // Will need to be given the user_id by authentication middleware
   }
   try {
     let result = await dailyEntriesModel.find(query).sort({ _id: -1 }).limit(1);
@@ -95,8 +97,33 @@ app.get('/api/latestEntry', async (req, res) => {
   }
 });
 
-app.get("/api/generateDaily", async (req, res) => {
+app.post('/api/daily', async (req, res) => {
+  let query = {
+    entryDate: { $gte: todayMidnight() },
+    // user_id: String, // Will need to be given the user_id by authentication middleware
+  }
+  let payload = req.body;
+  try {
+    let result = await dailyEntriesModel.findOneAndUpdate(
+      query,
+      payload,
+      {
+        upsert: true,
+        new: true
+      });
+    res.status(200);
+    res.send(result);
+  } catch (err) {
+    res.status(500);
+    res.send(err);
+  }
+});
 
+app.get("/api/generateDaily", async (req, res) => {
+  console.log('/api/generateDaily [params]: ', req.params)
+  /**
+   * Do something with req.params to configure advanced Data Generation
+   */
   let foodItems = []
   for (let i = 0; i < 5; i++) {
     foodItems.push(
@@ -121,7 +148,7 @@ app.get("/api/generateDaily", async (req, res) => {
     var daily = {
       user_id: "62e0ed5f9c63f6892fcbaa68",
       foodItems,
-      entryDate: dayjs().subtract(i, "day").toISOString(),
+      entryDate: dayjs().startOf('day').subtract(i, "day").toISOString(),
       waterAmount: Math.floor(Math.random() * 10),
       weightAmount: Math.floor(Math.random() * (150 - 40) + 40),
       caloriesAmount: Math.floor(Math.random() * (2200 - 3) + 3),
@@ -147,7 +174,7 @@ app.get("/api/register", (req, res) => {
     weight: 60,
     firstName: "Spruce",
     lastName: "Ya",
-    age:20,
+    age: 20,
     caloriesGoal: 1500,
     waterGoal: 7,
     gender: 1

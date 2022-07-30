@@ -19,3 +19,27 @@ export const apiPost = async (path: string, data: any = {}) => {
     throw new Error("data query failure");
   }
 };
+
+/**
+ * Gets the Daily Entry for Today. If none exits, it will create one.
+ * @returns daily entry object
+ */
+export const getDaily = async () => {
+  try {
+    let result = await axios.get('/api/daily');
+    console.log('first try data:', result.data);
+    if (result.data.length < 1) {
+      result = await axios.get('/api/latestEntry');
+      let entry = {
+        weight: result.data[0].weightAmount
+      };
+      result = await axios.post('api/daily',{
+        data: entry,
+      });
+    }
+    console.log('Returning Data', result.data[0]);
+    return result.data[0];
+  } catch (error: any) {
+    throw new Error(error.mesage);
+  }
+}

@@ -1,12 +1,14 @@
-import * as React from "react";
+import React, { useState } from "react";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
 import ProTip from "./ProTip";
 import Weekly from "./history/Weekly";
+import { getDaily } from '../api';
+import Daily from "./dashboard/Daily";
+import './App.scss';
 
-import './App.scss'
 
 function Copyright() {
   return (
@@ -20,12 +22,30 @@ function Copyright() {
   );
 }
 
+
+
 export default function App() {
-  const [activeIndex, setActiveIndex] = React.useState("daliy");
+
+  /********************* State Hooks At App Level ******************/
+
+  const [dailyData, setDailyData] = useState(() => {})
+  const [activeIndex, setActiveIndex] = useState("daliy");
+
+  /*****************************************************************/
 
   const handleChangeTab = (type: string) => {
     setActiveIndex(type);
   };
+
+  async function handleDailyUpdate() {
+    try {
+      let data = await getDaily();
+      setDailyData(data);
+    } catch (err: any) {
+      throw new Error(err.message);
+    }
+  }
+
 
   return (
     <Container maxWidth="sm">
@@ -39,24 +59,25 @@ export default function App() {
           <Box className="tab_wrap">
             <Box className="tab">
               <Typography
-                className={`tab_item ${
-                  activeIndex === "daliy" ? "active" : ""
-                }`}
+                className={`tab_item ${activeIndex === "daliy" ? "active" : ""
+                  }`}
                 onClick={() => handleChangeTab("daliy")}
               >
                 Daliy
               </Typography>
               <Typography
-                className={`tab_item ${
-                  activeIndex === "weekly" ? "active" : ""
-                }`}
+                className={`tab_item ${activeIndex === "weekly" ? "active" : ""
+                  }`}
                 onClick={() => handleChangeTab("weekly")}
               >
                 Weekly
               </Typography>
             </Box>
           </Box>
-          {activeIndex === "daliy" ? <Box /> : <Weekly />}
+          {activeIndex === "daliy" ?
+            <Daily dailyData={dailyData} handleDailyUpdate={handleDailyUpdate} /> :
+            <Weekly />
+          }
         </Box>
         <Copyright />
       </Box>
