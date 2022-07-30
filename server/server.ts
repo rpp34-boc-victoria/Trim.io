@@ -137,7 +137,7 @@ app.post("/api/register", (req, res) => {
     caloriesGoal: +userData.targetCalories,
     waterGoal: +userData.targetWater,
     createdTime: new Date(),
-    updatedTime:"",
+    updatedTime:{},
   });
   //userReg.save();
   res.send({
