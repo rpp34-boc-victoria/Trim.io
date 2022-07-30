@@ -22,14 +22,14 @@ export default function UserRegistration() {
   const { control, handleSubmit } = useForm<IFormInput>();
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    console.log(data);
+    //console.log(data);
     apiPost("/api/register", data).then((res) => {
-      console.log("user successfully posted something, :", res);
+      //console.log("user successfully posted something, :", res);
     });
   };
 
   return (
-    <Box className="hi">
+    <Box className="signUpForm">
       <Typography variant="h4">SIGN UP</Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Typography>
@@ -56,6 +56,7 @@ export default function UserRegistration() {
         <Controller
           name="age"
           control={control}
+          defaultValue={0}
           render={({ field }) => <Input {...field} />}
         />
         <Typography>
@@ -64,6 +65,7 @@ export default function UserRegistration() {
         <Controller
           name="gender"
           control={control}
+          defaultValue={ {value: "", label: "" } }
           render={({ field }) => (
             <Select
               {...field}
@@ -90,6 +92,7 @@ export default function UserRegistration() {
         <Controller
           name="phoneNumber"
           control={control}
+          defaultValue={0}
           render={({ field }) => <Input {...field} />}
         />
         <Typography>
@@ -98,6 +101,7 @@ export default function UserRegistration() {
         <Controller
           name="height"
           control={control}
+          defaultValue={0}
           render={({ field }) => <Input {...field} />}
         />
         <Typography>
@@ -106,6 +110,7 @@ export default function UserRegistration() {
         <Controller
           name="weight"
           control={control}
+          defaultValue={0}
           render={({ field }) => <Input {...field} />}
         />
         <Typography>
@@ -114,6 +119,7 @@ export default function UserRegistration() {
         <Controller
           name="targetCalories"
           control={control}
+          defaultValue={0}
           render={({ field }) => <Input {...field} />}
         />
         <Typography>
@@ -122,6 +128,7 @@ export default function UserRegistration() {
         <Controller
           name="targetWater"
           control={control}
+          defaultValue={0}
           render={({ field }) => <Input {...field} />}
         />
         <input type="submit" />

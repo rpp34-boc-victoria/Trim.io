@@ -30,26 +30,25 @@ export default function App() {
   return (
     <Container maxWidth="sm">
       <Box sx={{ my: 4 }}>
-        <Typography variant="h4" component="h1" gutterBottom>
+        {/* <Typography variant="h4" component="h1" gutterBottom>
           Create React App example with TypeScript
-        </Typography>
-        <ProTip />
+        </Typography> */}
+        {/* <ProTip /> */}
         {/* <History /> */}
+        <UserReg />
         <Box className="history">
           <Box className="tab_wrap">
             <Box className="tab">
               <Typography
-                className={`tab_item ${
-                  activeIndex === "daliy" ? "active" : ""
-                }`}
+                className={`tab_item ${activeIndex === "daliy" ? "active" : ""
+                  }`}
                 onClick={() => handleChangeTab("daliy")}
               >
                 Daliy
               </Typography>
               <Typography
-                className={`tab_item ${
-                  activeIndex === "weekly" ? "active" : ""
-                }`}
+                className={`tab_item ${activeIndex === "weekly" ? "active" : ""
+                  }`}
                 onClick={() => handleChangeTab("weekly")}
               >
                 Weekly
@@ -58,7 +57,6 @@ export default function App() {
           </Box>
           {activeIndex === "daliy" ? <Box /> : <Weekly />}
         </Box>
-        <UserReg />
         <Copyright />
       </Box>
     </Container>
