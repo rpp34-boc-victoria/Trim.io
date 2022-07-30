@@ -11,6 +11,7 @@ import {
 import dayjs from "dayjs";
 
 import cors from "cors";
+import { LEGAL_TCP_SOCKET_OPTIONS } from 'mongodb';
 
 dotenv.config();
 const PORT = process.env.PORT || 8000;
@@ -70,11 +71,11 @@ app.get("/api/getWeekly", async (req, res) => {
   };
 
   try {
-    const results = await dailyEntriesModel.find(query).limit(7).sort({ _id: -1 });
+    let results = await dailyEntriesModel.find(query).limit(7).sort({ _id: -1 });
     if (results.length >= 1) {
+      results.reverse();
       res.status(200);
       res.send(results);
-
     }
     else {
       throw new Error('data query failure')
