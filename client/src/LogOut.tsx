@@ -7,17 +7,17 @@ export interface inputData {
 export default function LogOut (props: any) {
 
   function handleLogOut (e: any) {
-    // e.preventDefault();
     props.onSubmit({
       login: false,
       username: '',
       userId: ''
     })
+    props.onClick();
   }
 
 return (
   <div>
-    <button onClick={handleLogOut}>Log Out</button>
+    <button onClick={handleLogOut}> Log Out</button>
   </div>
 )
 }

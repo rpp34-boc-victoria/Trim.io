@@ -18,7 +18,7 @@ const [login, updateLogin] = useState <inputData> ({
   username: '',
   userId: ''
 })
-const [loginOrCreateNewUser, setloginOrCreateNewUser] = useState <string> ('n/a');
+const [loginOrCreateNewUser, setloginOrCreateNewUser] = useState <string> ('notLoggedIn');
 
   function handleUpdate (data: any) {
     console.log(data)
@@ -30,11 +30,16 @@ const [loginOrCreateNewUser, setloginOrCreateNewUser] = useState <string> ('n/a'
   }
 
   function handleClick (e : any) {
+    console.log(e)
     setloginOrCreateNewUser(e.target.name)
   }
 
+  function handleLogOut () {
+    setloginOrCreateNewUser('notLoggedIn')
+  }
+
   if (!login.loggedIn) {
-    if (loginOrCreateNewUser === 'n/a') {
+    if (loginOrCreateNewUser === 'notLoggedIn') {
       return (
         <div>
           <button onClick={handleClick} name='login'>Let Me LogIn!</button>
@@ -59,7 +64,7 @@ const [loginOrCreateNewUser, setloginOrCreateNewUser] = useState <string> ('n/a'
     return (
       <div>
         <App data={login}/>
-        <LogOut onSubmit = {handleUpdate}/>
+        <LogOut onSubmit = {handleUpdate} onClick={handleLogOut}/>
       </div>
     )
   }
