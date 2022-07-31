@@ -18,6 +18,8 @@ const [login, updateLogin] = useState <inputData> ({
   username: '',
   userId: ''
 })
+const [loginOrCreateNewUser, setloginOrCreateNewUser] = useState <string> ('n/a');
+
   function handleUpdate (data: any) {
     console.log(data)
     updateLogin({
@@ -27,15 +29,32 @@ const [login, updateLogin] = useState <inputData> ({
     })
   }
 
+  function handleClick (e : any) {
+    setloginOrCreateNewUser(e.target.name)
+  }
+
   if (!login.loggedIn) {
-    return (
-      <div>
+    if (loginOrCreateNewUser === 'n/a') {
+      return (
+        <div>
+          <button onClick={handleClick} name='login'>Let Me LogIn!</button>
+          <button onClick={handleClick} name='newAccount'>Let Me Create an Account!</button>
+        </div>
+      )
+    } else {
+    return (loginOrCreateNewUser !== 'login') ?
+      (<div>
         SignUp
         <SignUp onSubmit = {handleUpdate} />
+      </div>
+      ) :
+      (
+      <div>
         Login
         <Login onSubmit = {handleUpdate}/>
       </div>
-    )
+      )
+    }
   } else {
     return (
       <div>

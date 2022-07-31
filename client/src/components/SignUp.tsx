@@ -85,31 +85,29 @@ export default function SignUp(props: any) {
   }
 
   return (
-    <div>
-      <form >
-        <label>
-          <input type='text' name='username' placeholder='Login' onChange={inputsHandler} value={inputField.username}></input>
-        {(!usedUsername) ?
-        (null) :
-        (<div>InValid UserName!</div>)
-        }
-        </label>
-        <br></br>
-        <label>
-          <input type='text' name='email' placeholder='E-mail' onChange={inputsHandler} value={inputField.email}></input>
-        </label>
-        <br></br>
-        <label>
-          <input type='text' name='password' placeholder='Password' onChange={inputsHandler} value={inputField.password}></input>
-        </label>
-        <br></br>
-        <label>
-          <input type='text' name='confirmPassword' placeholder='confirmPassword' onChange={inputsHandler} value={inputField.confirmPassword}></input>
-          {(matchingPasswords) ? null : (<div> Your Passwords Don't Match!</div>)}
-        </label>
-        <button onClick={handleSubmit}>Subimt</button>
-      </form>
-    </div>
+    <form >
+      <label>
+        <input type='text' name='username' placeholder='Login' onChange={inputsHandler} value={inputField.username}></input>
+      {(!usedUsername) ?
+      (null) :
+      (<div>InValid UserName!</div>)
+      }
+      </label>
+      <br></br>
+      <label>
+        <input type='text' name='email' placeholder='E-mail' onChange={inputsHandler} value={inputField.email}></input>
+      </label>
+      <br></br>
+      <label>
+        <input type='text' name='password' placeholder='Password' onChange={inputsHandler} value={inputField.password}></input>
+      </label>
+      <br></br>
+      <label>
+        <input type='text' name='confirmPassword' placeholder='confirmPassword' onChange={inputsHandler} value={inputField.confirmPassword}></input>
+        {(matchingPasswords) ? null : (<div> Your Passwords Don't Match!</div>)}
+      </label>
+      <button onClick={handleSubmit}>Subimt</button>
+    </form>
   )
 
 
