@@ -1,15 +1,17 @@
 import { sha512 } from 'js-sha512';
 import React, {useState} from 'react';
+import axios from 'axios';
 
 export interface inputData {
-  username: string | any;
-  email: string | any;
-  password: string | any;
+  username: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
 }
 
 export interface setInputField {
-  password: any;
-  username: any;
+  password: string;
+  username: string;
   type: object;
 }
 
@@ -19,17 +21,29 @@ export default function SignUp() {
     username: '',
     email: '',
     password: '',
+    confirmPassword: ''
   })
 
   const inputsHandler = (e: any) => {
-    const input : string = e.target.value;
-    const pass : string = e.target.name;
-    console.log(input, pass)
     setInputField( {[e.target.name]: e.target.value} )
   }
 
   const handleSubmit = (e: any) => {
     e.preventDefault()
+
+    // Check if user exists
+    axios.post('/auth/checkUser', {
+      'username': inputField.username
+    })
+    .then ((result) => {
+      if (result.data.length >= 1) {
+        //Show failed Message
+      } else {
+        // const salt =
+      }
+    })
+
+
     let salt : number = Date.now();
     var hashedFunction : string = sha512(inputField.password + salt);
     console.log(hashedFunction)
@@ -44,7 +58,15 @@ export default function SignUp() {
         </label>
         <br></br>
         <label>
+          <input type='text' name='email' placeholder='E-mail' onChange={inputsHandler} value={inputField?.email}></input>
+        </label>
+        <br></br>
+        <label>
           <input type='text' name='password' placeholder='Password' onChange={inputsHandler} value={inputField?.password}></input>
+        </label>
+        <br></br>
+        <label>
+          <input type='text' name='confirmPassword' placeholder='confirmPassword' onChange={inputsHandler} value={inputField?.confirmPassword}></input>
         </label>
         <button onClick={handleSubmit}>Subimt</button>
       </form>

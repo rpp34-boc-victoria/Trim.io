@@ -1,5 +1,6 @@
-// import { sha512 } from 'js-sha512';
+import { sha512 } from 'js-sha512';
 import React, {useState} from 'react';
+import axios from 'axios';
 
 export interface inputData {
   username: string | any;
@@ -15,7 +16,7 @@ export interface setInputField {
 
 export default function Login() {
 
-  const [inputField , setInputField] = useState<inputData | any> ({
+  const [inputField , setInputField] = useState <inputData | any> ({
     username: '',
     password: '',
   })
@@ -26,18 +27,37 @@ export default function Login() {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    console.log(inputField.username)
-    const response = fetch('/auth/login', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body : JSON.stringify({username: inputField.username})
+    console.log(inputField.username, 'test')
+    axios.post('/auth/login', {
+      'username': inputField.username
     })
-    .then(() => {
-      console.log('First Round')
+    .then((result) => {
+      if (result.data.length === 0) {
+        console.log('Failed during the .length')
+      } else {
+        const salt = result.data[0]['salt'];
+        const hashpass = result.data[0]['hashpass'];
+        const username = result.data[0]['username'];
+        const _id = result.data[0]['_id'];
+
+        // console.log(salt, hashpass, username, _id);
+        // const toHashPass = result.data.salt + inputField.password;
+        const toHashPass2 = inputField.password;
+        const hashedPass = sha512(toHashPass2);
+        console.log(hashedPass)
+        if (hashpass === hashedPass) {
+          console.log("SUCCESSFUL LOGIN")
+        } else {
+          // Try again
+          console.log('Failed during the try again 2')
+        }
+      }
     })
+    // .catch((error) => {
+    //   console.log('Error in the Catch Block of handleSubmit in Login.tsx')
+    // })
+
+    // console.log(response, 'response')
 
     // console.log(inputField.username)
     // call to the database for the salt

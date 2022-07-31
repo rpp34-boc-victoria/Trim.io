@@ -6,6 +6,7 @@ import {
   userEntriesModel,
   dailyEntriesModel,
   foodEntriesModel,
+  authModel
 } from "./db/schema.models";
 import db from "../server/db/connect";
 import dayjs from "dayjs";
@@ -13,6 +14,7 @@ import cors from 'cors';
 dotenv.config();
 // var bodyParser = require('body-parser');
 import bodyParser from "body-parser";
+import { resolveAny } from "dns";
 
 const PORT = process.env.PORT || 8000;
 
@@ -80,10 +82,50 @@ app.get("/api/register", (req, res) => {
   res.send({ message: "Hello" });
 });
 
-app.post("/auth/login", (req, res) => {
+app.post("/auth/login", async (req, res) => {
+  // const data = null;
+
   let username = req.body.username;
+  console.log(username, 'usernaem')
+  const query = {
+    username: username
+  };
+  authModel.find(query, (error, result) => {
+    if (error) res.send('Failed');
+    res.send(result);
+  })
+})
 
+app.post("/auth/checkUser", async (req, res) => {
+  // const data = null;
 
+  let username = req.body.username;
+  const query = {
+    username: username
+  };
+  authModel.find(query, (error, result) => {
+    if (error) res.send('Failed');
+    res.send(result);
+  })
+})
 
-  res.sendStatus(200)
-});
+// //     getAll(query, function(error, data) {
+// //       if (error) {
+// //         res.send(error);
+// //       } else {
+// //         res.send(data);
+// //       }
+// //     })
+// });
+
+// let getAll = (query, callback) => {
+//   authModel.find(query)
+//   .then((data) => {
+//     console.log(data)
+//     callback(null, data);
+//   })
+//   .catch((error) => {
+//     callback(error, null);
+//   })
+// }
+

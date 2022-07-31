@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/rpp34-boc-victoria/Trim.io#readme",
   "dependencies": {
+    "axios": "^0.27.2",
     "body-parser": "^1.20.0",
     "cors": "^2.8.5",
     "dayjs": "^1.11.4",
