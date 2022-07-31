@@ -39,7 +39,7 @@ const [login, updateLogin] = useState <inputData> ({
   } else {
     return (
       <div>
-        <App />
+        <App data={login}/>
         <LogOut onSubmit = {handleUpdate}/>
       </div>
     )

@@ -24,12 +24,15 @@ function Copyright() {
 
 
 
-export default function App() {
+export default function App(props: any) {
 
   /********************* State Hooks At App Level ******************/
 
   const [dailyData, setDailyData] = useState(async () => undefined);
   const [activeIndex, setActiveIndex] = useState("daliy");
+  // const [username, userId] = [...props.data];
+  const username = props.data.username;
+  const userId = props.data.userId;
 
   /*****************************************************************/
 

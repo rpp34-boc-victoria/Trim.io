@@ -43,8 +43,8 @@ export default function SignUp(props: any) {
         axios.post('/auth/CreateUser', {
           hashedFunction: hashedFunction,
           salt: salt,
-          username: 'test',
-          email: 'test@gmail.com'
+          username: inputField.username,
+          email: inputField.email
         })
         .then((result) => {
           const sendData = {
