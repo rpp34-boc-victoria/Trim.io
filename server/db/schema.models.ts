@@ -78,6 +78,7 @@ export const foodEntriesModel = mongoose.model(
 const authSchema = new mongoose.Schema({
   username: { type: String, required: true },
   salt: { type: Number, required: true },
+  email: { type: String, required: true },
   hashpass: { type: String, required: true }
 });
 

@@ -29,8 +29,7 @@ export default function SignUp() {
   }
 
   const handleSubmit = (e: any) => {
-    e.preventDefault()
-
+    console.log('test')
     // Check if user exists
     axios.post('/auth/checkUser', {
       'username': inputField.username
@@ -39,15 +38,22 @@ export default function SignUp() {
       if (result.data.length >= 1) {
         //Show failed Message
       } else {
-        // const salt =
+        console.log('got here')
+        let salt : number = Date.now();
+        var hashedFunction : string = sha512('password' + salt.toString());
+        axios.post('/auth/CreateUser', {
+          hashedFunction: hashedFunction,
+          salt: salt,
+          username: 'test',
+          email: 'test@gmail.com'
+        })
+        .then((data) => {
+          //Do something
+          console.log(data)
+        })
       }
     })
-
-
-    let salt : number = Date.now();
-    var hashedFunction : string = sha512(inputField.password + salt);
-    console.log(hashedFunction)
-
+    e.preventDefault()
   }
 
   return (

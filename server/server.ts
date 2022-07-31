@@ -96,7 +96,7 @@ app.post("/auth/login", async (req, res) => {
   })
 })
 
-app.post("/auth/checkUser", async (req, res) => {
+app.post("/auth/checkUser", (req, res) => {
   // const data = null;
 
   let username = req.body.username;
@@ -109,23 +109,25 @@ app.post("/auth/checkUser", async (req, res) => {
   })
 })
 
-// //     getAll(query, function(error, data) {
-// //       if (error) {
-// //         res.send(error);
-// //       } else {
-// //         res.send(data);
-// //       }
-// //     })
-// });
+app.post("/auth/CreateUser", (req, res) => {
+  // const data = null;
+  console.log(req.body)
 
-// let getAll = (query, callback) => {
-//   authModel.find(query)
-//   .then((data) => {
-//     console.log(data)
-//     callback(null, data);
-//   })
-//   .catch((error) => {
-//     callback(error, null);
-//   })
-// }
+  let username = req.body.username;
+  let email = req.body.email;
+  let hashedFunction = req.body.hashedFunction;
+  let salt = req.body.salt;
+  console.log(username, salt, hashedFunction, email)
+  const query = {
+    username: username,
+    email: email,
+    salt: salt,
+    hashpass: hashedFunction
+  };
 
+  const newAuthModel = new authModel (query);
+  newAuthModel.save().then((result) => {
+    res.send(result);
+  })
+
+})
