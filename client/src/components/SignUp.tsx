@@ -15,7 +15,7 @@ export interface setInputField {
   type: object;
 }
 
-export default function SignUp() {
+export default function SignUp(props: any) {
 
   const [inputField , setInputField] = useState<inputData | any> ({
     username: '',
@@ -46,9 +46,13 @@ export default function SignUp() {
           username: 'test',
           email: 'test@gmail.com'
         })
-        .then((data) => {
-          //Do something
-          console.log(data,' successful input')
+        .then((result) => {
+          const sendData = {
+            login: true,
+            username: result.data.username,
+            userId: result.data.userId,
+          }
+          props.onSubmit(sendData);
         })
       }
     })

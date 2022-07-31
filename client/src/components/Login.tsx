@@ -14,7 +14,7 @@ export interface setInputField {
   type: object;
 }
 
-export default function Login() {
+export default function Login(props : any) {
 
   const [inputField , setInputField] = useState <inputData | any> ({
     username: '',
@@ -43,30 +43,18 @@ export default function Login() {
         const hashedPass = sha512(inputField.password + salt.toString());
         console.log(hashedPass)
         if (hashpass === hashedPass) {
-          console.log("SUCCESSFUL LOGIN")
+          console.log("SUCCESSFUL LOGIN");
+          props.onSubmit({
+            username: username,
+            userId: _id,
+            login: true
+          })
         } else {
           // Try again
           console.log('Failed during the try again 2')
         }
       }
     })
-    // .catch((error) => {
-    //   console.log('Error in the Catch Block of handleSubmit in Login.tsx')
-    // })
-
-    // console.log(response, 'response')
-
-    // console.log(inputField.username)
-    // call to the database for the salt
-      // must also check that the username exists
-      //If username doesn't exist tell them to try to login again
-    //hash the password + the salt
-    //send the hashedfunction to the database
-      // if correct log them in
-      //if incorrect tell them to try again
-
-    // var hashedFunction : string = sha512(inputField.password + salt);
-    // console.log(hashedFunction)
 
   }
 

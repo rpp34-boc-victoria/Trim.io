@@ -6,24 +6,15 @@ import * as dotenv from "dotenv";
 import {
   userEntriesModel,
   dailyEntriesModel,
-<<<<<<< HEAD
-  foodEntriesModel,
-  authModel
-=======
   todayMidnight,
->>>>>>> b257c5a82667836e4d939f01ecf612f05a4bf745
+  authModel
 } from "./db/schema.models";
 import dayjs from "dayjs";
-<<<<<<< HEAD
 import cors from 'cors';
 dotenv.config();
 // var bodyParser = require('body-parser');
 import bodyParser from "body-parser";
 import { resolveAny } from "dns";
-=======
->>>>>>> b257c5a82667836e4d939f01ecf612f05a4bf745
-
-import cors from "cors";
 import { LEGAL_TCP_SOCKET_OPTIONS } from 'mongodb';
 
 dotenv.config();
@@ -220,7 +211,6 @@ app.get("/api/register", (req, res) => {
   res.send({ message: "Hello" });
 });
 
-<<<<<<< HEAD
 app.post("/auth/login", async (req, res) => {
   // const data = null;
 
@@ -270,7 +260,6 @@ app.post("/auth/CreateUser", (req, res) => {
   })
 
 })
-=======
 
 //Below is a post request for the users to register
 app.post("/api/register", async (req, res) => {
@@ -303,4 +292,3 @@ app.post("/api/register", async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
->>>>>>> b257c5a82667836e4d939f01ecf612f05a4bf745

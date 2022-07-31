@@ -86,7 +86,6 @@ export const userEntriesModel = mongoose.model(
   userSchema,
 )
 
-<<<<<<< HEAD
 export const foodEntriesModel = mongoose.model(
   foodName,
   userSchema,
@@ -103,6 +102,4 @@ export const authModel = mongoose.model(
   authName,
   authSchema,
 );
-=======
 export { todayMidnight };
->>>>>>> b257c5a82667836e4d939f01ecf612f05a4bf745
