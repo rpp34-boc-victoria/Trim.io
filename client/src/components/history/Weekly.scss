@@ -1,0 +1,16 @@
+.history {
+  display: flex;
+  flex-direction: column;
+}
+
+.weekly {
+  .chart_item {
+    .title {
+      margin: 10px 0;
+    }
+
+    .chart_wrap {
+      height: 120px;
+    }
+  }
+}

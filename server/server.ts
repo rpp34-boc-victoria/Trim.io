@@ -1,87 +1,226 @@
+import { startSchedule } from './scheduleNotification';
 import express from "express";
 import path from "path";
-// import connection from "./db/connect"
+import dbConnection from "./db/connect"
 import * as dotenv from "dotenv";
 import {
   userEntriesModel,
   dailyEntriesModel,
+<<<<<<< HEAD
   foodEntriesModel,
   authModel
+=======
+  todayMidnight,
+>>>>>>> b257c5a82667836e4d939f01ecf612f05a4bf745
 } from "./db/schema.models";
-import db from "../server/db/connect";
 import dayjs from "dayjs";
+<<<<<<< HEAD
 import cors from 'cors';
 dotenv.config();
 // var bodyParser = require('body-parser');
 import bodyParser from "body-parser";
 import { resolveAny } from "dns";
+=======
+>>>>>>> b257c5a82667836e4d939f01ecf612f05a4bf745
 
+import cors from "cors";
+import { LEGAL_TCP_SOCKET_OPTIONS } from 'mongodb';
+
+dotenv.config();
 const PORT = process.env.PORT || 8000;
+dbConnection();
+startSchedule();
+
+if (process.env.ENVIRONMENT !== 'DEV') {
+  const { exec } = require("child_process");
+  exec('sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 8000', (error, stdout, stderr) => {
+    if (error) {
+      console.log(`error: ${error.message}`);
+      return;
+    }
+    if (stderr) {
+      console.log(`stderr: ${stderr}`);
+      return;
+    }
+    console.log(`stdout: forwarding TCP port 80 to ${PORT}. ${stdout}`);
+  });
+}
 
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 app.use(express.json());
-
 app.use(express.static(path.join(__dirname, "../client/build")));
 
-db();
+/**************** Utility Functions *************************/
 
-app.listen(PORT, () => {
-  console.log(`Server listening on ${PORT}`);
-});
+
 
 app.get("/api/hello", (req, res) => {
   res.send({ message: "Hello" });
+});
+
+app.post('/notifications/subscribe', (req, res) => {
+  const subscription = req.body
+
+  console.log('SUB', subscription)
+  // add subscrition to database
+  res.status(200).json({'success': true})
 });
 
 app.get("/", (req, res) => {
   res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
 });
 
+/*************** HISTORY / WEEKLY ROUTES ********************/
+
 app.get("/api/getWeekly", async (req, res) => {
-  // console.log(req, res)
-  console.log(1);
   const start = dayjs().subtract(7, "day");
   var query = {
     entryDate: {
       $gt: start.toISOString(),
-      $lt: new Date(new Date().toISOString()),
+      $lt: new Date(),
     },
+    // user_id: {}, // Will need to be given the user_id by authentication middleware
   };
-  // 再使用mongodb查询调用这个query作为查询条件
-  const results = await dailyEntriesModel.find(query);
-  if (results.length) {
-    res.send({
-      code: 200,
-      essmsg: "success",
-      data: results,
-    });
-  }else{
-    res.send({
-      code: 201,
-      essmsg: "data query failure",
-      data: null,
-    });
+
+  try {
+    let results = await dailyEntriesModel.find(query).limit(7).sort({ _id: -1 });
+    if (results.length >= 1) {
+      results.reverse();
+      res.status(200);
+      res.send(results);
+    }
+    else {
+      throw new Error('data query failure')
+    }
+  } catch (error) {
+    res.status(404)
+    res.send(error.message);
   }
 });
 
+/******************** Daily Get Route ***********************/
+
+app.get('/api/daily', async (req, res) => {
+  let query = {
+    entryDate: { $gte: todayMidnight() },
+    // user_id: String, // Will need to be given the user_id by authentication middleware
+  }
+  try {
+    let result = await dailyEntriesModel.findOne(query).sort({ _id: -1 });
+    res.status(200);
+    res.send(result);
+  } catch (err) {
+    res.status(500);
+    res.send(err);
+  }
+});
+
+app.get('/api/latestEntry', async (req, res) => {
+  let query = {
+    // user_id: String, // Will need to be given the user_id by authentication middleware
+  }
+  try {
+    let result = await dailyEntriesModel.findOne(query).sort({ _id: -1 });
+    res.status(200);
+    res.send(result);
+  } catch (err) {
+    res.status(500);
+    res.send(err);
+  }
+});
+
+app.post('/api/daily', async (req, res) => {
+  let query = {
+    entryDate: { $gte: todayMidnight() },
+    // user_id: String, // Will need to be given the user_id by authentication middleware
+  }
+  let payload = req.body;
+  console.log(req.body);
+  try {
+    let result = await dailyEntriesModel.findOneAndUpdate(
+      query,
+      payload,
+      {
+        upsert: true,
+        new: true
+      });
+    console.log(result);
+    res.status(200);
+    res.send(result);
+  } catch (err) {
+    res.status(500);
+    res.send(err);
+  }
+});
+
+app.get("/api/generateDaily", async (req, res) => {
+  console.log('/api/generateDaily [params]: ', req.params)
+  /**
+   * Do something with req.params to configure advanced Data Generation
+   */
+  let foodItems = []
+  for (let i = 0; i < 5; i++) {
+    foodItems.push(
+      {
+        label: 'Big Mac',
+        nutrients: {
+          "ENERC_KCAL": 257,
+          "PROCNT": 11.82,
+          "FAT": 14.96,
+          "CHOCDF": 20.08,
+          "FIBTG": 1.6
+        },
+        wholeWeight: 213,
+      }
+    );
+  }
+
+  let randData = [];
+  const numDaysAgo = 10;
+
+  for (let i = 0; i < numDaysAgo; i++) {
+    var daily = {
+      user_id: "62e0ed5f9c63f6892fcbaa68",
+      foodItems,
+      entryDate: dayjs().startOf('day').subtract(numDaysAgo - 1 - i, "day").toISOString(),
+      waterAmount: Math.floor(Math.random() * 10),
+      weightAmount: Math.floor(Math.random() * (150 - 40) + 40),
+      caloriesAmount: Math.floor(Math.random() * (2200 - 3) + 3),
+    }
+    randData.push(daily);
+  }
+
+  try {
+    await dailyEntriesModel.insertMany(randData);
+    res.status(201);
+    res.send({ message: `Generated ${numDaysAgo} random data entries!` });
+  } catch (err) {
+    console.log(err.message);
+    res.status(500);
+    res.send(err);
+  }
+})
+
+// Not sure what this is for......????
 app.get("/api/register", (req, res) => {
-  let foodItems = new foodEntriesModel({
-    label: "apply",
-    nutrients: "test",
-  });
-  let daily = new dailyEntriesModel({
-    user_id: "62da35785754355239a691f3",
-    foodItems,
-    waterAmount: 8,
-    weightAmount: 45,
-    entryDate: new Date("2022-07-18T02:34:03.326+00:00"),
-  });
-  daily.save();
+
+  let user = new userEntriesModel({
+    height: 1.7,
+    weight: 60,
+    firstName: "Spruce",
+    lastName: "Ya",
+    age: 20,
+    caloriesGoal: 1500,
+    waterGoal: 7,
+    gender: 1
+  })
+  user.save();
   res.send({ message: "Hello" });
 });
 
+<<<<<<< HEAD
 app.post("/auth/login", async (req, res) => {
   // const data = null;
 
@@ -131,3 +270,37 @@ app.post("/auth/CreateUser", (req, res) => {
   })
 
 })
+=======
+
+//Below is a post request for the users to register
+app.post("/api/register", async (req, res) => {
+  //console.log('req here:!!', req.body);
+  let userData = req.body;
+  userData.caloriesRecommanded = "2000";
+  let userReg = new userEntriesModel({
+    firstName: userData.firstName,
+    lastName: userData.lastName,
+    age: +userData.age,
+    gender: userData.gender.value,
+    email: userData.email,
+    phoneNumber: +userData.phoneNumber,
+    height: +userData.height,
+    weight: +userData.weight,
+    caloriesGoal: +userData.targetCalories,
+    caloriesRecommanded: +userData.caloriesRecommanded,
+    waterGoal: +userData.targetWater,
+    createdTime: new Date(),
+  });
+  try {
+    await userReg.save();
+    res.sendStatus(201);
+  } catch (err) {
+    res.status(501);
+    res.send(err);
+  }
+});
+
+app.listen(PORT, () => {
+  console.log(`Server listening on ${PORT}`);
+});
+>>>>>>> b257c5a82667836e4d939f01ecf612f05a4bf745

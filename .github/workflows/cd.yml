@@ -1,0 +1,40 @@
+name: CD
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  Deploy:
+    # needs: Test
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    env:
+        # PEM file need to be saved in it's entirty!
+        PRIVATE_KEY: ${{ secrets.AWS_PRIVATE_KEY }}
+        HOSTNAME : ${{ secrets.AWS_HOSTNAME }}
+        USERNAME : ${{ secrets.AWS_USERNAME }}
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Deploy in EC2
+        # NPM and Node must be installed via bianry for the npm script to work.
+        # curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+        # apt-get install -y nodejs
+        run: |
+          echo "$PRIVATE_KEY" > private_key && chmod 400 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ${USERNAME}@${HOSTNAME} '
+          cd /home/ubuntu/Trim.io
+          git checkout main
+          git fetch --all
+          git reset --hard origin/main
+          git pull origin main
+          npm run install-all
+          npm run build
+          npm run reload
+          '

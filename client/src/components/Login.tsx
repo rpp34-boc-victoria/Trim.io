@@ -22,7 +22,7 @@ export default function Login() {
   })
 
   const inputsHandler = (e: any) => {
-    setInputField( {[e.target.name]: e.target.value} )
+    setInputField( {...inputField, [e.target.name]: e.target.value} )
   }
 
   const handleSubmit = (e: any) => {
@@ -40,10 +40,7 @@ export default function Login() {
         const username = result.data[0]['username'];
         const _id = result.data[0]['_id'];
 
-        // console.log(salt, hashpass, username, _id);
-        // const toHashPass = result.data.salt + inputField.password;
-        const toHashPass2 = inputField.password;
-        const hashedPass = sha512(toHashPass2);
+        const hashedPass = sha512(inputField.password + salt.toString());
         console.log(hashedPass)
         if (hashpass === hashedPass) {
           console.log("SUCCESSFUL LOGIN")

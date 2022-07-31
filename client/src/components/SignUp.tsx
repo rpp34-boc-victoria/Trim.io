@@ -25,7 +25,7 @@ export default function SignUp() {
   })
 
   const inputsHandler = (e: any) => {
-    setInputField( {[e.target.name]: e.target.value} )
+    setInputField({...inputField, [e.target.name]: e.target.value} )
   }
 
   const handleSubmit = (e: any) => {
@@ -36,11 +36,10 @@ export default function SignUp() {
     })
     .then ((result) => {
       if (result.data.length >= 1) {
-        //Show failed Message
+        console.log("Username Already Exists")
       } else {
-        console.log('got here')
         let salt : number = Date.now();
-        var hashedFunction : string = sha512('password' + salt.toString());
+        var hashedFunction : string = sha512(inputField.password + salt.toString());
         axios.post('/auth/CreateUser', {
           hashedFunction: hashedFunction,
           salt: salt,
@@ -49,7 +48,7 @@ export default function SignUp() {
         })
         .then((data) => {
           //Do something
-          console.log(data)
+          console.log(data,' successful input')
         })
       }
     })
@@ -60,19 +59,19 @@ export default function SignUp() {
     <div>
       <form >
         <label>
-          <input type='text' name='username' placeholder='Login' onChange={inputsHandler} value={inputField?.username}></input>
+          <input type='text' name='username' placeholder='Login' onChange={inputsHandler} value={inputField.username}></input>
         </label>
         <br></br>
         <label>
-          <input type='text' name='email' placeholder='E-mail' onChange={inputsHandler} value={inputField?.email}></input>
+          <input type='text' name='email' placeholder='E-mail' onChange={inputsHandler} value={inputField.email}></input>
         </label>
         <br></br>
         <label>
-          <input type='text' name='password' placeholder='Password' onChange={inputsHandler} value={inputField?.password}></input>
+          <input type='text' name='password' placeholder='Password' onChange={inputsHandler} value={inputField.password}></input>
         </label>
         <br></br>
         <label>
-          <input type='text' name='confirmPassword' placeholder='confirmPassword' onChange={inputsHandler} value={inputField?.confirmPassword}></input>
+          <input type='text' name='confirmPassword' placeholder='confirmPassword' onChange={inputsHandler} value={inputField.confirmPassword}></input>
         </label>
         <button onClick={handleSubmit}>Subimt</button>
       </form>
