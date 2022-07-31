@@ -3,6 +3,15 @@ const dailyEntriesName = "daily_entries";
 const userName = "user_entries";
 const foodName = "food_entries";
 
+/**
+ *
+ * @returns Today's Date at Mightnight
+ */
+const todayMidnight = () => {
+  let today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return today;
+};
 
 const foodItemsSchema = new mongoose.Schema(
   {
@@ -11,11 +20,11 @@ const foodItemsSchema = new mongoose.Schema(
     wholeWeight: {
       type: Number,
       default: 100,
+      remark: 'The actual total mass of the Meal',
     },
     // createTime:{type:Date, default:new Date()},
     // updateTime:{type:Date, default:new Date()},
-  },
-
+  }
 );
 
 const dailyEntriesSchema = new mongoose.Schema({
@@ -27,7 +36,7 @@ const dailyEntriesSchema = new mongoose.Schema({
   foodItems: [foodItemsSchema],
   entryDate: {
     type: Date,
-    default: new Date(),
+    default: todayMidnight(),
     index: true,
   },
   waterAmount: {
@@ -76,7 +85,4 @@ export const userEntriesModel = mongoose.model(
   userSchema,
 )
 
-export const foodEntriesModel = mongoose.model(
-  foodName,
-  foodItemsSchema,
-)
+export { todayMidnight };
