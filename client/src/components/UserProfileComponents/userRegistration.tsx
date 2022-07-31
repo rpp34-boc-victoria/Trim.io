@@ -19,18 +19,18 @@ interface IFormInput {
 }
 
 export default function UserRegistration() {
-  // const { control, handleSubmit } = useForm<IFormInput>();
+  const { control, handleSubmit } = useForm<IFormInput>();
 
-  // const onSubmit: SubmitHandler<IFormInput> = (data) => {
-  //   //console.log(data);
-  //   apiPost("/api/register", data).then((res) => {
-  //     //console.log("user successfully posted something, :", res);
-  //   });
-  // };
+  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+    //console.log(data);
+    apiPost("/api/register", data).then((res) => {
+      //console.log("user successfully posted something, :", res);
+    });
+  };
 
   return (
     <Box className="signUpForm">
-      {/* <Typography variant="h4">SIGN UP</Typography>
+      <Typography variant="h4">SIGN UP</Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Typography>
           <sub>First Name</sub>
@@ -137,7 +137,7 @@ export default function UserRegistration() {
           render={({ field }) => <Input {...field} />}
         />
         <input type="submit" />
-      </form> */}
+      </form>
     </Box>
   );
 }
