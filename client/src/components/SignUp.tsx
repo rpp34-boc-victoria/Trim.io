@@ -1,6 +1,9 @@
 import { sha512 } from 'js-sha512';
 import React, {useState} from 'react';
 import axios from 'axios';
+import { Typography, Input, Box } from "@mui/material";
+import { Button } from '@material-ui/core';
+
 
 export interface inputData {
   username: string;
@@ -85,9 +88,11 @@ export default function SignUp(props: any) {
   }
 
   return (
+    <Box className="signUpForm">
+      <Typography variant="h4">SIGN UP</Typography>
     <form >
       <label>
-        <input type='text' name='username' placeholder='Login' onChange={inputsHandler} value={inputField.username}></input>
+        <Input type='text' name='username' placeholder='Login' onChange={inputsHandler} value={inputField.username}></Input>
       {(!usedUsername) ?
       (null) :
       (<div>InValid UserName!</div>)
@@ -95,19 +100,20 @@ export default function SignUp(props: any) {
       </label>
       <br></br>
       <label>
-        <input type='text' name='email' placeholder='E-mail' onChange={inputsHandler} value={inputField.email}></input>
+        <Input type='text' name='email' placeholder='E-mail' onChange={inputsHandler} value={inputField.email}></Input>
       </label>
       <br></br>
       <label>
-        <input type='text' name='password' placeholder='Password' onChange={inputsHandler} value={inputField.password}></input>
+        <Input type='text' name='password' placeholder='Password' onChange={inputsHandler} value={inputField.password}></Input>
       </label>
       <br></br>
       <label>
-        <input type='text' name='confirmPassword' placeholder='confirmPassword' onChange={inputsHandler} value={inputField.confirmPassword}></input>
+        <Input type='text' name='confirmPassword' placeholder='confirmPassword' onChange={inputsHandler} value={inputField.confirmPassword}></Input>
         {(matchingPasswords) ? null : (<div> Your Passwords Don't Match!</div>)}
       </label>
-      <button onClick={handleSubmit}>Subimt</button>
+      <Button onClick={handleSubmit}>Subimt</Button>
     </form>
+    </Box>
   )
 
 

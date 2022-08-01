@@ -1,3 +1,5 @@
+import Button from "@mui/material/Button";
+
 export interface inputData {
   login: boolean;
   username: string;
@@ -17,7 +19,7 @@ export default function LogOut (props: any) {
 
 return (
   <div>
-    <button onClick={handleLogOut}> Log Out</button>
+    <Button color="primary" variant="outlined" onClick={handleLogOut}>Log Out</Button>
   </div>
 )
 }

@@ -1,12 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.scss';
-// import App from './components/App';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
-// import SignUp from './components/SignUp';
 import theme from './theme';
-// import Login from './components/Login';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { subscribeUser } from './subscription';
 import LoggedInOrNot from './LoggedInOrNot';

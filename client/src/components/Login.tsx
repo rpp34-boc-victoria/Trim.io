@@ -1,6 +1,8 @@
 import { sha512 } from 'js-sha512';
 import React, {useState} from 'react';
 import axios from 'axios';
+import { Typography, Input, Box } from "@mui/material";
+import { Button } from '@material-ui/core';
 
 export interface inputData {
   username: string | any;
@@ -50,8 +52,7 @@ export default function Login(props : any) {
             login: true
           })
         } else {
-          // Try again
-          console.log('Failed during the try again 2')
+          alert('Incorrect Username or Password!')
         }
       }
     })
@@ -59,19 +60,19 @@ export default function Login(props : any) {
   }
 
   return (
-
-    <div>
-      <form >
-        <label>
-          <input type='text' name='username' placeholder='Login' onChange={inputsHandler} value={inputField?.username}></input>
-        </label>
-        <br></br>
-        <label>
-          <input type='text' name='password' placeholder='Password' onChange={inputsHandler} value={inputField?.password}></input>
-        </label>
-        <button onClick={handleSubmit}>Subimt</button>
-      </form>
-    </div>
+    <Box>
+      <Typography variant="h4">Log In</Typography>
+    <form >
+      <label>
+        <Input type='text' name='username' placeholder='Login' onChange={inputsHandler} value={inputField?.username}></Input>
+      </label>
+      <br></br>
+      <label>
+        <Input type='text' name='password' placeholder='Password' onChange={inputsHandler} value={inputField?.password}></Input>
+      </label>
+      <Button onClick={handleSubmit}>Subimt</Button>
+    </form>
+    </Box>
   )
 
 

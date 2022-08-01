@@ -4,12 +4,17 @@ import App from './components/App';
 import SignUp from './components/SignUp';
 import Login from './components/Login';
 import LogOut from './LogOut';
+import { Button } from '@material-ui/core';
+// import { centralButtons } from './index';
 
 export interface inputData {
   loggedIn: boolean;
   username: string;
   userId: string;
 }
+
+const centralButtons =  ({'width': '50%', 'transform': 'translateX(50%)'});
+const centralTitle =  ({'width': '75%', 'transform': 'translateX(55%)'})
 
 export default function LoggedInOrNot () {
 
@@ -41,21 +46,21 @@ const [loginOrCreateNewUser, setloginOrCreateNewUser] = useState <string> ('notL
   if (!login.loggedIn) {
     if (loginOrCreateNewUser === 'notLoggedIn') {
       return (
-        <div>
-          <button onClick={handleClick} name='login'>Let Me LogIn!</button>
-          <button onClick={handleClick} name='newAccount'>Let Me Create an Account!</button>
+        <div style={{'padding': '25%'}}>
+          <h1 style={centralTitle}>Trim.io</h1>
+          <Button style={centralButtons} onClick={handleClick} color="primary" variant="outlined" name='login'>Let Me LogIn!</Button>
+        <div style={{'padding': '10%'}}></div>
+          <Button style={centralButtons} onClick={handleClick} color="primary" variant="outlined" name='newAccount'>Let Me Create an Account!</Button>
         </div>
       )
     } else {
-    return (loginOrCreateNewUser !== 'login') ?
+    return (loginOrCreateNewUser === 'login') ?
       (<div>
-        SignUp
         <SignUp onSubmit = {handleUpdate} />
       </div>
       ) :
       (
       <div>
-        Login
         <Login onSubmit = {handleUpdate}/>
       </div>
       )
