@@ -5,7 +5,6 @@ import SignUp from './components/SignUp';
 import Login from './components/Login';
 import LogOut from './LogOut';
 import { Button } from '@material-ui/core';
-// import { centralButtons } from './index';
 
 export interface inputData {
   loggedIn: boolean;
@@ -35,8 +34,8 @@ const [loginOrCreateNewUser, setloginOrCreateNewUser] = useState <string> ('notL
   }
 
   function handleClick (e : any) {
-    console.log(e)
-    setloginOrCreateNewUser(e.target.name)
+    console.log(e.target.value)
+    setloginOrCreateNewUser(e.target.value)
   }
 
   function handleLogOut () {
@@ -48,13 +47,13 @@ const [loginOrCreateNewUser, setloginOrCreateNewUser] = useState <string> ('notL
       return (
         <div style={{'padding': '25%'}}>
           <h1 style={centralTitle}>Trim.io</h1>
-          <Button style={centralButtons} onClick={handleClick} color="primary" variant="outlined" name='login'>Let Me LogIn!</Button>
+          <button style={centralButtons} onClick={handleClick} value='login'>Let Me LogIn!</button>
         <div style={{'padding': '10%'}}></div>
-          <Button style={centralButtons} onClick={handleClick} color="primary" variant="outlined" name='newAccount'>Let Me Create an Account!</Button>
+          <button style={centralButtons} onClick={handleClick} value='newAccount'>Let Me Create an Account!</button>
         </div>
       )
     } else {
-    return (loginOrCreateNewUser === 'login') ?
+    return (loginOrCreateNewUser !== 'login') ?
       (<div>
         <SignUp onSubmit = {handleUpdate} />
       </div>

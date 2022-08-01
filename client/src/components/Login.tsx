@@ -1,8 +1,8 @@
 import { sha512 } from 'js-sha512';
 import React, {useState} from 'react';
 import axios from 'axios';
-import { Typography, Input, Box } from "@mui/material";
-import { Button } from '@material-ui/core';
+import { Typography, Input, Box, Button } from "@mui/material";
+// import { Button } from '@material-ui/core';
 
 export interface inputData {
   username: string | any;
@@ -45,7 +45,6 @@ export default function Login(props : any) {
         const hashedPass = sha512(inputField.password + salt.toString());
         console.log(hashedPass)
         if (hashpass === hashedPass) {
-          console.log("SUCCESSFUL LOGIN");
           props.onSubmit({
             username: username,
             userId: _id,
