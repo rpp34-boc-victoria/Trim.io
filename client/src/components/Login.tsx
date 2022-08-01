@@ -26,6 +26,8 @@ export default function Login(props : any) {
   const inputsHandler = (e: any) => {
     setInputField( {...inputField, [e.target.name]: e.target.value} )
   }
+  const [eyeVisible, updateEye] = useState<string>('bi bi-eye-slash');
+  const [showPass, updatePass] = useState<string>('password')
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -55,7 +57,13 @@ export default function Login(props : any) {
         }
       }
     })
+  }
 
+  const togglePassword = (e: any) => {
+    e.preventDefault();
+    const input = (eyeVisible === 'bi bi-eye-slash') ? 'bi bi-eye' : 'bi bi-eye-slash';
+    updateEye(input);
+    (input === 'bi bi-eye-slash') ? updatePass('password') : updatePass('text');
   }
 
   return (
@@ -67,7 +75,8 @@ export default function Login(props : any) {
       </label>
       <br></br>
       <label>
-        <Input type='text' name='password' placeholder='Password' onChange={inputsHandler} value={inputField?.password}></Input>
+        <Input type={showPass} name='password' placeholder='Password' onChange={inputsHandler} value={inputField?.password}></Input>
+        <button className={eyeVisible} onClick={togglePassword} id="togglePassword"></button>
       </label>
       <Button onClick={handleSubmit}>Subimt</Button>
     </form>

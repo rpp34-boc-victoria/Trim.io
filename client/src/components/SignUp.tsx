@@ -29,6 +29,11 @@ export default function SignUp(props: any) {
   const [usedUsername, setusedUserName] = useState <boolean> (false);
   const [matchingPasswords, setmatchingPasswords] = useState <boolean> (false);
 
+  const [eyeVisible1, updateEye1] = useState<string>('bi bi-eye-slash');
+  const [eyeVisible2, updateEye2] = useState<string>('bi bi-eye-slash');
+  const [showPass1, updatePass1] = useState<string>('password')
+  const [showPass2, updatePass2] = useState<string>('password')
+
   const inputsHandler = (e: any) => {
     setInputField({...inputField, [e.target.name]: e.target.value})
   }
@@ -87,12 +92,25 @@ export default function SignUp(props: any) {
     e.preventDefault()
   }
 
+  const togglePassword = (e: any) => {
+    e.preventDefault();
+    if (e.target.value === 'eye1') {
+      const input = (eyeVisible1 === 'bi bi-eye-slash') ? 'bi bi-eye' : 'bi bi-eye-slash';
+      updateEye1(input);
+      (input === 'bi bi-eye-slash') ? updatePass1('password') : updatePass1('text');
+    } else {
+      const input = (eyeVisible2 === 'bi bi-eye-slash') ? 'bi bi-eye' : 'bi bi-eye-slash';
+      updateEye2(input);
+      (input === 'bi bi-eye-slash') ? updatePass2('password') : updatePass2('text');
+    }
+  }
+
   return (
     <Box className="signUpForm">
       <Typography variant="h4">SIGN UP</Typography>
     <form >
       <label>
-        <Input type='text' name='username' placeholder='Login' onChange={inputsHandler} value={inputField.username}></Input>
+        <Input type='text' name='username' placeholder='UserName' onChange={inputsHandler} value={inputField.username}></Input>
       {(!usedUsername) ?
       (null) :
       (<div>InValid UserName!</div>)
@@ -104,11 +122,13 @@ export default function SignUp(props: any) {
       </label>
       <br></br>
       <label>
-        <Input type='text' name='password' placeholder='Password' onChange={inputsHandler} value={inputField.password}></Input>
+        <Input type={showPass1} name='password' placeholder='Password' onChange={inputsHandler} value={inputField.password}></Input>
+        <button  className={eyeVisible1} onClick={togglePassword} value='eye1'></button>
       </label>
       <br></br>
       <label>
-        <Input type='text' name='confirmPassword' placeholder='confirmPassword' onChange={inputsHandler} value={inputField.confirmPassword}></Input>
+        <Input type={showPass2}  name='confirmPassword' placeholder='confirmPassword' onChange={inputsHandler} value={inputField.confirmPassword}></Input>
+        <button className={eyeVisible2} onClick={togglePassword} value='eye2'></button>
         {(matchingPasswords) ? null : (<div> Your Passwords Don't Match!</div>)}
       </label>
       <Button onClick={handleSubmit}>Subimt</Button>
