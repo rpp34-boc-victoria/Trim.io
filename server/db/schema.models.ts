@@ -54,6 +54,17 @@ const dailyEntriesSchema = new mongoose.Schema({
   // createdTime:{type:Date, default:new Date()},
   // updatedTime:{type:Date, default:new Date()},
 });
+const webPushSchema = new mongoose.Schema({
+  endpoint: String,
+  expirationTime: {
+    type: String,
+    default: null
+  },
+  keys: {
+    p256dh: String,
+    auth: String
+  }
+});
 
 const userSchema = new mongoose.Schema({
   firstName: { type: String, required: true },
@@ -72,6 +83,10 @@ const userSchema = new mongoose.Schema({
   caloriesRecommanded: { type: Number, default: 0, remark: "Recommanded daily Calories in kcal" },
   waterGoal: { type: Number, default: 0, remark: "daily Water intake Goal in cups" },
   createdTime:{type:Date, default:new Date()},
+  webPushSubscriptions: {
+    type: [webPushSchema],
+    default: []
+  }
   //updatedTime:{type:Date, default:new Date()},
 });
 

@@ -190,7 +190,7 @@ app.get("/api/generateDaily", async (req, res) => {
 })
 
 // Not sure what this is for......????
-app.get("/api/register", (req, res) => {
+app.get("/api/register", async (req, res) => {
 
   let user = new userEntriesModel({
     height: 1.7,
@@ -200,9 +200,11 @@ app.get("/api/register", (req, res) => {
     age: 20,
     caloriesGoal: 1500,
     waterGoal: 7,
-    gender: 1
+    gender: "M",
+    email: 'asd@fas.com',
+    phoneNumber: 124123
   })
-  user.save();
+  await user.save();
   res.send({ message: "Hello" });
 });
 
