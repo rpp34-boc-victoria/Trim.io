@@ -6,16 +6,13 @@ const foodName = "food_entries";
 
 const foodItemsSchema = new mongoose.Schema(
   {
-    label: String,
+    foodItem: String,
     nutrients: { type: mongoose.Schema.Types.Mixed },
-    wholeWeight: {
-      type: Number,
-      default: 100,
-    },
+    gramsPerServing: Number,
+    servings: Number
     // createTime:{type:Date, default:new Date()},
     // updateTime:{type:Date, default:new Date()},
-  },
-  { _id: false }
+  }
 );
 
 const dailyEntriesSchema = new mongoose.Schema({
@@ -35,8 +32,7 @@ const dailyEntriesSchema = new mongoose.Schema({
     default: 0,
   },
   weightAmount: {
-    type: Number,
-    default: 0,
+    type: Number
   },
   caloriesAmount:{
     type: Number,
