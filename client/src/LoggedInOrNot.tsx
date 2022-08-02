@@ -4,7 +4,7 @@ import App from './components/App';
 import SignUp from './components/SignUp';
 import Login from './components/Login';
 import LogOut from './LogOut';
-import { Button } from '@material-ui/core';
+// import { Button } from '@material-ui/core';
 
 export interface inputData {
   loggedIn: boolean;
