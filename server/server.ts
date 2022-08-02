@@ -7,10 +7,14 @@ import {
   userEntriesModel,
   dailyEntriesModel,
   todayMidnight,
+  authModel
 } from "./db/schema.models";
 import dayjs from "dayjs";
-
-import cors from "cors";
+import cors from 'cors';
+dotenv.config();
+// var bodyParser = require('body-parser');
+import bodyParser from "body-parser";
+import { resolveAny } from "dns";
 import { LEGAL_TCP_SOCKET_OPTIONS } from 'mongodb';
 
 dotenv.config();
@@ -206,6 +210,55 @@ app.get("/api/register", (req, res) => {
   res.send({ message: "Hello" });
 });
 
+app.post("/auth/login", async (req, res) => {
+  // const data = null;
+
+  let username = req.body.username;
+  console.log(username, 'usernaem')
+  const query = {
+    username: username
+  };
+  authModel.find(query, (error, result) => {
+    if (error) res.send('Failed');
+    res.send(result);
+  })
+})
+
+app.post("/auth/checkUser", (req, res) => {
+  // const data = null;
+
+  let username = req.body.username;
+  const query = {
+    username: username
+  };
+  authModel.find(query, (error, result) => {
+    if (error) res.send('Failed');
+    res.send(result);
+  })
+})
+
+app.post("/auth/CreateUser", (req, res) => {
+  // const data = null;
+  console.log(req.body)
+
+  let username = req.body.username;
+  let email = req.body.email;
+  let hashedFunction = req.body.hashedFunction;
+  let salt = req.body.salt;
+  console.log(username, salt, hashedFunction, email)
+  const query = {
+    username: username,
+    email: email,
+    salt: salt,
+    hashpass: hashedFunction
+  };
+
+  const newAuthModel = new authModel (query);
+  newAuthModel.save().then((result) => {
+    res.send(result);
+  })
+
+})
 
 //Below is a post request for the users to register
 app.post("/api/register", async (req, res) => {
