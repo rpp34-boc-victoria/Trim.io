@@ -123,7 +123,7 @@ export default function UserRegistration() {
           render={({ field }) => <Input {...field} />}
         />
         <Typography>
-          <sub><i>Recommanded </i></sub> 
+          <sub><i>Recommanded </i></sub>
           <sub><i>1000</i></sub>
           <sub><i> kcal Daily Calories intake based on your BMI</i></sub>
         </Typography>

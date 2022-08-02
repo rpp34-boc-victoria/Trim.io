@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 const dailyEntriesName = "daily_entries";
 const userName = "user_entries";
 const foodName = "food_entries";
+const authName = "auth_entries";
 
 /**
  *
@@ -100,4 +101,20 @@ export const userEntriesModel = mongoose.model(
   userSchema,
 )
 
+export const foodEntriesModel = mongoose.model(
+  foodName,
+  userSchema,
+)
+
+const authSchema = new mongoose.Schema({
+  username: { type: String, required: true },
+  salt: { type: Number, required: true },
+  email: { type: String, required: true },
+  hashpass: { type: String, required: true }
+});
+
+export const authModel = mongoose.model(
+  authName,
+  authSchema,
+);
 export { todayMidnight };
