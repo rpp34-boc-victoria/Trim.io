@@ -1,5 +1,5 @@
 import mongoConnection from './connect';
-import { dailyEntriesModel } from './schema.models';
+import { dailyEntriesModel, todayMidnight } from './schema.models';
 import mongoose from 'mongoose';
 
 describe('Connects to DB', () => {
@@ -30,7 +30,7 @@ describe('Connects to DB', () => {
   test('Makes Daily Entries', async () => {
     var entryObject = {
       user_id: new mongoose.Types.ObjectId().toString(),
-      entryDate: new Date(),
+      entryDate: todayMidnight(),
       foodItems: [{
         label: 'Big Mac',
         nutrients: {
