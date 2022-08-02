@@ -41,12 +41,10 @@ export function startSchedule() {
 };
 
 async function getUserResultsFromYesterday(userId, userCalorieGoal) {
-  console.log(userId)
   let query = {
     user_id: userId
   }
   const userEntryYesterday = await dailyEntriesModel.findOne(query).sort({ _id: -1 });
-  console.log(userEntryYesterday);
   try {
     const caloriesConsumedYesterday = userEntryYesterday['caloriesAmount'];
     const diff = Math.abs(caloriesConsumedYesterday - userCalorieGoal);
@@ -58,5 +56,4 @@ async function getUserResultsFromYesterday(userId, userCalorieGoal) {
   } catch (e) {
     return null
   }
-
 }
