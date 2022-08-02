@@ -25,5 +25,3 @@ root.render(
 // Learn more about service workers: https://cra.link/PWA
 serviceWorkerRegistration.register();
 subscribeUser();
-fetch('/api/register')
-  .then(x => console.log(x))

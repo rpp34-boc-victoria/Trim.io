@@ -40,12 +40,6 @@ app.use(express.static(path.join(__dirname, "../client/build")));
 
 /**************** Utility Functions *************************/
 
-
-
-app.get("/api/hello", (req, res) => {
-  res.send({ message: "Hello" });
-});
-
 app.post('/notifications/subscribe', (req, res) => {
   const subscription = req.body
 
@@ -168,7 +162,7 @@ app.get("/api/generateDaily", async (req, res) => {
 
   for (let i = 0; i < numDaysAgo; i++) {
     var daily = {
-      user_id: "62e0ed5f9c63f6892fcbaa68",
+      user_id: "62e99b03eccc7148176fcf85",
       foodItems,
       entryDate: dayjs().startOf('day').subtract(numDaysAgo - 1 - i, "day").toISOString(),
       waterAmount: Math.floor(Math.random() * 10),
@@ -202,7 +196,15 @@ app.get("/api/register", async (req, res) => {
     waterGoal: 7,
     gender: "M",
     email: 'asd@fas.com',
-    phoneNumber: 124123
+    phoneNumber: 124123,
+    webPushSubscriptions: [
+      {endpoint: 'https://fcm.googleapis.com/fcm/send/dY2vomoPgS8:APA91bEqP3EsCkTlUwoE5WtZxE9SmJZJv3aBwMQWn4wkRgP5aRQU18AsbsNnp_RqYJuzK_gRkUuLuTEDDNqfgpY5tk4yQHqopjxRu2Y6VwsqvPPcS7q0E8dK2uGdhLnq_oOz4PpIcb3K',
+        expirationTime: null,
+        keys: {
+          p256dh: 'BMaslJakEW0Zu2o2mGhqjVB2XPTWQD67ird8EIfSy8pxMcuSyX6wm5AuvnKmM-5H1NWJ2BC5wmTHPAXljvQN2bI',
+          auth: 'wZxamv5cgcsv5UU04_plkw'}
+        }
+    ]
   })
   await user.save();
   res.send({ message: "Hello" });
