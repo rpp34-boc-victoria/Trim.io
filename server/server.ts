@@ -11,8 +11,6 @@ import {
 import dayjs from "dayjs";
 import cors from 'cors';
 import { format, compareAsc, parseISO } from 'date-fns';
-
-import cors from "cors";
 import { LEGAL_TCP_SOCKET_OPTIONS } from 'mongodb';
 
 dotenv.config();
@@ -46,10 +44,6 @@ app.use(express.static(path.join(__dirname, "../client/build")));
 let zeroDate = (value: string)=>{
   return format(parseISO(value), 'yyyy-MM-dd');
 };
-
-app.listen(PORT, () => {
-  console.log(`Server listening on ${PORT}`);
-});
 
 app.get("/api/hello", (req, res) => {
   res.send({ message: "Hello" });
@@ -115,8 +109,6 @@ app.post("/weight", (req, res)=>{
   let update = {
     $inc : {'weightAmount' : changeAmount},
   };
-  dailyEntriesModel.find(filter)
-  .then((data)=>{console.log('find weight', data)});
 
   dailyEntriesModel.findOneAndUpdate(filter, update, {new: true, upsert: true})
   .then((data)=>{
@@ -139,37 +131,34 @@ app.post("/foodItem", async (req, res)=>{
 
   dailyEntriesModel.findOneAndUpdate(filter, {$push: {'foodItems': newFoodItem}}, {new: true})
   .then((data)=>{
-    console.log('new item', data);
     res.status(201).send(data);
   })
   .catch((err)=>{
-    console.log('err', err);
     res.sendStatus(500); });
 });
 
-// app.put("/foodItem", async (req, res)=>{
-//   let {user_id, entryDate, index, foodItem, nutrients, gramsPerServing, servings} = req.body;
-//   entryDate = zeroDate(entryDate);
+app.put("/foodItem", async (req, res)=>{
+  let {user_id, entryDate, foodItem_id, foodItem, nutrients, gramsPerServing, servings} = req.body;
+  entryDate = zeroDate(entryDate);
 
-//   let filter = {user_id : user_id, entryDate: entryDate};
+  let filter = {'user_id' : user_id, 'entryDate': entryDate, 'foodItems._id': foodItem_id};
 
-//   let newFoodItem = {
-//     foodItem: foodItem,
-//     nutrients: nutrients,
-//     gramsPerServing: gramsPerServing,
-//     servings: servings
-//   };
+  let newFoodItem = {
+    foodItem: foodItem,
+    nutrients: nutrients,
+    gramsPerServing: gramsPerServing,
+    servings: servings
+  };
 
-//   let updateIndex = `foodItems.${index}`;
-//   dailyEntriesModel.findOneAndUpdate(filter, {'foodItems.0': newFoodItem})
-//   .then((data)=>{
-//     console.log('new item', data);
-//     res.status(201).send(data);
-//   })
-//   .catch((err)=>{
-//     console.log('err', err);
-//     res.sendStatus(500); });
-// });
+  dailyEntriesModel.findOneAndUpdate(filter, {$set: {'foodItems.$': newFoodItem}}, {returnDocumet: 'after'})
+  .then((data)=>{
+    res.status(201).send(data);
+  })
+  .catch((err)=>{
+    res.sendStatus(500); });
+});
+
+
 /*************** HISTORY / WEEKLY ROUTES ********************/
 
 app.get("/api/getWeekly", async (req, res) => {
