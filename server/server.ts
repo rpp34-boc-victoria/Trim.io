@@ -38,7 +38,6 @@ if (process.env.ENVIRONMENT !== 'DEV') {
 }
 
 const app = express();
-app.use(bodyParser.json());
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "../client/build")));
