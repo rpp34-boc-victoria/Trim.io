@@ -52,6 +52,10 @@ app.post('/notifications/subscribe', (req, res) => {
   res.status(200).json({'success': true})
 });
 
+app.get('/getUserStreak', async (req, res) => {
+  res.send('10');
+});
+
 app.get("/", (req, res) => {
   res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
 });

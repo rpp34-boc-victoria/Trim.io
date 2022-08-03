@@ -8,6 +8,7 @@ import Weekly from "./history/Weekly";
 import { getDaily } from '../api';
 import Daily from "./dashboard/Daily";
 import UserReg from './UserProfileComponents/userRegistration';
+import ToastNotification from './ToastNotification/ToastNotification';
 import './App.scss'
 
 function Copyright() {
@@ -88,6 +89,7 @@ export default function App(props: any) {
         </Box>
         <Copyright />
       </Box>
+      <ToastNotification />
     </Container>
   );
 }
