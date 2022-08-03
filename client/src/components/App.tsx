@@ -32,7 +32,7 @@ export default function App(props: any) {
   const [dailyData, setDailyData] = useState(async () => undefined);
   const [activeIndex, setActiveIndex] = useState("daliy");
   // const [username, userId] = [...props.data];
-  // const username = props.data.username;
+  const user_id = props.data.username;
   // const userId = props.data.userId;
 
   /*****************************************************************/
@@ -43,6 +43,7 @@ export default function App(props: any) {
 
   async function handleDailyUpdate() {
     try {
+      console.log(user_id);
       let data = await getDaily();
       setDailyData(data);
     } catch (err: any) {
