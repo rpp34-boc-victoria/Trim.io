@@ -48,7 +48,7 @@ app.post('/notifications/subscribe', async (req, res) => {
   const subscription = req.body
 
   console.log('SUB', subscription)
-  // add subscrition to database
+  // add subscription to database
 
   let user = new userEntriesModel({
     height: 1.7,
