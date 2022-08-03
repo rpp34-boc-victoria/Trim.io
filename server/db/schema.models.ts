@@ -78,7 +78,7 @@ const userSchema = new mongoose.Schema({
   },
   email: { type: String, required: true },
   phoneNumber: { type: Number, required: true },
-  height: { type: Number, required: true, remark: "height in cm" },
+  height: { type: Number, required: true, remark: "height in m" },
   weight: { type: Number, required: true, remark: "weight in kg" },
   caloriesGoal: { type: Number, default: 0, remark: "daily Calories Goal in kcal" },
   caloriesRecommanded: { type: Number, default: 0, remark: "Recommanded daily Calories in kcal" },
