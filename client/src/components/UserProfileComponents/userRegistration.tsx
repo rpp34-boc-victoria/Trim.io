@@ -22,7 +22,8 @@ export default function UserRegistration() {
   const { control, handleSubmit } = useForm<IFormInput>();
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    //console.log(data);
+    console.log(data);
+    localStorage.setItem('userInfo',JSON.stringify(data))
     apiPost("/api/register", data).then((res) => {
       //console.log("user successfully posted something, :", res);
     });
@@ -96,7 +97,7 @@ export default function UserRegistration() {
           render={({ field }) => <Input {...field} />}
         />
         <Typography>
-          <sub>height (cm)</sub>
+          <sub>height (m)</sub>
         </Typography>
         <Controller
           name="height"

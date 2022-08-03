@@ -34,14 +34,17 @@ interface IUser {
 }
 
 const Weekly = () => {
-  const [userInfo] = useState<IUser>({
-    gender: EGender.female,
-    weight: 50,
-    height: 1.7,
-    caloriesGoal: 500,
-    waterGoal: 8,
-    age: 27,
-  });
+  const tempUserInfo = JSON.parse(localStorage.getItem("userInfo") || "");
+  const [userInfo] = useState<IUser>(
+    tempUserInfo || {
+      gender: EGender.female,
+      weight: 50,
+      height: 1.7,
+      caloriesGoal: 500,
+      waterGoal: 8,
+      age: 27,
+    }
+  );
   const [weeklyData, setWeeklyData] = useState<IDaliy[]>([]);
 
   useEffect(() => {
@@ -55,7 +58,7 @@ const Weekly = () => {
     console.log(result);
     if (result) {
       const tempData = [...result];
-      const {height, gender, age } = userInfo;
+      const { height, gender, age } = userInfo;
       tempData.forEach((item) => {
         item.entryDate = dayjs(item.entryDate).format("MM/DD");
         item.bmi = Number((item.weightAmount / (height * height)).toFixed(2));
@@ -75,7 +78,15 @@ const Weekly = () => {
         <Typography className="title">Calories</Typography>
         <Box className="chart_wrap">
           <MyBarChart
-            data={weeklyData.map((item) => ({ value: item.caloriesAmount }))}
+            data={weeklyData.map((item) => ({
+              value: item.foodItems.reduce((total: any, num: any) => {
+                if (typeof total === "number") {
+                  return total + num.nutrients.ENERC_KCAL;
+                } else {
+                  return total.nutrients.ENERC_KCAL + num.nutrients.ENERC_KCAL;
+                }
+              }),
+            }))}
           />
         </Box>
       </Box>

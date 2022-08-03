@@ -30,10 +30,7 @@ export default function App(props: any) {
   /********************* State Hooks At App Level ******************/
 
   const [dailyData, setDailyData] = useState(async () => undefined);
-  const [activeIndex, setActiveIndex] = useState("daliy");
-  // const [username, userId] = [...props.data];
-  const user_id = props.data.username;
-  // const userId = props.data.userId;
+  const [activeIndex, setActiveIndex] = useState("daily");
 
   /*****************************************************************/
 
@@ -65,11 +62,11 @@ export default function App(props: any) {
           <Box className="tab_wrap">
             <Box className="tab">
               <Typography
-                className={`tab_item ${activeIndex === "daliy" ? "active" : ""
+                className={`tab_item ${activeIndex === "daily" ? "active" : ""
                   }`}
-                onClick={() => handleChangeTab("daliy")}
+                onClick={() => handleChangeTab("daily")}
               >
-                Daliy
+                Day
               </Typography>
               <Typography
                 className={`tab_item ${activeIndex === "weekly" ? "active" : ""
@@ -80,7 +77,7 @@ export default function App(props: any) {
               </Typography>
             </Box>
           </Box>
-          {activeIndex === "daliy" ?
+          {activeIndex === "daily" ?
             <Daily dailyData={dailyData} handleDailyUpdate={handleDailyUpdate} /> :
             <Weekly />
           }
