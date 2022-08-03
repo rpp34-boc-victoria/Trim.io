@@ -21,15 +21,15 @@ export default function ToastNotification() {
   React.useEffect(() => {
     fetch('/getUserStreak')
       .then(res => res.json())
-      .then(x => {
-        const parsed = +x;
+      .then(streak => {
+        const parsed = +streak;
         if (parsed > 0) {
-          const message = `You are on a ${x} day streak of hitting your goals! 🔥🔥🔥`
+          const message = `You are on a ${streak} day streak of hitting your goals! 🔥🔥🔥`
           setMessage(message);
           console.log(message);
         }
       })
-      .catch(xd => console.log(xd))
+      .catch(e => console.log(e))
   }, []);
 
   React.useEffect(() => {
