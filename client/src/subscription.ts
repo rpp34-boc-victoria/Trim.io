@@ -50,6 +50,7 @@ export function subscribeUser() {
           })
         } else {
           console.log('Existed notification subscription detected.')
+          sendSubscription(existedSubscription)
         }
       })
     })
