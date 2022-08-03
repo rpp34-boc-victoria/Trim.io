@@ -13,7 +13,7 @@ import dayjs from "dayjs";
 import cors from 'cors';
 dotenv.config();
 // var bodyParser = require('body-parser');
-import bodyParser from "body-parser";
+// import bodyParser from "body-parser";
 import { resolveAny } from "dns";
 import { LEGAL_TCP_SOCKET_OPTIONS } from 'mongodb';
 
@@ -44,12 +44,31 @@ app.use(express.static(path.join(__dirname, "../client/build")));
 
 /**************** Utility Functions *************************/
 
-app.post('/notifications/subscribe', (req, res) => {
+app.post('/notifications/subscribe', async (req, res) => {
   const subscription = req.body
 
   console.log('SUB', subscription)
-  // add subscrition to database
+  // add subscription to database
+
+  let user = new userEntriesModel({
+    height: 1.7,
+    weight: 60,
+    firstName: "Spruce",
+    lastName: "Ya",
+    age: 20,
+    caloriesGoal: 1500,
+    waterGoal: 7,
+    gender: "M",
+    email: 'asd@fas.com',
+    phoneNumber: 124123,
+    webPushSubscriptions: [subscription]
+  })
+  await user.save();
   res.status(200).json({'success': true})
+});
+
+app.get('/getUserStreak', async (req, res) => {
+  res.send('10');
 });
 
 app.get("/", (req, res) => {
