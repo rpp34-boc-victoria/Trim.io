@@ -1,7 +1,7 @@
 import { sha512 } from 'js-sha512';
 import React, {useState} from 'react';
 import axios from 'axios';
-import { Typography, Input, Box, Button } from "@mui/material";
+import { Typography, Input, Card, Button } from "@mui/material";
 // import { Button } from '@material-ui/core';
 
 export interface inputData {
@@ -21,7 +21,7 @@ export default function Login(props : any) {
   const [inputField , setInputField] = useState <inputData | any> ({
     username: '',
     password: '',
-  })
+  });
 
   const inputsHandler = (e: any) => {
     setInputField( {...inputField, [e.target.name]: e.target.value} )
@@ -64,11 +64,11 @@ export default function Login(props : any) {
   }
 
   return (
-    <Box>
+    <Card>
       <Typography variant="h4">Log In</Typography>
     <form >
       <label>
-        <Input type='text' name='username' placeholder='Login' onChange={inputsHandler} value={inputField?.username}></Input>
+        <Input type='text' name='username' placeholder='Username' onChange={inputsHandler} value={inputField?.username}></Input>
       </label>
       <br></br>
       <label>
@@ -77,7 +77,7 @@ export default function Login(props : any) {
       </label>
       <Button onClick={handleSubmit}>Subimt</Button>
     </form>
-    </Box>
+    </Card>
   )
 
 

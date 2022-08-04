@@ -16,13 +16,10 @@ const todayMidnight = () => {
 
 const foodItemsSchema = new mongoose.Schema(
   {
-    label: String,
+    foodItem: String,
     nutrients: { type: mongoose.Schema.Types.Mixed },
-    wholeWeight: {
-      type: Number,
-      default: 100,
-      remark: 'The actual total mass of the Meal',
-    },
+    gramsPerServing: Number,
+    servings: Number
     // createTime:{type:Date, default:new Date()},
     // updateTime:{type:Date, default:new Date()},
   }
@@ -45,8 +42,7 @@ const dailyEntriesSchema = new mongoose.Schema({
     default: 0,
   },
   weightAmount: {
-    type: Number,
-    default: 0,
+    type: Number
   },
   caloriesAmount: {
     type: Number,

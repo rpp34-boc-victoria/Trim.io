@@ -11,6 +11,7 @@ import {
 } from "./db/schema.models";
 import dayjs from "dayjs";
 import cors from 'cors';
+import { format, compareAsc, parseISO } from 'date-fns';
 dotenv.config();
 // var bodyParser = require('body-parser');
 // import bodyParser from "body-parser";
@@ -44,6 +45,15 @@ app.use(express.static(path.join(__dirname, "../client/build")));
 
 /**************** Utility Functions *************************/
 
+
+let zeroDate = (value: string)=>{
+  return format(parseISO(value), 'yyyy-MM-dd');
+};
+
+app.get("/api/hello", (req, res) => {
+  res.send({ message: "Hello" });
+});
+
 app.post('/notifications/subscribe', async (req, res) => {
   const subscription = req.body
 
@@ -74,6 +84,104 @@ app.get('/getUserStreak', async (req, res) => {
 app.get("/", (req, res) => {
   res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
 });
+
+
+/*************** DAILY ENTRIES ROUTES ********************/
+app.post('/entry', (req, res)=>{
+  let {user_id, entryDate, weightAmount} = req.body;
+  let newDate = format(parseISO(entryDate), 'yyyy-MM-dd');
+  weightAmount = Number(weightAmount);
+
+  dailyEntriesModel.findOneAndUpdate(
+    {user_id: user_id, entryDate: newDate},
+    {weightAmount: weightAmount},
+    {new: true, upsert: true}
+  )
+  .then((data)=>{ res.status(201).send(data);})
+  .catch((err)=>{ res.sendStatus(500); });
+});
+
+app.get("/entry", async (req, res)=>{
+  let {user_id, entryDate} = req.body;
+  entryDate = zeroDate(entryDate);
+  dailyEntriesModel.find({user_id: user_id, entryDate: entryDate})
+  .then((data)=>{ res.status(200).send(data);})
+  .catch((err)=>{ res.sendStatus(500); });
+});
+
+app.post("/water", async (req, res)=>{
+  let {user_id, entryDate, changeAmount} = req.body;
+  entryDate = zeroDate(entryDate);
+  changeAmount = Number(changeAmount);
+
+  let filter = {user_id : user_id, entryDate: entryDate};
+  let update = {
+    $inc : {'waterAmount' : changeAmount},
+  };
+
+  dailyEntriesModel.findOneAndUpdate(filter, update, {new: true, upsert: true})
+  .then((data)=>{ res.status(201).send(data);})
+  .catch((err)=>{ res.sendStatus(500); });
+})
+
+app.post("/weight", (req, res)=>{
+  let {user_id, entryDate, changeAmount} = req.body;
+  entryDate = zeroDate(entryDate);
+  changeAmount = Number(changeAmount);
+
+  let filter = {user_id : user_id, entryDate: entryDate};
+  let update = {
+    $inc : {'weightAmount' : changeAmount},
+  };
+
+  dailyEntriesModel.findOneAndUpdate(filter, update, {new: true, upsert: true})
+  .then((data)=>{
+    res.status(201).send(data);})
+  .catch((err)=>{ res.sendStatus(500); });
+});
+
+app.post("/foodItem", async (req, res)=>{
+  let {user_id, entryDate, foodItem, nutrients, gramsPerServing, servings} = req.body;
+  entryDate = zeroDate(entryDate);
+
+  let filter = {user_id : user_id, entryDate: entryDate};
+
+  let newFoodItem = {
+    foodItem: foodItem,
+    nutrients: nutrients,
+    gramsPerServing: gramsPerServing,
+    servings: servings
+  };
+
+  dailyEntriesModel.findOneAndUpdate(filter, {$push: {'foodItems': newFoodItem}}, {new: true})
+  .then((data)=>{
+    res.status(201).send(data);
+  })
+  .catch((err)=>{
+    res.sendStatus(500); });
+});
+
+app.put("/foodItem", async (req, res)=>{
+  let {user_id, entryDate, foodItem_id, foodItem, nutrients, gramsPerServing, servings} = req.body;
+  entryDate = zeroDate(entryDate);
+
+  let filter = {'user_id' : user_id, 'entryDate': entryDate, 'foodItems._id': foodItem_id};
+
+  let newFoodItem = {
+    foodItem: foodItem,
+    nutrients: nutrients,
+    gramsPerServing: gramsPerServing,
+    servings: servings
+  };
+
+  dailyEntriesModel.findOneAndUpdate(filter, {$set: {'foodItems.$': newFoodItem}}, {returnDocumet: 'after'})
+  .then((data)=>{
+    res.status(201).send(data);
+  })
+  .catch((err)=>{
+    res.sendStatus(500); });
+});
+
 
 /*************** HISTORY / WEEKLY ROUTES ********************/
 
