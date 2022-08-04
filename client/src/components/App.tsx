@@ -32,6 +32,8 @@ export default function App(props: any) {
   const [dailyData, setDailyData] = useState(async () => undefined);
   const [activeIndex, setActiveIndex] = useState("daily");
 
+  const user_id = props.data.username;
+
   /*****************************************************************/
 
   const handleChangeTab = (type: string) => {
