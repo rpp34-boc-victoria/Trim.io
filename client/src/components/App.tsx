@@ -51,7 +51,7 @@ export default function App(props: any) {
   async function handleDailyUpdate() {
     try {
       console.log(user_id);
-      let data = await getDaily();
+      let data = await getDaily(user_id);
       setDailyData(data);
     } catch (err: any) {
       throw err;

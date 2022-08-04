@@ -46,13 +46,10 @@ app.use(express.static(path.join(__dirname, "../client/build")));
 /**************** Utility Functions *************************/
 
 
-let zeroDate = (value: string)=>{
+let zeroDate = (value: string) => {
   return format(parseISO(value), 'yyyy-MM-dd');
 };
 
-app.get("/api/hello", (req, res) => {
-  res.send({ message: "Hello" });
-});
 
 app.post('/notifications/subscribe', async (req, res) => {
   const subscription = req.body
@@ -74,7 +71,7 @@ app.post('/notifications/subscribe', async (req, res) => {
     webPushSubscriptions: [subscription]
   })
   await user.save();
-  res.status(200).json({'success': true})
+  res.status(200).json({ 'success': true })
 });
 
 app.get('/getUserStreak', async (req, res) => {
@@ -87,64 +84,65 @@ app.get("/", (req, res) => {
 
 
 /*************** DAILY ENTRIES ROUTES ********************/
-app.post('/entry', (req, res)=>{
-  let {user_id, entryDate, weightAmount} = req.body;
+app.post('/entry', (req, res) => {
+  let { user_id, entryDate, weightAmount } = req.body;
   let newDate = format(parseISO(entryDate), 'yyyy-MM-dd');
   weightAmount = Number(weightAmount);
 
   dailyEntriesModel.findOneAndUpdate(
-    {user_id: user_id, entryDate: newDate},
-    {weightAmount: weightAmount},
-    {new: true, upsert: true}
+    { user_id: user_id, entryDate: newDate },
+    { weightAmount: weightAmount },
+    { new: true, upsert: true }
   )
-  .then((data)=>{ res.status(201).send(data);})
-  .catch((err)=>{ res.sendStatus(500); });
+    .then((data) => { res.status(201).send(data); })
+    .catch((err) => { res.sendStatus(500); });
 });
 
-app.get("/entry", async (req, res)=>{
-  let {user_id, entryDate} = req.body;
+app.get("/entry", async (req, res) => {
+  let { user_id, entryDate } = req.body;
   entryDate = zeroDate(entryDate);
-  dailyEntriesModel.find({user_id: user_id, entryDate: entryDate})
-  .then((data)=>{ res.status(200).send(data);})
-  .catch((err)=>{ res.sendStatus(500); });
+  dailyEntriesModel.find({ user_id: user_id, entryDate: entryDate })
+    .then((data) => { res.status(200).send(data); })
+    .catch((err) => { res.sendStatus(500); });
 });
 
-app.post("/water", async (req, res)=>{
-  let {user_id, entryDate, changeAmount} = req.body;
+app.post("/water", async (req, res) => {
+  let { user_id, entryDate, changeAmount } = req.body;
   entryDate = zeroDate(entryDate);
   changeAmount = Number(changeAmount);
 
-  let filter = {user_id : user_id, entryDate: entryDate};
+  let filter = { user_id: user_id, entryDate: entryDate };
   let update = {
-    $inc : {'waterAmount' : changeAmount},
+    $inc: { 'waterAmount': changeAmount },
   };
 
-  dailyEntriesModel.findOneAndUpdate(filter, update, {new: true, upsert: true})
-  .then((data)=>{ res.status(201).send(data);})
-  .catch((err)=>{ res.sendStatus(500); });
+  dailyEntriesModel.findOneAndUpdate(filter, update, { new: true, upsert: true })
+    .then((data) => { res.status(201).send(data); })
+    .catch((err) => { res.sendStatus(500); });
 })
 
-app.post("/weight", (req, res)=>{
-  let {user_id, entryDate, changeAmount} = req.body;
+app.post("/weight", (req, res) => {
+  let { user_id, entryDate, changeAmount } = req.body;
   entryDate = zeroDate(entryDate);
   changeAmount = Number(changeAmount);
 
-  let filter = {user_id : user_id, entryDate: entryDate};
+  let filter = { user_id: user_id, entryDate: entryDate };
   let update = {
-    $inc : {'weightAmount' : changeAmount},
+    $inc: { 'weightAmount': changeAmount },
   };
 
-  dailyEntriesModel.findOneAndUpdate(filter, update, {new: true, upsert: true})
-  .then((data)=>{
-    res.status(201).send(data);})
-  .catch((err)=>{ res.sendStatus(500); });
+  dailyEntriesModel.findOneAndUpdate(filter, update, { new: true, upsert: true })
+    .then((data) => {
+      res.status(201).send(data);
+    })
+    .catch((err) => { res.sendStatus(500); });
 });
 
-app.post("/foodItem", async (req, res)=>{
-  let {user_id, entryDate, foodItem, nutrients, gramsPerServing, servings} = req.body;
+app.post("/foodItem", async (req, res) => {
+  let { user_id, entryDate, foodItem, nutrients, gramsPerServing, servings } = req.body;
   entryDate = zeroDate(entryDate);
 
-  let filter = {user_id : user_id, entryDate: entryDate};
+  let filter = { user_id: user_id, entryDate: entryDate };
 
   let newFoodItem = {
     foodItem: foodItem,
@@ -153,19 +151,20 @@ app.post("/foodItem", async (req, res)=>{
     servings: servings
   };
 
-  dailyEntriesModel.findOneAndUpdate(filter, {$push: {'foodItems': newFoodItem}}, {new: true})
-  .then((data)=>{
-    res.status(201).send(data);
-  })
-  .catch((err)=>{
-    res.sendStatus(500); });
+  dailyEntriesModel.findOneAndUpdate(filter, { $push: { 'foodItems': newFoodItem } }, { new: true })
+    .then((data) => {
+      res.status(201).send(data);
+    })
+    .catch((err) => {
+      res.sendStatus(500);
+    });
 });
 
-app.put("/foodItem", async (req, res)=>{
-  let {user_id, entryDate, foodItem_id, foodItem, nutrients, gramsPerServing, servings} = req.body;
+app.put("/foodItem", async (req, res) => {
+  let { user_id, entryDate, foodItem_id, foodItem, nutrients, gramsPerServing, servings } = req.body;
   entryDate = zeroDate(entryDate);
 
-  let filter = {'user_id' : user_id, 'entryDate': entryDate, 'foodItems._id': foodItem_id};
+  let filter = { 'user_id': user_id, 'entryDate': entryDate, 'foodItems._id': foodItem_id };
 
   let newFoodItem = {
     foodItem: foodItem,
@@ -174,12 +173,13 @@ app.put("/foodItem", async (req, res)=>{
     servings: servings
   };
 
-  dailyEntriesModel.findOneAndUpdate(filter, {$set: {'foodItems.$': newFoodItem}}, {returnDocumet: 'after'})
-  .then((data)=>{
-    res.status(201).send(data);
-  })
-  .catch((err)=>{
-    res.sendStatus(500); });
+  dailyEntriesModel.findOneAndUpdate(filter, { $set: { 'foodItems.$': newFoodItem } }, { returnDocumet: 'after' })
+    .then((data) => {
+      res.status(201).send(data);
+    })
+    .catch((err) => {
+      res.sendStatus(500);
+    });
 });
 
 
@@ -214,9 +214,10 @@ app.get("/api/getWeekly", async (req, res) => {
 /******************** Daily Get Route ***********************/
 
 app.get('/api/daily', async (req, res) => {
+  console.log('/api/daily params:' , req.query)
   let query = {
     entryDate: { $gte: todayMidnight() },
-    // user_id: String, // Will need to be given the user_id by authentication middleware
+    user_id: req.query?.user_id, // Will need to be given the user_id by authentication middleware
   }
   try {
     let result = await dailyEntriesModel.findOne(query).sort({ _id: -1 });
@@ -229,8 +230,9 @@ app.get('/api/daily', async (req, res) => {
 });
 
 app.get('/api/latestEntry', async (req, res) => {
+  console.log('/api/latestEntry params:' , req.query)
   let query = {
-    // user_id: String, // Will need to be given the user_id by authentication middleware
+    user_id: req.query?.user_id, // Will need to be given the user_id by authentication middleware
   }
   try {
     let result = await dailyEntriesModel.findOne(query).sort({ _id: -1 });
@@ -243,12 +245,14 @@ app.get('/api/latestEntry', async (req, res) => {
 });
 
 app.post('/api/daily', async (req, res) => {
+  console.log('Daily Post body:', req.body);
   let query = {
     entryDate: { $gte: todayMidnight() },
-    // user_id: String, // Will need to be given the user_id by authentication middleware
+    user_id: req.body?.user_id, // Will need to be given the user_id by authentication middleware
   }
-  let payload = req.body;
-  console.log(req.body);
+  let payload = {
+    weight: req.body.weight,
+  };
   try {
     let result = await dailyEntriesModel.findOneAndUpdate(
       query,
@@ -267,7 +271,7 @@ app.post('/api/daily', async (req, res) => {
 });
 
 app.get("/api/generateDaily", async (req, res) => {
-  console.log('/api/generateDaily [params]: ', req.params)
+  console.log('/api/generateDaily [params]: ', req.query)
   /**
    * Do something with req.params to configure advanced Data Generation
    */
@@ -275,7 +279,7 @@ app.get("/api/generateDaily", async (req, res) => {
   for (let i = 0; i < 5; i++) {
     foodItems.push(
       {
-        label: 'Big Mac',
+        foodItem: 'Big Mac',
         nutrients: {
           "ENERC_KCAL": 257,
           "PROCNT": 11.82,
@@ -283,7 +287,8 @@ app.get("/api/generateDaily", async (req, res) => {
           "CHOCDF": 20.08,
           "FIBTG": 1.6
         },
-        wholeWeight: 213,
+        gramsPerServing: 213,
+        servings: 1,
       }
     );
   }
@@ -293,9 +298,9 @@ app.get("/api/generateDaily", async (req, res) => {
 
   for (let i = 0; i < numDaysAgo; i++) {
     var daily = {
-      user_id: "62e99b03eccc7148176fcf85",
+      user_id: req.query?.user_id,
       foodItems,
-      entryDate: dayjs().startOf('day').subtract(numDaysAgo - 1 - i, "day").toISOString(),
+      entryDate: dayjs().startOf('day').subtract(numDaysAgo - i, "day").toISOString(),
       waterAmount: Math.floor(Math.random() * 10),
       weightAmount: Math.floor(Math.random() * (150 - 40) + 40),
       caloriesAmount: Math.floor(Math.random() * (2200 - 3) + 3),
@@ -329,12 +334,14 @@ app.get("/api/register", async (req, res) => {
     email: 'asd@fas.com',
     phoneNumber: 124123,
     webPushSubscriptions: [
-      {endpoint: 'https://fcm.googleapis.com/fcm/send/dY2vomoPgS8:APA91bEqP3EsCkTlUwoE5WtZxE9SmJZJv3aBwMQWn4wkRgP5aRQU18AsbsNnp_RqYJuzK_gRkUuLuTEDDNqfgpY5tk4yQHqopjxRu2Y6VwsqvPPcS7q0E8dK2uGdhLnq_oOz4PpIcb3K',
+      {
+        endpoint: 'https://fcm.googleapis.com/fcm/send/dY2vomoPgS8:APA91bEqP3EsCkTlUwoE5WtZxE9SmJZJv3aBwMQWn4wkRgP5aRQU18AsbsNnp_RqYJuzK_gRkUuLuTEDDNqfgpY5tk4yQHqopjxRu2Y6VwsqvPPcS7q0E8dK2uGdhLnq_oOz4PpIcb3K',
         expirationTime: null,
         keys: {
           p256dh: 'BMaslJakEW0Zu2o2mGhqjVB2XPTWQD67ird8EIfSy8pxMcuSyX6wm5AuvnKmM-5H1NWJ2BC5wmTHPAXljvQN2bI',
-          auth: 'wZxamv5cgcsv5UU04_plkw'}
+          auth: 'wZxamv5cgcsv5UU04_plkw'
         }
+      }
     ]
   })
   await user.save();
@@ -384,7 +391,7 @@ app.post("/auth/CreateUser", (req, res) => {
     hashpass: hashedFunction
   };
 
-  const newAuthModel = new authModel (query);
+  const newAuthModel = new authModel(query);
   newAuthModel.save().then((result) => {
     res.send(result);
   })
