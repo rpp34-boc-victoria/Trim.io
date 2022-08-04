@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 const dailyEntriesName = "daily_entries";
 const userName = "user_entries";
 const foodName = "food_entries";
+const authName = "auth_entries";
 
 /**
  *
@@ -50,6 +51,17 @@ const dailyEntriesSchema = new mongoose.Schema({
   // createdTime:{type:Date, default:new Date()},
   // updatedTime:{type:Date, default:new Date()},
 });
+const webPushSchema = new mongoose.Schema({
+  endpoint: String,
+  expirationTime: {
+    type: String,
+    default: null
+  },
+  keys: {
+    p256dh: String,
+    auth: String
+  }
+});
 
 const userSchema = new mongoose.Schema({
   firstName: { type: String, required: true },
@@ -68,6 +80,10 @@ const userSchema = new mongoose.Schema({
   caloriesRecommanded: { type: Number, default: 0, remark: "Recommanded daily Calories in kcal" },
   waterGoal: { type: Number, default: 0, remark: "daily Water intake Goal in cups" },
   createdTime:{type:Date, default:new Date()},
+  webPushSubscriptions: {
+    type: [webPushSchema],
+    default: []
+  }
   //updatedTime:{type:Date, default:new Date()},
 });
 
@@ -81,4 +97,20 @@ export const userEntriesModel = mongoose.model(
   userSchema,
 )
 
+export const foodEntriesModel = mongoose.model(
+  foodName,
+  userSchema,
+)
+
+const authSchema = new mongoose.Schema({
+  username: { type: String, required: true },
+  salt: { type: Number, required: true },
+  email: { type: String, required: true },
+  hashpass: { type: String, required: true }
+});
+
+export const authModel = mongoose.model(
+  authName,
+  authSchema,
+);
 export { todayMidnight };

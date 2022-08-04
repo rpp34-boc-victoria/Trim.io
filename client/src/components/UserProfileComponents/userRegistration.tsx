@@ -18,7 +18,7 @@ interface IFormInput {
   targetWater: number;
 }
 
-export default function UserRegistration() {
+export default function UserRegistration(props: any) {
   const { control, handleSubmit } = useForm<IFormInput>();
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
@@ -26,6 +26,7 @@ export default function UserRegistration() {
     apiPost("/api/register", data).then((res) => {
       //console.log("user successfully posted something, :", res);
     });
+    props.setSignUp('SignedUp')
   };
 
   return (
@@ -123,7 +124,7 @@ export default function UserRegistration() {
           render={({ field }) => <Input {...field} />}
         />
         <Typography>
-          <sub><i>Recommanded </i></sub> 
+          <sub><i>Recommanded </i></sub>
           <sub><i>1000</i></sub>
           <sub><i> kcal Daily Calories intake based on your BMI</i></sub>
         </Typography>

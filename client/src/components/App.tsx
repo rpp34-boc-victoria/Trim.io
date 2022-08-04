@@ -15,6 +15,7 @@ import Incrementer from './dailyEntries/Incrementer';
 import {ThemeProvider} from '@mui/material/styles';
 import { Divider } from '@mui/material';
 import theme from '../theme';
+import ToastNotification from './ToastNotification/ToastNotification';
 import './App.scss'
 
 function Copyright() {
@@ -31,12 +32,16 @@ function Copyright() {
 
 
 
-export default function App() {
+export default function App(props: any) {
 
   /********************* State Hooks At App Level ******************/
 
   const [dailyData, setDailyData] = useState(async () => undefined);
   const [activeIndex, setActiveIndex] = useState("daliy");
+  // const [username, userId] = [...props.data];
+  const user_id = props.data.username;
+  // const userId = props.data.userId;
+  const [signUp, setSignedUp] = useState(props.signedUp);
 
   /*****************************************************************/
 
@@ -46,15 +51,26 @@ export default function App() {
 
   async function handleDailyUpdate() {
     try {
+      console.log(user_id);
       let data = await getDaily();
       setDailyData(data);
     } catch (err: any) {
       throw err;
     }
   }
-
-
-  return (
+  if (signUp === 'newAccount') {
+    return (
+      <Container maxWidth="sm">
+        <Box sx={{ my: 4 }}>
+          <Box>
+            <UserReg setSignUp= {setSignedUp}/>
+          </Box>
+          <Copyright />
+        </Box>
+      </Container>
+    );
+  } else {
+    return (
     <ThemeProvider theme={theme}>
       <Container maxWidth="sm">
         <Box sx={{ my: 4 }}>
@@ -92,12 +108,11 @@ export default function App() {
           <Divider sx={{mb: '16px'}} />
           <Incrementer labelText='Body weight' route="weight"/>
           <AddEntry></AddEntry>
-          <Box>
-            <UserReg />
-          </Box>
           <Copyright />
         </Box>
+        <ToastNotification />
       </Container>
     </ThemeProvider>
-  );
+    );
+  }
 }

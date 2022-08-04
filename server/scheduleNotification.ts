@@ -1,6 +1,11 @@
 import schedule from 'node-schedule';
 import webpush from 'web-push';
 import * as dotenv from 'dotenv';
+import mongoConnection from './db/connect';
+import {
+  userEntriesModel,
+  dailyEntriesModel
+} from './db/schema.models';
 
 dotenv.config();
 
@@ -9,23 +14,46 @@ webpush.setVapidDetails(process.env.WEB_PUSH_CONTACT, process.env.PUBLIC_VAPID_K
 // loop through all subscript and process/send out custom notifications
 export function startSchedule() {
   const job = schedule.scheduleJob('* * * * *', async () => {
-
-    const payload = JSON.stringify({
-      title: 'Hello!',
-      description: 'Test noti',
-    })
-
-    const sub = {
-      endpoint: 'https://fcm.googleapis.com/fcm/send/fG20vaUTLFw:APA91bFZj5P2gR3tOAr-Gv8lVSUy5kmM_4V1WPHy3y2fnWPENOzRkm87TOhLJLWaaIcAPSS3iMdjkfcCNRNU13IVLJ4xyXUNdbpma9Ntpy-f4BOqVjPU3rm7hRXKBZyivBRn2_P_N91p',
-      expirationTime: null,
-      keys: {
-        p256dh: 'BGSGUOoqYiynV-WBTR03ZlnOSZxw5KEQK6UJQyZyWi4zRuqXfD3ZdEc6rNJMUNVg7KS7lWABusk6s3EoB7xWt7w',
-        auth: 'z8kYHIdEL3Oby22LQ6fcFw'
+    await mongoConnection();
+    const allUsers = await userEntriesModel.find();
+    for (const user of allUsers) {
+      const subscriptions = user['webPushSubscriptions'];
+      if (subscriptions.length > 0) {
+        const message = await getUserResultsFromYesterday(user._id, user.caloriesGoal);
+        if (message === null) {
+          continue;
+        }
+        const payload = JSON.stringify({
+          title: 'Daily Goals',
+          description: message
+        })
+        for (const subscription of subscriptions) {
+          // in the case of invalid/expired subscriptions
+          try {
+            await webpush.sendNotification(subscription, payload);
+          } catch(e) {
+            continue;
+          }
+        }
       }
     }
-
-    webpush.sendNotification(sub, payload)
-      .then(result => console.log('AYOOO', result))
-      .catch(e => console.log(e.stack))
   });
 };
+
+async function getUserResultsFromYesterday(userId, userCalorieGoal) {
+  let query = {
+    user_id: userId
+  }
+  const userEntryYesterday = await dailyEntriesModel.findOne(query).sort({ _id: -1 });
+  try {
+    const caloriesConsumedYesterday = userEntryYesterday['caloriesAmount'];
+    const diff = Math.abs(caloriesConsumedYesterday - userCalorieGoal);
+    if (diff <= 50) {
+      return 'Congrats on hitting your goal yesterday!! Keep it up!';
+    } else {
+      return 'Looks like you missed your goal yesterday. Let\'s give it another try today!'
+    }
+  } catch (e) {
+    return null
+  }
+}
