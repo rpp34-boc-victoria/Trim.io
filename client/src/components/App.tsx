@@ -88,9 +88,9 @@ export default function App() {
               <Weekly />
             }
           </Box>
-          <Incrementer labelText='Water (cups)' />
+          <Incrementer labelText='Water (cups)' route="water"/>
           <Divider sx={{mb: '16px'}} />
-          <Incrementer labelText='Body weight' />
+          <Incrementer labelText='Body weight' route="weight"/>
           <AddEntry></AddEntry>
           <Box>
             <UserReg />

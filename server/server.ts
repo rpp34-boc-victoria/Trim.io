@@ -16,7 +16,7 @@ import { LEGAL_TCP_SOCKET_OPTIONS } from 'mongodb';
 dotenv.config();
 const PORT = process.env.PORT || 8000;
 dbConnection();
-startSchedule();
+// startSchedule();
 
 if (process.env.ENVIRONMENT !== 'DEV') {
   const { exec } = require("child_process");
@@ -128,9 +128,11 @@ app.post("/foodItem", async (req, res)=>{
     gramsPerServing: gramsPerServing,
     servings: servings
   };
+  console.log('NEED TO POST, ', newFoodItem);
 
   dailyEntriesModel.findOneAndUpdate(filter, {$push: {'foodItems': newFoodItem}}, {new: true})
   .then((data)=>{
+    console.log('POSTED FOOD ITEM, ', data);
     res.status(201).send(data);
   })
   .catch((err)=>{
