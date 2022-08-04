@@ -41,6 +41,7 @@ export default function App(props: any) {
   // const [username, userId] = [...props.data];
   const user_id = props.data.username;
   // const userId = props.data.userId;
+  const [signUp, setSignedUp] = useState(props.signedUp);
 
   /*****************************************************************/
 
@@ -57,9 +58,19 @@ export default function App(props: any) {
       throw err;
     }
   }
-
-
-  return (
+  if (signUp === 'newAccount') {
+    return (
+      <Container maxWidth="sm">
+        <Box sx={{ my: 4 }}>
+          <Box>
+            <UserReg setSignUp= {setSignedUp}/>
+          </Box>
+          <Copyright />
+        </Box>
+      </Container>
+    );
+  } else {
+    return (
     <ThemeProvider theme={theme}>
       <Container maxWidth="sm">
         <Box sx={{ my: 4 }}>
@@ -97,13 +108,11 @@ export default function App(props: any) {
           <Divider sx={{mb: '16px'}} />
           <Incrementer labelText='Body weight' />
           <AddEntry></AddEntry>
-          <Box>
-            <UserReg />
-          </Box>
           <Copyright />
         </Box>
         <ToastNotification />
       </Container>
     </ThemeProvider>
-  );
+    );
+  }
 }
