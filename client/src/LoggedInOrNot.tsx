@@ -25,7 +25,6 @@ const [login, updateLogin] = useState <inputData> ({
 const [loginOrCreateNewUser, setloginOrCreateNewUser] = useState <string> ('notLoggedIn');
 
   function handleUpdate (data: any) {
-    console.log(data)
     updateLogin({
       loggedIn: data.login,
       username: data.username,
@@ -34,9 +33,7 @@ const [loginOrCreateNewUser, setloginOrCreateNewUser] = useState <string> ('notL
   }
 
   function handleClick (e : any) {
-    console.log(e.target.value)
     setloginOrCreateNewUser(e.target.value)
-    console.log(e.target.value, 'check')
   }
 
   function handleLogOut () {
