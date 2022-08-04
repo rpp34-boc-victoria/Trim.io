@@ -14,7 +14,6 @@ webpush.setVapidDetails(process.env.WEB_PUSH_CONTACT, process.env.PUBLIC_VAPID_K
 // loop through all subscript and process/send out custom notifications
 export function startSchedule() {
   const job = schedule.scheduleJob('* * * * *', async () => {
-    await mongoConnection();
     const allUsers = await userEntriesModel.find();
     for (const user of allUsers) {
       const subscriptions = user['webPushSubscriptions'];
