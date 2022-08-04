@@ -34,6 +34,7 @@ export default function App(props: any) {
   // const [username, userId] = [...props.data];
   const user_id = props.data.username;
   // const userId = props.data.userId;
+  const [signUp, setSignedUp] = useState(props.signedUp);
 
   /*****************************************************************/
 
@@ -50,47 +51,61 @@ export default function App(props: any) {
       throw err;
     }
   }
-
-
-  return (
-    <Container maxWidth="sm">
-      <Box sx={{ my: 4 }}>
-        <Typography variant="h3" component="h1"
-          gutterBottom align="center" fontWeight="bold">
-          Trim.io
-        </Typography>
-        {/* <ProTip /> */}
-        {/* <History /> */}
-        <Box className="history">
-          <Box className="tab_wrap">
-            <Box className="tab">
-              <Typography
-                className={`tab_item ${activeIndex === "daliy" ? "active" : ""
-                  }`}
-                onClick={() => handleChangeTab("daliy")}
-              >
-                Daliy
-              </Typography>
-              <Typography
-                className={`tab_item ${activeIndex === "weekly" ? "active" : ""
-                  }`}
-                onClick={() => handleChangeTab("weekly")}
-              >
-                Weekly
-              </Typography>
-            </Box>
+  if (signUp === 'newAccount') {
+    return (
+      <Container maxWidth="sm">
+        <Box sx={{ my: 4 }}>
+          <Box>
+            <UserReg setSignUp= {setSignedUp}/>
           </Box>
-          {activeIndex === "daliy" ?
-            <Daily dailyData={dailyData} handleDailyUpdate={handleDailyUpdate} /> :
-            <Weekly />
-          }
+          <Copyright />
         </Box>
-        <Box>
-          <UserReg />
+      </Container>
+    );
+  } else {
+    return (
+      <Container maxWidth="sm">
+        <Box sx={{ my: 4 }}>
+          <Typography variant="h3" component="h1"
+            gutterBottom align="center" fontWeight="bold">
+            Trim.io
+          </Typography>
+          {/* <ProTip /> */}
+          {/* <History /> */}
+          <Box className="history">
+            <Box className="tab_wrap">
+              <Box className="tab">
+                <Typography
+                  className={`tab_item ${activeIndex === "daliy" ? "active" : ""
+                    }`}
+                  onClick={() => handleChangeTab("daliy")}
+                >
+                  Daliy
+                </Typography>
+                <Typography
+                  className={`tab_item ${activeIndex === "weekly" ? "active" : ""
+                    }`}
+                  onClick={() => handleChangeTab("weekly")}
+                >
+                  Weekly
+                </Typography>
+              </Box>
+            </Box>
+            {activeIndex === "daliy" ?
+              <Daily dailyData={dailyData} handleDailyUpdate={handleDailyUpdate} /> :
+              <Weekly />
+            }
+          </Box>
+          {/* <Box>
+            <UserReg />
+          </Box> */}
+          <Copyright />
         </Box>
-        <Copyright />
-      </Box>
-      <ToastNotification />
-    </Container>
-  );
+        <ToastNotification />
+      </Container>
+    );
+
+  }
+
+
 }

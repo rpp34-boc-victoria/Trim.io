@@ -36,6 +36,7 @@ const [loginOrCreateNewUser, setloginOrCreateNewUser] = useState <string> ('notL
   function handleClick (e : any) {
     console.log(e.target.value)
     setloginOrCreateNewUser(e.target.value)
+    console.log(e.target.value, 'check')
   }
 
   function handleLogOut () {
@@ -67,7 +68,7 @@ const [loginOrCreateNewUser, setloginOrCreateNewUser] = useState <string> ('notL
   } else {
     return (
       <div>
-        <App data={login}/>
+        <App data={login} signedUp={loginOrCreateNewUser}/>
         <LogOut onSubmit = {handleUpdate} onClick={handleLogOut}/>
       </div>
     )

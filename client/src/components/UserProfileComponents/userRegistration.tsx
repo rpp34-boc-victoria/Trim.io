@@ -18,7 +18,7 @@ interface IFormInput {
   targetWater: number;
 }
 
-export default function UserRegistration() {
+export default function UserRegistration(props: any) {
   const { control, handleSubmit } = useForm<IFormInput>();
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
@@ -26,6 +26,7 @@ export default function UserRegistration() {
     apiPost("/api/register", data).then((res) => {
       //console.log("user successfully posted something, :", res);
     });
+    props.setSignUp('SignedUp')
   };
 
   return (
