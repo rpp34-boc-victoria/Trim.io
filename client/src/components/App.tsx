@@ -58,7 +58,6 @@ export default function App(props: any) {
       throw err;
     }
   }
-<<<<<<< HEAD
   if (signUp === 'newAccount') {
     return (
       <Container maxWidth="sm">
@@ -72,45 +71,6 @@ export default function App(props: any) {
     );
   } else {
     return (
-      <Container maxWidth="sm">
-        <Box sx={{ my: 4 }}>
-          <Typography variant="h3" component="h1"
-            gutterBottom align="center" fontWeight="bold">
-            Trim.io
-          </Typography>
-          {/* <ProTip /> */}
-          {/* <History /> */}
-          <Box className="history">
-            <Box className="tab_wrap">
-              <Box className="tab">
-                <Typography
-                  className={`tab_item ${activeIndex === "daliy" ? "active" : ""
-                    }`}
-                  onClick={() => handleChangeTab("daliy")}
-                >
-                  Daliy
-                </Typography>
-                <Typography
-                  className={`tab_item ${activeIndex === "weekly" ? "active" : ""
-                    }`}
-                  onClick={() => handleChangeTab("weekly")}
-                >
-                  Weekly
-                </Typography>
-              </Box>
-            </Box>
-            {activeIndex === "daliy" ?
-              <Daily dailyData={dailyData} handleDailyUpdate={handleDailyUpdate} /> :
-              <Weekly />
-            }
-          </Box>
-          {/* <Box>
-            <UserReg />
-          </Box> */}
-=======
-
-
-  return (
     <ThemeProvider theme={theme}>
       <Container maxWidth="sm">
         <Box sx={{ my: 4 }}>
@@ -148,22 +108,11 @@ export default function App(props: any) {
           <Divider sx={{mb: '16px'}} />
           <Incrementer labelText='Body weight' />
           <AddEntry></AddEntry>
-          <Box>
-            <UserReg />
-          </Box>
->>>>>>> 753ea1725a5627dd729b0e73bca5cc20c18aff83
           <Copyright />
         </Box>
         <ToastNotification />
       </Container>
-<<<<<<< HEAD
-    );
-
-  }
-
-
-=======
     </ThemeProvider>
-  );
->>>>>>> 753ea1725a5627dd729b0e73bca5cc20c18aff83
+    );
+  }
 }
