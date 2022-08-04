@@ -86,7 +86,7 @@ export default function App(props: any) {
                   }`}
                 onClick={() => handleChangeTab("daily")}
               >
-                Day
+                Daily
               </Typography>
               <Typography
                 className={`tab_item ${activeIndex === "weekly" ? "active" : ""
