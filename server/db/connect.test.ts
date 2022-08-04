@@ -32,7 +32,7 @@ describe('Connects to DB', () => {
       user_id: new mongoose.Types.ObjectId().toString(),
       entryDate: todayMidnight(),
       foodItems: [{
-        label: 'Big Mac',
+        foodItem: 'Big Mac',
         nutrients: {
           "ENERC_KCAL": 257,
           "PROCNT": 11.82,
@@ -40,7 +40,8 @@ describe('Connects to DB', () => {
           "CHOCDF": 20.08,
           "FIBTG": 1.6
         },
-        wholeWeight: 213,
+        gramsPerServing: 213,
+        servings: 1
       }],
       waterAmount: 1,
       weightAmount: 1,
