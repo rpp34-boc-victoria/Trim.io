@@ -1,7 +1,7 @@
 import { sha512 } from 'js-sha512';
 import React, {useState} from 'react';
 import axios from 'axios';
-import { Typography, Input, Box, Button } from "@mui/material";
+import { Typography, Input, Card, Button } from "@mui/material";
 // import { Button } from '@material-ui/core';
 
 export interface inputData {
@@ -21,7 +21,7 @@ export default function Login(props : any) {
   const [inputField , setInputField] = useState <inputData | any> ({
     username: '',
     password: '',
-  })
+  });
 
   const inputsHandler = (e: any) => {
     setInputField( {...inputField, [e.target.name]: e.target.value} )
@@ -31,13 +31,11 @@ export default function Login(props : any) {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    console.log(inputField.username, 'test')
     axios.post('/auth/login', {
       'username': inputField.username
     })
     .then((result) => {
       if (result.data.length === 0) {
-        console.log('Failed during the .length')
       } else {
         const salt = result.data[0]['salt'];
         const hashpass = result.data[0]['hashpass'];
@@ -45,7 +43,6 @@ export default function Login(props : any) {
         const _id = result.data[0]['_id'];
 
         const hashedPass = sha512(inputField.password + salt.toString());
-        console.log(hashedPass)
         if (hashpass === hashedPass) {
           props.onSubmit({
             username: username,
@@ -67,11 +64,11 @@ export default function Login(props : any) {
   }
 
   return (
-    <Box>
+    <Card>
       <Typography variant="h4">Log In</Typography>
     <form >
       <label>
-        <Input type='text' name='username' placeholder='Login' onChange={inputsHandler} value={inputField?.username}></Input>
+        <Input type='text' name='username' placeholder='Username' onChange={inputsHandler} value={inputField?.username}></Input>
       </label>
       <br></br>
       <label>
@@ -80,7 +77,7 @@ export default function Login(props : any) {
       </label>
       <Button onClick={handleSubmit}>Subimt</Button>
     </form>
-    </Box>
+    </Card>
   )
 
 
