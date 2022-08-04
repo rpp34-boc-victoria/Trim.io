@@ -15,6 +15,7 @@ import Incrementer from './dailyEntries/Incrementer';
 import {ThemeProvider} from '@mui/material/styles';
 import { Divider } from '@mui/material';
 import theme from '../theme';
+import ToastNotification from './ToastNotification/ToastNotification';
 import './App.scss'
 
 function Copyright() {
@@ -31,12 +32,15 @@ function Copyright() {
 
 
 
-export default function App() {
+export default function App(props: any) {
 
   /********************* State Hooks At App Level ******************/
 
   const [dailyData, setDailyData] = useState(async () => undefined);
   const [activeIndex, setActiveIndex] = useState("daliy");
+  // const [username, userId] = [...props.data];
+  const user_id = props.data.username;
+  // const userId = props.data.userId;
 
   /*****************************************************************/
 
@@ -46,6 +50,7 @@ export default function App() {
 
   async function handleDailyUpdate() {
     try {
+      console.log(user_id);
       let data = await getDaily();
       setDailyData(data);
     } catch (err: any) {
@@ -97,6 +102,7 @@ export default function App() {
           </Box>
           <Copyright />
         </Box>
+        <ToastNotification />
       </Container>
     </ThemeProvider>
   );

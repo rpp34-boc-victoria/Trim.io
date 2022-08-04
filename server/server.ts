@@ -7,10 +7,15 @@ import {
   userEntriesModel,
   dailyEntriesModel,
   todayMidnight,
+  authModel
 } from "./db/schema.models";
 import dayjs from "dayjs";
 import cors from 'cors';
 import { format, compareAsc, parseISO } from 'date-fns';
+dotenv.config();
+// var bodyParser = require('body-parser');
+// import bodyParser from "body-parser";
+import { resolveAny } from "dns";
 import { LEGAL_TCP_SOCKET_OPTIONS } from 'mongodb';
 
 dotenv.config();
@@ -49,12 +54,31 @@ app.get("/api/hello", (req, res) => {
   res.send({ message: "Hello" });
 });
 
-app.post('/notifications/subscribe', (req, res) => {
+app.post('/notifications/subscribe', async (req, res) => {
   const subscription = req.body
 
   console.log('SUB', subscription)
-  // add subscrition to database
+  // add subscription to database
+
+  let user = new userEntriesModel({
+    height: 1.7,
+    weight: 60,
+    firstName: "Spruce",
+    lastName: "Ya",
+    age: 20,
+    caloriesGoal: 1500,
+    waterGoal: 7,
+    gender: "M",
+    email: 'asd@fas.com',
+    phoneNumber: 124123,
+    webPushSubscriptions: [subscription]
+  })
+  await user.save();
   res.status(200).json({'success': true})
+});
+
+app.get('/getUserStreak', async (req, res) => {
+  res.send('10');
 });
 
 app.get("/", (req, res) => {
@@ -269,7 +293,7 @@ app.get("/api/generateDaily", async (req, res) => {
 
   for (let i = 0; i < numDaysAgo; i++) {
     var daily = {
-      user_id: "62e0ed5f9c63f6892fcbaa68",
+      user_id: "62e99b03eccc7148176fcf85",
       foodItems,
       entryDate: dayjs().startOf('day').subtract(numDaysAgo - 1 - i, "day").toISOString(),
       waterAmount: Math.floor(Math.random() * 10),
@@ -291,7 +315,7 @@ app.get("/api/generateDaily", async (req, res) => {
 })
 
 // Not sure what this is for......????
-app.get("/api/register", (req, res) => {
+app.get("/api/register", async (req, res) => {
 
   let user = new userEntriesModel({
     height: 1.7,
@@ -301,12 +325,71 @@ app.get("/api/register", (req, res) => {
     age: 20,
     caloriesGoal: 1500,
     waterGoal: 7,
-    gender: 1
+    gender: "M",
+    email: 'asd@fas.com',
+    phoneNumber: 124123,
+    webPushSubscriptions: [
+      {endpoint: 'https://fcm.googleapis.com/fcm/send/dY2vomoPgS8:APA91bEqP3EsCkTlUwoE5WtZxE9SmJZJv3aBwMQWn4wkRgP5aRQU18AsbsNnp_RqYJuzK_gRkUuLuTEDDNqfgpY5tk4yQHqopjxRu2Y6VwsqvPPcS7q0E8dK2uGdhLnq_oOz4PpIcb3K',
+        expirationTime: null,
+        keys: {
+          p256dh: 'BMaslJakEW0Zu2o2mGhqjVB2XPTWQD67ird8EIfSy8pxMcuSyX6wm5AuvnKmM-5H1NWJ2BC5wmTHPAXljvQN2bI',
+          auth: 'wZxamv5cgcsv5UU04_plkw'}
+        }
+    ]
   })
-  user.save();
+  await user.save();
   res.send({ message: "Hello" });
 });
 
+app.post("/auth/login", async (req, res) => {
+  // const data = null;
+
+  let username = req.body.username;
+  console.log(username, 'usernaem')
+  const query = {
+    username: username
+  };
+  authModel.find(query, (error, result) => {
+    if (error) res.send('Failed');
+    res.send(result);
+  })
+})
+
+app.post("/auth/checkUser", (req, res) => {
+  // const data = null;
+
+  let username = req.body.username;
+  const query = {
+    username: username
+  };
+  authModel.find(query, (error, result) => {
+    if (error) res.send('Failed');
+    res.send(result);
+  })
+})
+
+app.post("/auth/CreateUser", (req, res) => {
+  // const data = null;
+  console.log(req.body)
+
+  let username = req.body.username;
+  let email = req.body.email;
+  let hashedFunction = req.body.hashedFunction;
+  let salt = req.body.salt;
+  console.log(username, salt, hashedFunction, email)
+  const query = {
+    username: username,
+    email: email,
+    salt: salt,
+    hashpass: hashedFunction
+  };
+
+  const newAuthModel = new authModel (query);
+  newAuthModel.save().then((result) => {
+    res.send(result);
+  })
+
+})
 
 //Below is a post request for the users to register
 app.post("/api/register", async (req, res) => {
