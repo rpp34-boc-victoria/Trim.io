@@ -34,6 +34,8 @@ export default function App(props: any) {
   const [activeIndex, setActiveIndex] = useState("daily");
 >>>>>>> 39f47bd (backup)
 
+  const user_id = props.data.username;
+
   /*****************************************************************/
 
   const handleChangeTab = (type: string) => {
