@@ -2,6 +2,7 @@ import { sha512 } from 'js-sha512';
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Typography, Input, Box, Button, Container } from "@mui/material";
+import { maxHeight } from '@mui/system';
 
 export interface inputData {
   username: string | any;
@@ -64,19 +65,19 @@ export default function Login(props: any) {
 
   return (
     <Container maxWidth="sm" sx={{ padding: '25%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignContent: 'center' }}>
-      <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignContent: 'center' }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
         <Typography variant="h4" align='center' >Log In</Typography>
         <form style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center' }}>
           <label>
             <Input type='text' name='username' placeholder='Username' onChange={inputsHandler} value={inputField?.username}></Input>
-            <button className={eyeVisible} style={{visibility: 'hidden'}}></button>
+            <button className={eyeVisible} style={{ visibility: 'hidden' }}></button>
           </label>
           <br></br>
           <label>
             <Input type={showPass} name='password' placeholder='Password' onChange={inputsHandler} value={inputField?.password}></Input>
             <button className={eyeVisible} onClick={togglePassword} id="togglePassword"></button>
           </label>
-          <Button onClick={handleSubmit}>Subimt</Button>
+          <Button variant="contained" onClick={handleSubmit}>Subimt</Button>
         </form>
       </Box>
     </Container >
