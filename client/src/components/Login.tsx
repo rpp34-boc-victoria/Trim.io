@@ -2,7 +2,6 @@ import { sha512 } from 'js-sha512';
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Typography, Input, Box, Button, Container } from "@mui/material";
-import { maxHeight } from '@mui/system';
 
 export interface inputData {
   username: string | any;
