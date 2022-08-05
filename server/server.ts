@@ -268,6 +268,8 @@ app.post('/api/daily', async (req, res) => {
   }
 });
 
+/******************** DAILY DATA GENERATOR ***********************/
+
 app.get("/api/generateDaily", async (req, res) => {
   console.log('/api/generateDaily [params]: ', req.query)
   /**
@@ -275,7 +277,7 @@ app.get("/api/generateDaily", async (req, res) => {
    */
   const skipDays = req.query?.skipToday ? 0 : 1;
   let foodItems = []
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < Math.ceil(Math.random() * 8); i++) {
     foodItems.push(
       {
         foodItem: 'Big Mac',
