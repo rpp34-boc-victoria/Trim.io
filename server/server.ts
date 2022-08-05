@@ -17,6 +17,7 @@ dotenv.config();
 // import bodyParser from "body-parser";
 import { resolveAny } from "dns";
 import { LEGAL_TCP_SOCKET_OPTIONS } from 'mongodb';
+import mongoose from 'mongoose';
 
 dotenv.config();
 const PORT = process.env.PORT || 8000;
@@ -58,6 +59,7 @@ app.post('/notifications/subscribe', async (req, res) => {
   // add subscription to database
 
   let user = new userEntriesModel({
+    user_id: new mongoose.Types.ObjectId(),
     height: 1.7,
     weight: 60,
     firstName: "Spruce",
@@ -273,8 +275,9 @@ app.post('/api/daily', async (req, res) => {
 app.get("/api/generateDaily", async (req, res) => {
   console.log('/api/generateDaily [params]: ', req.query)
   /**
-   * Do something with req.params to configure advanced Data Generation
+   * Do something with req.query/params to configure advanced Data Generation
    */
+  const skip = req.query?.skip ? 0 : 1;
   let foodItems = []
   for (let i = 0; i < 5; i++) {
     foodItems.push(
@@ -300,8 +303,8 @@ app.get("/api/generateDaily", async (req, res) => {
     var daily = {
       user_id: req.query?.user_id,
       foodItems,
-      entryDate: dayjs().startOf('day').subtract(numDaysAgo - i, "day").toISOString(),
-      waterAmount: Math.floor(Math.random() * 10),
+      entryDate: dayjs().startOf('day').subtract(numDaysAgo - skip - i, "day").toISOString(),
+      waterAmount: Math.floor(Math.random() * 16),
       weightAmount: Math.floor(Math.random() * (150 - 40) + 40),
       caloriesAmount: Math.floor(Math.random() * (2200 - 3) + 3),
     }
@@ -323,6 +326,7 @@ app.get("/api/generateDaily", async (req, res) => {
 app.get("/api/register", async (req, res) => {
 
   let user = new userEntriesModel({
+    user_id: new mongoose.Types.ObjectId(),
     height: 1.7,
     weight: 60,
     firstName: "Spruce",
@@ -344,8 +348,14 @@ app.get("/api/register", async (req, res) => {
       }
     ]
   })
-  await user.save();
-  res.send({ message: "Hello" });
+  try {
+    await user.save();
+    res.sendStatus(201);
+  } catch (err) {
+    res.status(501);
+    res.send(err);
+  }
+
 });
 
 app.post("/auth/login", async (req, res) => {

@@ -6,12 +6,15 @@ import CalorieBar from "./calorieBar";
 import ExceedBar from './exceedBar';
 import './daily.scss';
 
+const defaultCalorieGoal = 2000;
+const defaultWaterGoal = 8;
+
 const Daily = (props: any) => {
 
-  const { handleDailyUpdate, dailyData } = props;
-  const calorieGoal = 2000; // will be changed;
+  const { handleDailyUpdate, dailyData, userGoals } = props;
+  const calorieGoal = userGoals?.caloriesGoal || defaultCalorieGoal;
   const calorie = dailyData?.caloriesAmount; // will be changed;
-  const waterGoal = 8; // will be changed;
+  const waterGoal = userGoals?.waterGoal || defaultWaterGoal;
   const water = dailyData?.waterAmount; // will be changed;
 
   useEffect(() => {
