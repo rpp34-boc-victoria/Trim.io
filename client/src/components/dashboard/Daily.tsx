@@ -4,6 +4,7 @@ import { Box, Typography, Button } from "@mui/material";
 import CalorieBar from "./calorieBar";
 import ExceedBar from './exceedBar';
 import './daily.scss';
+import { calcTotalCal } from '../utilFuncs';
 
 const defaultCalorieGoal = 2000;
 const defaultWaterGoal = 8;
@@ -11,15 +12,15 @@ const defaultWaterGoal = 8;
 const Daily = (props: any) => {
 
   const { handleDailyUpdate, dailyData, userInfo, submitModalOn, toggleSubmit } = props;
-  const calorieGoal = userInfo?.targetCalories || defaultCalorieGoal;
-  const calorie = dailyData?.caloriesAmount; // will be changed;
-  const waterGoal = userInfo?.targetWater || defaultWaterGoal;
-  const water = dailyData?.waterAmount; // will be changed;
+  const calorieGoal = userInfo?.caloriesGoal || defaultCalorieGoal;
+  const waterGoal = userInfo?.waterGoal || defaultWaterGoal;
+  const calorie = dailyData?.foodItems ? calcTotalCal(dailyData.foodItems) : null;
+  const water = dailyData?.waterAmount || 0;
 
   useEffect(() => {
     handleDailyUpdate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [userInfo]);
 
   if (dailyData !== undefined) {
     return (

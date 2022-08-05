@@ -55,3 +55,18 @@ export const getDaily = async (user_id: String) => {
     throw error;
   }
 }
+
+export const getUserInfo = async (user_id: String) => {
+  try {
+    let result = await axios({
+      method: 'get',
+      url: '/api/fetchUser',
+      params: {
+        user_id,
+      }
+    });
+    return result.data;
+  } catch (error: any) {
+    throw error;
+  }
+}

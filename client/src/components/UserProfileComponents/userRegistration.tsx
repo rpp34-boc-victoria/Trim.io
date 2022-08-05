@@ -29,7 +29,7 @@ interface UserRegistrationProps {
   userID: any;
 }
 
-export default function UserRegistration( props: any,  {userID} : UserRegistrationProps ) {
+export default function UserRegistration(props: any, { userID }: UserRegistrationProps) {
   const { control, handleSubmit } = useForm<IFormInput>();
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
@@ -42,9 +42,12 @@ export default function UserRegistration( props: any,  {userID} : UserRegistrati
     //console.log(data);
     apiPost("/api/register", data).then((res) => {
       //console.log("user successfully posted something, :", res);
+      props.setSignUp('SignedUp')
+      props.setUserInfomation(data);
+    }).catch(err => {
+      alert(`User Creation NOT Succssful: ${err.message}`);
     });
-    props.setSignUp('SignedUp')
-    props.setUserInfomation(data);
+
   };
 
   return (

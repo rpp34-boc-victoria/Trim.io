@@ -1,12 +1,12 @@
 
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 // import ProTip from "./ProTip";
 import Weekly from "./history/Weekly";
-import { getDaily } from '../api';
+import { getDaily, getUserInfo } from '../api';
 import Daily from "./dashboard/Daily";
 import UserReg from './UserProfileComponents/userRegistration';
 import AddEntry from './dailyEntries/AddEntry';
@@ -22,11 +22,11 @@ export default function App(props: any) {
 
   /********************* State Hooks At App Level ******************/
 
-  const [dailyData, setDailyData] = useState(async () => undefined);
+  const [dailyData, setDailyData] = useState(() => undefined);
   const [activeIndex, setActiveIndex] = useState("daliy");
   const user_id = props.data.username;
   const [signUp, setSignedUp] = useState(props.signedUp);
-  const [userInfo, setUserInfo] = useState(props.userInfo);
+  const [userInfo, setUserInfo] = useState(() => undefined);
   const [submitModalOn, toggleSubmit] = useState(false);
 
   /*****************************************************************/
@@ -43,6 +43,15 @@ export default function App(props: any) {
       throw err;
     }
   };
+
+  async function updateUserInfo(user_id: String) {
+    let info = await getUserInfo(user_id);
+    setUserInfo(info);
+  }
+
+  useEffect(() => {
+    updateUserInfo(user_id);
+  }, [user_id]);
 
   if (signUp === 'newAccount') {
     return (

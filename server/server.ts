@@ -212,7 +212,7 @@ app.get("/api/getWeekly", async (req, res) => {
 /******************** Daily Get Route ***********************/
 
 app.get('/api/daily', async (req, res) => {
-  console.log('/api/daily params:' , req.query)
+  console.log('/api/daily params:', req.query)
   let query = {
     entryDate: { $gte: todayMidnight() },
     user_id: req.query?.user_id, // Will need to be given the user_id by authentication middleware
@@ -228,7 +228,7 @@ app.get('/api/daily', async (req, res) => {
 });
 
 app.get('/api/latestEntry', async (req, res) => {
-  console.log('/api/latestEntry params:' , req.query)
+  console.log('/api/latestEntry params:', req.query)
   let query = {
     user_id: req.query?.user_id, // Will need to be given the user_id by authentication middleware
   }
@@ -358,7 +358,7 @@ app.post("/auth/login", async (req, res) => {
   // const data = null;
 
   let username = req.body.username;
-  console.log(username, 'usernaem')
+  console.log('Username: ', username);
   const query = {
     username: username
   };
@@ -367,6 +367,9 @@ app.post("/auth/login", async (req, res) => {
     res.send(result);
   })
 })
+
+
+/******************** AUTH ROUTES ***********************/
 
 app.post("/auth/checkUser", (req, res) => {
   // const data = null;
@@ -404,9 +407,10 @@ app.post("/auth/CreateUser", (req, res) => {
 
 })
 
+/******************** USER Routes ***********************/
+
 //Below is a post request for the users to register
 app.post("/api/register", async (req, res) => {
-  //console.log('req here:!!', req.body);
   let userData = req.body;
   userData.caloriesRecommanded = "2000"; // THIS NEEDS TO BE CALCULATED!!
   let userReg = new userEntriesModel({
@@ -432,6 +436,18 @@ app.post("/api/register", async (req, res) => {
   try {
     await userReg.save();
     res.sendStatus(201);
+  } catch (err) {
+    res.status(501);
+    res.send(err);
+  }
+});
+
+app.get("/api/fetchUser", async (req, res) => {
+  let user_id = req.query?.user_id;
+  try {
+    let result = await userEntriesModel.findOne({ user_id }).sort({ _id: -1 });
+    res.status(200);
+    res.send(result);
   } catch (err) {
     res.status(501);
     res.send(err);
