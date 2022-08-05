@@ -2,12 +2,13 @@ import * as React from 'react';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import {Autocomplete, Box, Button, Stack, TextField} from '@mui/material';
-import {useForm, Controller} from 'react-hook-form'
+import { Autocomplete, Box, Button, Stack, TextField } from '@mui/material';
+import { useForm, Controller } from 'react-hook-form'
 
 
-const AddEntry = () => {
-  const {register, control, handleSubmit} = useForm();
+const AddEntry = (props?: any) => {
+  const { handleDailyUpdate } = props;
+  const { register, control, handleSubmit } = useForm();
 
   const foodItems = [
     { title: 'The Shawshank Redemption', year: 1994 },
@@ -138,25 +139,32 @@ const AddEntry = () => {
 
   return (
     <Box>
-      <form onSubmit={handleSubmit((data)=> alert(JSON.stringify(data)))}>
+      <form onSubmit={handleSubmit(async (data) => {
+        alert(JSON.stringify(data));
+        try {
+          await handleDailyUpdate(); // @ Slava, This this the function that will update the Daily DashBoard
+        } catch (err) {
+          alert(`Submit Unsuccessful: ${err}`);
+        }
+      })}>
 
         <Stack spacing={2}>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <Controller
-            control={control}
-            name="date"
-            defaultValue={new Date()}
+            <Controller
+              control={control}
+              name="date"
+              defaultValue={new Date()}
 
-            render={({ field: { onChange, onBlur, value, ref } }) => (
-              <DatePicker
-                onChange={(value)=>{console.log('change', this); onChange(value)}}
-                value={value}
-                label="Date"
-                renderInput={(params) => {console.log('params', params); return (<TextField {...params} />)}}
-              />
-            )}
-          />
-          {/* <Controller
+              render={({ field: { onChange, onBlur, value, ref } }) => (
+                <DatePicker
+                  onChange={(value) => { console.log('change', this); onChange(value) }}
+                  value={value}
+                  label="Date"
+                  renderInput={(params) => { console.log('params', params); return (<TextField {...params} />) }}
+                />
+              )}
+            />
+            {/* <Controller
             control={control}
             name="date"
             defaultValue={new Date()}

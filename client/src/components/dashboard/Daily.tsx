@@ -11,10 +11,10 @@ const defaultWaterGoal = 8;
 
 const Daily = (props: any) => {
 
-  const { handleDailyUpdate, dailyData, userGoals } = props;
-  const calorieGoal = userGoals?.caloriesGoal || defaultCalorieGoal;
+  const { handleDailyUpdate, dailyData, userInfo } = props;
+  const calorieGoal = userInfo?.targetCalories || defaultCalorieGoal;
   const calorie = dailyData?.caloriesAmount; // will be changed;
-  const waterGoal = userGoals?.waterGoal || defaultWaterGoal;
+  const waterGoal = userInfo?.targetWater || defaultWaterGoal;
   const water = dailyData?.waterAmount; // will be changed;
 
   useEffect(() => {

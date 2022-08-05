@@ -40,9 +40,6 @@ export default function App(props: any) {
   const [signUp, setSignedUp] = useState(props.signedUp);
   const [userInfo, setUserInfo] = useState(props.userInfo);
 
-  // Need to fetch the goals: NEED To CHange
-  const [userGoals, setUserGoals] = useState({ caloriesGoal: 1800, waterGoal: 10 })
-
   /*****************************************************************/
 
   const handleChangeTab = (type: string) => {
@@ -51,13 +48,13 @@ export default function App(props: any) {
 
   async function handleDailyUpdate() {
     try {
-      console.log(user_id);
       let data = await getDaily(user_id);
       setDailyData(data);
     } catch (err: any) {
       throw err;
     }
-  }
+  };
+
   if (signUp === 'newAccount') {
     return (
       <Container maxWidth="sm">
@@ -88,7 +85,7 @@ export default function App(props: any) {
                       }`}
                     onClick={() => handleChangeTab("daliy")}
                   >
-                    Daliy
+                    Daily
                   </Typography>
                   <Typography
                     className={`tab_item ${activeIndex === "weekly" ? "active" : ""
@@ -100,14 +97,16 @@ export default function App(props: any) {
                 </Box>
               </Box>
               {activeIndex === "daliy" ?
-                <Daily dailyData={dailyData} userGoals={userGoals} handleDailyUpdate={handleDailyUpdate} userInfo={userInfo} /> :
+                <Daily dailyData={dailyData}
+                  handleDailyUpdate={handleDailyUpdate}
+                  userInfo={userInfo} /> :
                 <Weekly />
               }
             </Box>
             <Incrementer labelText='Water (cups)' />
             <Divider sx={{ mb: '16px' }} />
             <Incrementer labelText='Body weight' />
-            <AddEntry></AddEntry>
+            <AddEntry handleDailyUpdate={handleDailyUpdate} ></AddEntry>
             <Copyright />
           </Box>
           <ToastNotification />
