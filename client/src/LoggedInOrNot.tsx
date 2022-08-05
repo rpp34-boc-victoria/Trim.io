@@ -16,7 +16,7 @@ export interface inputData {
   userId: string;
 }
 
-const centralButtons = ({ 'width': '50%', 'transform': 'translateX(50%)' });
+const centralButtons = ({ 'width': '100%' });
 
 function Copyright() {
   return (
@@ -59,7 +59,7 @@ export default function LoggedInOrNot() {
   if (!login.loggedIn) {
     if (loginOrCreateNewUser === 'notLoggedIn') {
       return (
-        <div style={{
+        <Container maxWidth="sm" sx={{
           'padding': '25%',
           'display': 'flex',
           'flexDirection': 'column',
@@ -70,10 +70,16 @@ export default function LoggedInOrNot() {
             Trim.io
           </Typography>
           <div style={{ 'padding': '10%' }}></div>
-          <Button color="primary" variant="outlined" style={centralButtons} onClick={handleClick} value='login'>Let Me LogIn!</Button>
+          <Button color="primary" variant="outlined"
+            style={centralButtons} onClick={handleClick} value='login'>
+            Login
+          </Button>
           <div style={{ 'padding': '10%' }}></div>
-          <Button color="primary" variant="outlined" style={centralButtons} onClick={handleClick} value='newAccount'>Let Me Create an Account!</Button>
-        </div>
+          <Button color="primary" variant="outlined"
+            style={centralButtons} onClick={handleClick} value='newAccount'>
+            Sign Up
+          </Button>
+        </Container>
       )
     } else {
       return (loginOrCreateNewUser !== 'login') ?
@@ -97,7 +103,7 @@ export default function LoggedInOrNot() {
           </Box>
         </Box>
         <Box>
-        <div style={{ 'padding': '20px' }}></div>
+          <div style={{ 'padding': '20px' }}></div>
           <Copyright />
         </Box>
       </Container >

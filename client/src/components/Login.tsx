@@ -1,8 +1,7 @@
 import { sha512 } from 'js-sha512';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import { Typography, Input, Card, Button } from "@mui/material";
-// import { Button } from '@material-ui/core';
+import { Typography, Input, Box, Button, Container } from "@mui/material";
 
 export interface inputData {
   username: string | any;
@@ -16,15 +15,15 @@ export interface setInputField {
   type: object;
 }
 
-export default function Login(props : any) {
+export default function Login(props: any) {
 
-  const [inputField , setInputField] = useState <inputData | any> ({
+  const [inputField, setInputField] = useState<inputData | any>({
     username: '',
     password: '',
   });
 
   const inputsHandler = (e: any) => {
-    setInputField( {...inputField, [e.target.name]: e.target.value} )
+    setInputField({ ...inputField, [e.target.name]: e.target.value })
   }
   const [eyeVisible, updateEye] = useState<string>('bi bi-eye-slash');
   const [showPass, updatePass] = useState<string>('password')
@@ -34,26 +33,26 @@ export default function Login(props : any) {
     axios.post('/auth/login', {
       'username': inputField.username
     })
-    .then((result) => {
-      if (result.data.length === 0) {
-      } else {
-        const salt = result.data[0]['salt'];
-        const hashpass = result.data[0]['hashpass'];
-        const username = result.data[0]['username'];
-        const _id = result.data[0]['_id'];
-
-        const hashedPass = sha512(inputField.password + salt.toString());
-        if (hashpass === hashedPass) {
-          props.onSubmit({
-            username: username,
-            userId: _id,
-            login: true
-          })
+      .then((result) => {
+        if (result.data.length === 0) {
         } else {
-          alert('Incorrect Username or Password!')
+          const salt = result.data[0]['salt'];
+          const hashpass = result.data[0]['hashpass'];
+          const username = result.data[0]['username'];
+          const _id = result.data[0]['_id'];
+
+          const hashedPass = sha512(inputField.password + salt.toString());
+          if (hashpass === hashedPass) {
+            props.onSubmit({
+              username: username,
+              userId: _id,
+              login: true
+            })
+          } else {
+            alert('Incorrect Username or Password!')
+          }
         }
-      }
-    })
+      })
   }
 
   const togglePassword = (e: any) => {
@@ -64,21 +63,22 @@ export default function Login(props : any) {
   }
 
   return (
-    <Card>
-      <Typography variant="h4">Log In</Typography>
-    <form >
-      <label>
-        <Input type='text' name='username' placeholder='Username' onChange={inputsHandler} value={inputField?.username}></Input>
-      </label>
-      <br></br>
-      <label>
-        <Input type={showPass} name='password' placeholder='Password' onChange={inputsHandler} value={inputField?.password}></Input>
-        <button className={eyeVisible} onClick={togglePassword} id="togglePassword"></button>
-      </label>
-      <Button onClick={handleSubmit}>Subimt</Button>
-    </form>
-    </Card>
+    <Container maxWidth="sm" sx={{ padding: '25%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignContent: 'center' }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignContent: 'center' }}>
+        <Typography variant="h4" align='center' >Log In</Typography>
+        <form style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center' }}>
+          <label>
+            <Input type='text' name='username' placeholder='Username' onChange={inputsHandler} value={inputField?.username}></Input>
+            <button className={eyeVisible} style={{visibility: 'hidden'}}></button>
+          </label>
+          <br></br>
+          <label>
+            <Input type={showPass} name='password' placeholder='Password' onChange={inputsHandler} value={inputField?.password}></Input>
+            <button className={eyeVisible} onClick={togglePassword} id="togglePassword"></button>
+          </label>
+          <Button onClick={handleSubmit}>Subimt</Button>
+        </form>
+      </Box>
+    </Container >
   )
-
-
 }

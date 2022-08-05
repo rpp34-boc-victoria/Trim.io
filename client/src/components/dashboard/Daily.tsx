@@ -40,10 +40,11 @@ const Daily = (props: any) => {
               data={[{ value: water, goal: waterGoal }]} />
           </Box>
         </Box>
+        <Box sx={{ height: '30px' }}></Box>
         <Box>
           {
             submitModalOn ? null :
-              <Button sx={{width: '100%'}}
+              <Button sx={{ width: '100%' }}
                 variant="contained"
                 onClick={() => { toggleSubmit(true) }} >
                 + Add Food Item
