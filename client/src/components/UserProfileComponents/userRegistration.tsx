@@ -39,8 +39,7 @@ export default function UserRegistration( {userID} : UserRegistrationProps ) {
     data.userBMR = BMRcal(data.gender.value, data.weight, data.height, data.age);
     data.userRecommandedCaloIntake = RecommandedCaloIntakecal(data.gender.value, data.height, data.weight, data.age);
     data.userRecommandedWaterIntake = RecommandedWaterIntakecal(data.weight);
-    
-    console.log(data);
+    //console.log(data);
     apiPost("/api/register", data).then((res) => {
       //console.log("user successfully posted something, :", res);
     });
