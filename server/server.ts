@@ -395,8 +395,9 @@ app.post("/auth/CreateUser", (req, res) => {
 app.post("/api/register", async (req, res) => {
   //console.log('req here:!!', req.body);
   let userData = req.body;
-  userData.caloriesRecommanded = "2000";
+  //userData.caloriesRecommanded = "2000";
   let userReg = new userEntriesModel({
+    userId: +userData.user_id,
     firstName: userData.firstName,
     lastName: userData.lastName,
     age: +userData.age,
@@ -408,6 +409,11 @@ app.post("/api/register", async (req, res) => {
     caloriesGoal: +userData.targetCalories,
     caloriesRecommanded: +userData.caloriesRecommanded,
     waterGoal: +userData.targetWater,
+    userBMI: +userData.userBMI,
+    userBFP: +userData.userBFP,
+    userBMR: +userData.userBMR,
+    userRecommandedCaloIntake: +userData.userRecommandedCaloIntake,
+    userRecommandedWaterIntake: +userData.userRecommandedWaterIntake,
     createdTime: new Date(),
   });
   try {

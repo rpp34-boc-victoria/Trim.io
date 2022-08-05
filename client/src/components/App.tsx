@@ -30,8 +30,6 @@ function Copyright() {
   );
 }
 
-
-
 export default function App(props: any) {
 
   /********************* State Hooks At App Level ******************/
@@ -40,8 +38,10 @@ export default function App(props: any) {
   const [activeIndex, setActiveIndex] = useState("daliy");
   // const [username, userId] = [...props.data];
   const user_id = props.data.username;
+  //const user_id_obj = {userID: user_id};
   // const userId = props.data.userId;
   const [signUp, setSignedUp] = useState(props.signedUp);
+  const [userInfo, setUserInfo] = useState(props.userInfo);
 
   /*****************************************************************/
 
@@ -63,7 +63,7 @@ export default function App(props: any) {
       <Container maxWidth="sm">
         <Box sx={{ my: 4 }}>
           <Box>
-            <UserReg setSignUp= {setSignedUp}/>
+            <UserReg setSignUp={setSignedUp} setUserInfomation={setUserInfo}/>
           </Box>
           <Copyright />
         </Box>
@@ -100,7 +100,7 @@ export default function App(props: any) {
               </Box>
             </Box>
             {activeIndex === "daliy" ?
-              <Daily dailyData={dailyData} handleDailyUpdate={handleDailyUpdate} /> :
+              <Daily dailyData={dailyData} handleDailyUpdate={handleDailyUpdate} userInfo={userInfo} /> :
               <Weekly />
             }
           </Box>
