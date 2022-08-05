@@ -80,7 +80,12 @@ const userSchema = new mongoose.Schema({
   caloriesGoal: { type: Number, default: 0, remark: "daily Calories Goal in kcal" },
   caloriesRecommanded: { type: Number, default: 0, remark: "Recommanded daily Calories in kcal" },
   waterGoal: { type: Number, default: 0, remark: "daily Water intake Goal in cups" },
-  createdTime: { type: Date, default: new Date() },
+  userBMI: { type: Number, default: 0, remark: "user's BMI" },
+  userBFP: { type: Number, default: 0, remark: "user's body fat percentage" },
+  userBMR: { type: Number, default: 0, remark: "user's basal metabolic rate" },
+  userRecommandedCaloIntake: { type: Number, default: 0, remark: "recommanded calories intake" },
+  userRecommandedWaterIntake: { type: Number, default: 0, remark: "recommanded water intake" },
+  createdTime:{type:Date, default:new Date()},
   webPushSubscriptions: {
     type: [webPushSchema],
     default: []

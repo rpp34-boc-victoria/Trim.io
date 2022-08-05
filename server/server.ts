@@ -420,12 +420,17 @@ app.post("/api/register", async (req, res) => {
     age: +userData.age,
     gender: userData.gender.value,
     email: userData.email,
-    phoneNumber: +userData.phoneNumber,
+    phoneNumber: userData.phoneNumber,
     height: +userData.height,
     weight: +userData.weight,
     caloriesGoal: +userData.targetCalories,
     caloriesRecommanded: +userData.caloriesRecommanded,
     waterGoal: +userData.targetWater,
+    userBMI: +userData.userBMI,
+    userBFP: +userData.userBFP,
+    userBMR: +userData.userBMR,
+    userRecommandedCaloIntake: +userData.userRecommandedCaloIntake,
+    userRecommandedWaterIntake: +userData.userRecommandedWaterIntake,
     createdTime: new Date(),
   });
   try {

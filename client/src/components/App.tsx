@@ -30,8 +30,6 @@ function Copyright() {
   );
 }
 
-
-
 export default function App(props: any) {
 
   /********************* State Hooks At App Level ******************/
@@ -40,6 +38,7 @@ export default function App(props: any) {
   const [activeIndex, setActiveIndex] = useState("daliy");
   const user_id = props.data.username;
   const [signUp, setSignedUp] = useState(props.signedUp);
+  const [userInfo, setUserInfo] = useState(props.userInfo);
 
   // Need to fetch the goals: NEED To CHange
   const [userGoals, setUserGoals] = useState({ caloriesGoal: 1800, waterGoal: 10 })
@@ -64,7 +63,7 @@ export default function App(props: any) {
       <Container maxWidth="sm">
         <Box sx={{ my: 4 }}>
           <Box>
-            <UserReg setSignUp={setSignedUp} />
+            <UserReg setSignUp={setSignedUp} setUserInfomation={setUserInfo} />
           </Box>
           <Copyright />
         </Box>
@@ -105,11 +104,10 @@ export default function App(props: any) {
                 <Weekly />
               }
             </Box>
-            <Incrementer labelText='Water (cups)' />
-            <Divider sx={{ mb: '16px' }} />
-            <Incrementer labelText='Body weight' />
-            <AddEntry></AddEntry>
-            <Copyright />
+            {activeIndex === "daliy" ?
+              <Daily dailyData={dailyData} handleDailyUpdate={handleDailyUpdate} userInfo={userInfo} /> :
+              <Weekly />
+            }
           </Box>
           <ToastNotification />
         </Container>
