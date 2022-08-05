@@ -39,7 +39,7 @@ export default function CalorieBar(props: IProps) {
     pad2Color: over ? badColor : nonColor,
     max,
   }
-  console.log(dataPoint);
+  // console.log(dataPoint);
   return (
     <ResponsiveContainer width="100%" height="100%">
       <BarChart layout='vertical' data={[dataPoint]}>
