@@ -402,8 +402,9 @@ app.post("/auth/CreateUser", (req, res) => {
 app.post("/api/register", async (req, res) => {
   //console.log('req here:!!', req.body);
   let userData = req.body;
-  userData.caloriesRecommanded = "2000";
+  userData.caloriesRecommanded = "2000"; // THIS NEEDS TO BE CALCULATED!!
   let userReg = new userEntriesModel({
+    user_id: userData.user_id,
     firstName: userData.firstName,
     lastName: userData.lastName,
     age: +userData.age,
