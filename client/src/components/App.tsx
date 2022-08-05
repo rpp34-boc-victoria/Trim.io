@@ -100,14 +100,15 @@ export default function App(props: any) {
                 </Box>
               </Box>
               {activeIndex === "daliy" ?
-                <Daily dailyData={dailyData} userGoals={userGoals} handleDailyUpdate={handleDailyUpdate} /> :
+                <Daily dailyData={dailyData} userGoals={userGoals} handleDailyUpdate={handleDailyUpdate} userInfo={userInfo} /> :
                 <Weekly />
               }
             </Box>
-            {activeIndex === "daliy" ?
-              <Daily dailyData={dailyData} handleDailyUpdate={handleDailyUpdate} userInfo={userInfo} /> :
-              <Weekly />
-            }
+            <Incrementer labelText='Water (cups)' />
+            <Divider sx={{ mb: '16px' }} />
+            <Incrementer labelText='Body weight' />
+            <AddEntry></AddEntry>
+            <Copyright />
           </Box>
           <ToastNotification />
         </Container>
