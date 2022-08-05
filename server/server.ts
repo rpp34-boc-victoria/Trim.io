@@ -59,7 +59,7 @@ app.post('/notifications/subscribe', async (req, res) => {
   // add subscription to database
 
   let user = new userEntriesModel({
-    user_id: new mongoose.Types.ObjectId(),
+    user_id: req.body?.user_id || new mongoose.Types.ObjectId(),
     height: 1.7,
     weight: 60,
     firstName: "Spruce",
@@ -326,7 +326,7 @@ app.get("/api/generateDaily", async (req, res) => {
 app.get("/api/register", async (req, res) => {
 
   let user = new userEntriesModel({
-    user_id: new mongoose.Types.ObjectId(),
+    user_id: req.query?.user_id || new mongoose.Types.ObjectId(),
     height: 1.7,
     weight: 60,
     firstName: "Spruce",
