@@ -7,7 +7,7 @@ import { useForm, Controller } from 'react-hook-form'
 
 
 const AddEntry = (props?: any) => {
-  const { handleDailyUpdate } = props;
+  const { handleDailyUpdate, toggleSubmit } = props;
   const { register, control, handleSubmit } = useForm();
 
   const foodItems = [
@@ -143,6 +143,7 @@ const AddEntry = (props?: any) => {
         alert(JSON.stringify(data));
         try {
           await handleDailyUpdate(); // @ Slava, This this the function that will update the Daily DashBoard
+          toggleSubmit(false);
         } catch (err) {
           alert(`Submit Unsuccessful: ${err}`);
         }
@@ -206,6 +207,12 @@ const AddEntry = (props?: any) => {
             type="submit"
           >
             Submit
+          </Button>
+          <Button
+            variant="contained"
+            onClick={() => { toggleSubmit(false) }}
+          >
+            Cancel
           </Button>
         </Stack>
       </form>

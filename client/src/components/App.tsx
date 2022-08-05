@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import Link from "@mui/material/Link";
 // import ProTip from "./ProTip";
 import Weekly from "./history/Weekly";
 import { getDaily } from '../api';
@@ -18,17 +17,6 @@ import theme from '../theme';
 import ToastNotification from './ToastNotification/ToastNotification';
 import './App.scss'
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Trim.io
-      </Link>{" "}
-      {new Date().getFullYear()}.
-    </Typography>
-  );
-}
 
 export default function App(props: any) {
 
@@ -39,6 +27,7 @@ export default function App(props: any) {
   const user_id = props.data.username;
   const [signUp, setSignedUp] = useState(props.signedUp);
   const [userInfo, setUserInfo] = useState(props.userInfo);
+  const [submitModalOn, toggleSubmit] = useState(false);
 
   /*****************************************************************/
 
@@ -62,7 +51,6 @@ export default function App(props: any) {
           <Box>
             <UserReg setSignUp={setSignedUp} setUserInfomation={setUserInfo} />
           </Box>
-          <Copyright />
         </Box>
       </Container>
     );
@@ -99,15 +87,20 @@ export default function App(props: any) {
               {activeIndex === "daliy" ?
                 <Daily dailyData={dailyData}
                   handleDailyUpdate={handleDailyUpdate}
-                  userInfo={userInfo} /> :
+                  userInfo={userInfo}
+                  toggleSubmit={toggleSubmit}
+                  submitModalOn={submitModalOn} /> :
                 <Weekly />
               }
             </Box>
-            <Incrementer labelText='Water (cups)' />
-            <Divider sx={{ mb: '16px' }} />
-            <Incrementer labelText='Body weight' />
-            <AddEntry handleDailyUpdate={handleDailyUpdate} ></AddEntry>
-            <Copyright />
+            {submitModalOn ?
+              <Box>
+                <Incrementer labelText='Water (cups)' />
+                <Divider sx={{ mb: '16px' }} />
+                <Incrementer labelText='Body weight' />
+                <AddEntry toggleSubmit={toggleSubmit} handleDailyUpdate={handleDailyUpdate} ></AddEntry>
+              </Box> :
+              null}
           </Box>
           <ToastNotification />
         </Container>

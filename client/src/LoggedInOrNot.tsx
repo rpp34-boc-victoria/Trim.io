@@ -6,6 +6,9 @@ import Login from './components/Login';
 import LogOut from './LogOut';
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Link from "@mui/material/Link";
 
 export interface inputData {
   loggedIn: boolean;
@@ -14,6 +17,18 @@ export interface inputData {
 }
 
 const centralButtons = ({ 'width': '50%', 'transform': 'translateX(50%)' });
+
+function Copyright() {
+  return (
+    <Typography variant="body2" color="text.secondary" align="center">
+      {"Copyright © "}
+      <Link color="inherit" href="https://mui.com/">
+        Trim.io
+      </Link>{" "}
+      {new Date().getFullYear()}.
+    </Typography>
+  );
+}
 
 
 export default function LoggedInOrNot() {
@@ -48,7 +63,8 @@ export default function LoggedInOrNot() {
           'padding': '25%',
           'display': 'flex',
           'flexDirection': 'column',
-          'justifyContent': 'center' }}>
+          'justifyContent': 'center'
+        }}>
           <Typography variant="h3" component="h1"
             gutterBottom align="center" fontWeight="bold">
             Trim.io
@@ -73,10 +89,18 @@ export default function LoggedInOrNot() {
     }
   } else {
     return (
-      <div>
-        <App data={login} signedUp={loginOrCreateNewUser} />
-        <LogOut onSubmit={handleUpdate} onClick={handleLogOut} />
-      </div>
+      <Container>
+        <Box>
+          <App data={login} signedUp={loginOrCreateNewUser} />
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <LogOut onSubmit={handleUpdate} onClick={handleLogOut} />
+          </Box>
+        </Box>
+        <Box>
+        <div style={{ 'padding': '20px' }}></div>
+          <Copyright />
+        </Box>
+      </Container >
     )
   }
 }
