@@ -393,7 +393,7 @@ app.post("/auth/CreateUser", (req, res) => {
 
 //Below is a post request for the users to register
 app.post("/api/register", async (req, res) => {
-  console.log('req here:!!', req.body);
+  //console.log('req here:!!', req.body);
   let userData = req.body;
   //userData.caloriesRecommanded = "2000";
   let userReg = new userEntriesModel({

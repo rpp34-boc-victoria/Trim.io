@@ -29,7 +29,7 @@ interface UserRegistrationProps {
   userID: any;
 }
 
-export default function UserRegistration( {userID} : UserRegistrationProps ) {
+export default function UserRegistration( props: any,  {userID} : UserRegistrationProps ) {
   const { control, handleSubmit } = useForm<IFormInput>();
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {

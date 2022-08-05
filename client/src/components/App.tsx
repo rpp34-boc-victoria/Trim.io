@@ -38,7 +38,7 @@ export default function App(props: any) {
   const [activeIndex, setActiveIndex] = useState("daliy");
   // const [username, userId] = [...props.data];
   const user_id = props.data.username;
-  const user_id_obj = {userID: user_id};
+  //const user_id_obj = {userID: user_id};
   // const userId = props.data.userId;
   const [signUp, setSignedUp] = useState(props.signedUp);
 
@@ -62,7 +62,7 @@ export default function App(props: any) {
       <Container maxWidth="sm">
         <Box sx={{ my: 4 }}>
           <Box>
-            <UserReg setSignUp= {setSignedUp}/>
+            <UserReg setSignUp={setSignedUp}/>
           </Box>
           <Copyright />
         </Box>
