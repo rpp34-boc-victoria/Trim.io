@@ -44,6 +44,7 @@ export default function UserRegistration( props: any,  {userID} : UserRegistrati
       //console.log("user successfully posted something, :", res);
     });
     props.setSignUp('SignedUp')
+    props.setUserInfomation(data);
   };
 
   return (
