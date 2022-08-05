@@ -28,7 +28,9 @@
   },
   "homepage": "https://github.com/rpp34-boc-victoria/Trim.io#readme",
   "dependencies": {
-    "all": "^0.0.0",
+    "@emotion/react": "^11.10.0",
+    "@emotion/styled": "^11.10.0",
+    "@mui/material": "^5.9.3",
     "axios": "^0.27.2",
     "cors": "^2.8.5",
     "date-fns": "^2.29.1",
@@ -40,6 +42,8 @@
     "mongoose": "^6.4.4",
     "node-schedule": "^2.1.0",
     "pm2": "^5.2.0",
+    "react-hook-form": "^7.34.0",
+    "react-select": "^5.4.0",
     "sass": "^1.53.0",
     "web-push": "^3.5.0"
   },
