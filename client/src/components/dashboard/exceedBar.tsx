@@ -10,8 +10,8 @@ interface IProps {
   data: { value: any, goal: any }[],
 }
 
-const goodColor = "#a5f08d";
-const medColor = '#f2d285';
+// const goodColor = "#a5f08d";
+// const medColor = '#f2d285';
 const lightBlue = '#b7e9f7';
 const darkBlue = '#4dd2f7';
 // const badColor = "#e87676";

@@ -277,7 +277,7 @@ app.get("/api/generateDaily", async (req, res) => {
   /**
    * Do something with req.query/params to configure advanced Data Generation
    */
-  const skip = req.query?.skip ? 0 : 1;
+  const skipDays = req.query?.skipToday ? 0 : 1;
   let foodItems = []
   for (let i = 0; i < 5; i++) {
     foodItems.push(
@@ -303,7 +303,7 @@ app.get("/api/generateDaily", async (req, res) => {
     var daily = {
       user_id: req.query?.user_id,
       foodItems,
-      entryDate: dayjs().startOf('day').subtract(numDaysAgo - skip - i, "day").toISOString(),
+      entryDate: dayjs().startOf('day').subtract(numDaysAgo - skipDays - i, "day").toISOString(),
       waterAmount: Math.floor(Math.random() * 16),
       weightAmount: Math.floor(Math.random() * (150 - 40) + 40),
       caloriesAmount: Math.floor(Math.random() * (2200 - 3) + 3),
