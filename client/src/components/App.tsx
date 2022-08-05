@@ -30,8 +30,6 @@ function Copyright() {
   );
 }
 
-
-
 export default function App(props: any) {
 
   /********************* State Hooks At App Level ******************/
@@ -40,6 +38,7 @@ export default function App(props: any) {
   const [activeIndex, setActiveIndex] = useState("daliy");
   // const [username, userId] = [...props.data];
   const user_id = props.data.username;
+  const user_id_obj = {userID: user_id};
   // const userId = props.data.userId;
   const [signUp, setSignedUp] = useState(props.signedUp);
 

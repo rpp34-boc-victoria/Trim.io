@@ -4,6 +4,7 @@ import "./userRegistration.scss";
 import { Typography, Input, Box } from "@mui/material";
 import Select from "react-select";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
+import { BMIcal, BFPcal, BMRcal, RecommandedCaloIntakecal, RecommandedWaterIntakecal } from './calculators';
 
 interface IFormInput {
   firstName: string;
@@ -16,13 +17,30 @@ interface IFormInput {
   weight: number;
   targetCalories: number;
   targetWater: number;
+  user_id: any;
+  userBMI: number;
+  userBFP: number;
+  userBMR: number;
+  userRecommandedCaloIntake: number;
+  userRecommandedWaterIntake: number;
 }
 
-export default function UserRegistration(props: any) {
+interface UserRegistrationProps {
+  userID: any;
+}
+
+export default function UserRegistration( {userID} : UserRegistrationProps ) {
   const { control, handleSubmit } = useForm<IFormInput>();
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    //console.log(data);
+    data.user_id = userID;
+    data.userBMI = BMIcal(data.weight, data.height);
+    data.userBFP = BFPcal(data.gender.value, data.weight, data.height, data.age);
+    data.userBMR = BMRcal(data.gender.value, data.weight, data.height, data.age);
+    data.userRecommandedCaloIntake = RecommandedCaloIntakecal(data.gender.value, data.height, data.weight, data.age);
+    data.userRecommandedWaterIntake = RecommandedWaterIntakecal(data.weight);
+    
+    console.log(data);
     apiPost("/api/register", data).then((res) => {
       //console.log("user successfully posted something, :", res);
     });

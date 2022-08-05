@@ -397,6 +397,7 @@ app.post("/api/register", async (req, res) => {
   let userData = req.body;
   userData.caloriesRecommanded = "2000";
   let userReg = new userEntriesModel({
+    userId: +userData.user_id,
     firstName: userData.firstName,
     lastName: userData.lastName,
     age: +userData.age,
