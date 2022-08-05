@@ -25,6 +25,9 @@ sudo apt-get install -y mongodb-mongosh
 # Alternate way to install node where it can be run correctly using SSH!!
 curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
 sudo apt-get install -y nodejs
+# increase Node heapmemory
+export NODE_OPTIONS="--max-old-space-size=1024"
+
 
 
 # Setting up pm2 to run the server as a service on start up

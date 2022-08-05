@@ -14,6 +14,7 @@
     "client": "cd client && npm start && cd ..",
     "dev": "concurrently \"npm run client\" \"npm run server\"",
     "init-server": "bash server.config.sh",
+    "config-ec2": "bash server.config.sh",
     "reload": "pm2 restart server"
   },
   "repository": {
