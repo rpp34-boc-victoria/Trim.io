@@ -22,11 +22,12 @@ export default function App(props: any) {
 
   /********************* State Hooks At App Level ******************/
 
-  const [dailyData, setDailyData] = useState(() => undefined);
-  const [activeIndex, setActiveIndex] = useState("daliy");
+
   const user_id = props.data.username;
   const [signUp, setSignedUp] = useState(props.signedUp);
-  const [userInfo, setUserInfo] = useState(() => undefined);
+  const [dailyData, setDailyData] = useState(() => undefined);
+  const [activeIndex, setActiveIndex] = useState("daliy");
+  const [userInfo, setUserInfo] = useState(undefined);
   const [submitModalOn, toggleSubmit] = useState(false);
 
   /*****************************************************************/
