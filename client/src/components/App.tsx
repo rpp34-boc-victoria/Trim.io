@@ -55,13 +55,15 @@ export default function App(props: any) {
 
   if (signUp === 'newAccount') {
     return (
-      <Container maxWidth="sm">
-        <Box sx={{ my: 4 }}>
-          <Box>
-            <UserReg setSignUp={setSignedUp} setUserInfomation={setUserInfo} userID={user_id}/>
+      <ThemeProvider theme={theme}>
+        <Container maxWidth="sm">
+          <Box sx={{ my: 4 }}>
+            <Box>
+              <UserReg setSignUp={setSignedUp} setUserInfomation={setUserInfo} userID={user_id}/>
+            </Box>
           </Box>
-        </Box>
-      </Container>
+        </Container>
+      </ThemeProvider>
     );
   } else {
     return (
@@ -98,7 +100,8 @@ export default function App(props: any) {
                   handleDailyUpdate={handleDailyUpdate}
                   userInfo={userInfo}
                   toggleSubmit={toggleSubmit}
-                  submitModalOn={submitModalOn} /> :
+                  submitModalOn={submitModalOn}
+                  userId={user_id}/> :
                 <Weekly />
               }
             </Box>

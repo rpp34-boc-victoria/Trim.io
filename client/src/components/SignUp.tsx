@@ -1,9 +1,10 @@
-import { sha512 } from 'js-sha512';
 import React, {useState} from 'react';
+import { sha512 } from 'js-sha512';
 import axios from 'axios';
-import { Typography, Input, Box, Button } from "@mui/material";
-// import { Button } from '@material-ui/core';
-
+import { Typography, Input, Box, Button, TextField } from "@mui/material";
+import Container from "@mui/material/Container";
+import { ThemeProvider } from '@mui/material/styles';
+import "../../src/components/UserProfileComponents/userRegistration.scss";
 
 export interface inputData {
   username: string;
@@ -76,7 +77,7 @@ export default function SignUp(props: any) {
             hashedFunction: hashedFunction,
             salt: salt,
             username: inputField.username,
-            email: inputField.email
+            email: 'randomEmail@gmail.com'
           })
           .then((result) => {
             const sendData = {
@@ -106,34 +107,42 @@ export default function SignUp(props: any) {
   }
 
   return (
-    <Box className="signUpForm">
-      <Typography variant="h4">SIGN UP</Typography>
-    <form >
-      <label>
-        <Input type='text' name='username' placeholder='UserName' onChange={inputsHandler} value={inputField.username}></Input>
-      {(!usedUsername) ?
-      (null) :
-      (<div>InValid UserName!</div>)
-      }
-      </label>
-      <br></br>
-      <label>
-        <Input type='text' name='email' placeholder='E-mail' onChange={inputsHandler} value={inputField.email}></Input>
-      </label>
-      <br></br>
-      <label>
-        <Input type={showPass1} name='password' placeholder='Password' onChange={inputsHandler} value={inputField.password}></Input>
-        <button  className={eyeVisible1} onClick={togglePassword} value='eye1'></button>
-      </label>
-      <br></br>
-      <label>
-        <Input type={showPass2}  name='confirmPassword' placeholder='confirmPassword' onChange={inputsHandler} value={inputField.confirmPassword}></Input>
-        <button className={eyeVisible2} onClick={togglePassword} value='eye2'></button>
-        {(matchingPasswords) ? null : (<div> Your Passwords Don't Match!</div>)}
-      </label>
-      <Button onClick={handleSubmit}>Subimt</Button>
-    </form>
-    </Box>
+   <div>
+     <br></br><br></br><br></br><br></br><br></br><br></br><br></br>
+        <Typography variant="h3" component="h1"
+          gutterBottom align="center" fontWeight="bold" style={{paddingRight: '10%'}}>
+          Trim.io
+        </Typography>
+      <Container maxWidth="sm" sx={{ padding: '10%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignContent: 'center' }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+          <Typography variant="h2" sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center', paddingRight: '15%' }}>Log In</Typography>
+          <br></br><br></br><br></br>
+        <form style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+          <Typography style={{display: 'flex'}}>
+          <br></br><br></br><br></br>
+          <TextField style={{width: '100%'}} type='text' label='User Name' name='username' onChange={inputsHandler} value={inputField.username}></TextField>
+          {(!usedUsername) ?
+          (null) :
+          (<div>InValid UserName!</div>)
+        }
+          <Button className={eyeVisible2} style={{ visibility: 'hidden' }}></Button>
+        </Typography >
+          <Typography style={{display: 'flex'}}>
+            <TextField style={{width: '100%'}} type={showPass1} name='password' label='Password' onChange={inputsHandler} value={inputField.password}></TextField>
+            <Button  className={eyeVisible1} onClick={togglePassword} value='eye1' sx={{padding: '20px', float: 'right'}}></Button>
+          </Typography>
+          <br></br>
+          <Typography style={{display: 'flex'}}>
+            <TextField type={showPass2} style={{width: '100%'}}  name='confirmPassword' label='Confirm Password' onChange={inputsHandler} value={inputField.confirmPassword}></TextField>
+            <Button className={eyeVisible2} onClick={togglePassword} value='eye2' sx={{padding: '20px'}}></Button>
+            {(matchingPasswords) ? null : (<div> Your Passwords Don't Match!</div>)}
+          </Typography>
+          <br></br><br></br><br></br>
+          <Button variant="contained" onClick={handleSubmit} style={{display:'flex', width:'90%',fontSize: '150%', paddingRight:'8.5%'}}>Subimt</Button>
+        </form>
+        </Box>
+      </Container>
+      </div>
   )
 
 

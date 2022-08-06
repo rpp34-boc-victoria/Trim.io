@@ -1,8 +1,9 @@
 import { sha512 } from 'js-sha512';
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Typography, Input, Box, Button, Container } from "@mui/material";
-
+import { Typography, Input, Box, Button, Container, TextField } from "@mui/material";
+import { ThemeProvider } from '@mui/material/styles';
+import theme from '../theme';
 export interface inputData {
   username: string | any;
   email: string | any;
@@ -35,6 +36,7 @@ export default function Login(props: any) {
     })
       .then((result) => {
         if (result.data.length === 0) {
+          alert('Incorrect Username or Password!')
         } else {
           const salt = result.data[0]['salt'];
           const hashpass = result.data[0]['hashpass'];
@@ -63,22 +65,33 @@ export default function Login(props: any) {
   }
 
   return (
-    <Container maxWidth="sm" sx={{ padding: '25%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignContent: 'center' }}>
+    <ThemeProvider theme={theme}>
+      <br></br><br></br><br></br><br></br>
+      <Typography variant="h3" component="h1"
+        gutterBottom align="center" fontWeight="bold" sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center', paddingRight: '5%' }}>
+        Trim.io
+      </Typography>
+    <Container maxWidth="sm" sx={{ padding: '10%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignContent: 'center' }}>
       <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-        <Typography variant="h4" align='center' >Log In</Typography>
+        <Typography variant="h2" sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center', paddingRight: '15%' }}>Log In</Typography>
+        <br></br><br></br><br></br><br></br>
         <form style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center' }}>
-          <label>
-            <Input type='text' name='username' placeholder='Username' onChange={inputsHandler} value={inputField?.username}></Input>
-            <button className={eyeVisible} style={{ visibility: 'hidden' }}></button>
-          </label>
-          <br></br>
-          <label>
-            <Input type={showPass} name='password' placeholder='Password' onChange={inputsHandler} value={inputField?.password}></Input>
-            <button className={eyeVisible} onClick={togglePassword} id="togglePassword"></button>
-          </label>
-          <Button variant="contained" onClick={handleSubmit}>Subimt</Button>
+        <Typography style={{display: 'flex'}}>
+            <TextField style={{width: '100%'}} type='text' name='username' label='User Name' onChange={inputsHandler} value={inputField?.username}></TextField>
+            <Button className={eyeVisible} style={{ visibility: 'hidden' }}></Button>
+          </Typography>
+          <br></br><br></br><br></br>
+          <Typography style={{display: 'flex'}}>
+            <TextField style={{width: '100%'}} type={showPass} name='password' label='Password' onChange={inputsHandler} value={inputField?.password}></TextField>
+            <Button className={eyeVisible} onClick={togglePassword} id="togglePassword" sx={{padding: '20px'}}></Button>
+          </Typography>
+          <br></br><br></br><br></br><br></br>
+          <Typography>
+          <Button variant="contained" onClick={handleSubmit} style={{display:'flex', width:'90%',fontSize: '150%', paddingRight:'8.5%'}}>Subimt</Button>
+          </Typography>
         </form>
       </Box>
     </Container >
+    </ThemeProvider>
   )
 }
