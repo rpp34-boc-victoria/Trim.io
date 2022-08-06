@@ -16,8 +16,8 @@ interface IFormInput {
   gender: { label: string; value: string };
   height: number;
   weight: number;
-  targetCalories: number;
-  targetWater: number;
+  caloriesGoal: number;
+  waterGoal: number;
   user_id: any;
   userBMI: number;
   userBFP: number;
@@ -137,7 +137,7 @@ export default function UserRegistration(props: any) {
           <sub>Target Daily Calories Goal (kcal)</sub>
         </Typography>
         <Controller
-          name="targetCalories"
+          name="caloriesGoal"
           control={control}
           defaultValue={0}
           render={({ field }) => <Input {...field} />}
@@ -151,7 +151,7 @@ export default function UserRegistration(props: any) {
           <sub>Target Daily Water Intake Goal (cup)</sub>
         </Typography>
         <Controller
-          name="targetWater"
+          name="waterGoal"
           control={control}
           defaultValue={0}
           render={({ field }) => <Input {...field} />}

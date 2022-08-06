@@ -13,10 +13,6 @@ import dayjs from "dayjs";
 import cors from 'cors';
 import { format, compareAsc, parseISO } from 'date-fns';
 dotenv.config();
-// var bodyParser = require('body-parser');
-// import bodyParser from "body-parser";
-import { resolveAny } from "dns";
-import { LEGAL_TCP_SOCKET_OPTIONS } from 'mongodb';
 import mongoose from 'mongoose';
 
 dotenv.config();
@@ -268,6 +264,8 @@ app.post('/api/daily', async (req, res) => {
   }
 });
 
+/******************** DAILY DATA GENERATOR ***********************/
+
 app.get("/api/generateDaily", async (req, res) => {
   console.log('/api/generateDaily [params]: ', req.query)
   /**
@@ -275,7 +273,7 @@ app.get("/api/generateDaily", async (req, res) => {
    */
   const skipDays = req.query?.skipToday ? 0 : 1;
   let foodItems = []
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < Math.ceil(Math.random() * 8); i++) {
     foodItems.push(
       {
         foodItem: 'Big Mac',
@@ -355,8 +353,6 @@ app.get("/api/register", async (req, res) => {
 });
 
 app.post("/auth/login", async (req, res) => {
-  // const data = null;
-
   let username = req.body.username;
   const query = {
     user_id: username
@@ -371,8 +367,6 @@ app.post("/auth/login", async (req, res) => {
 /******************** AUTH ROUTES ***********************/
 
 app.post("/auth/checkUser", (req, res) => {
-  // const data = null;
-
   let user_id = req.body.username;
   const query = {
     user_id: user_id
@@ -421,9 +415,9 @@ app.post('/api/register', async (req, res) => {
     phoneNumber: userData.phoneNumber,
     height: +userData.height,
     weight: +userData.weight,
-    caloriesGoal: +userData.targetCalories,
+    caloriesGoal: +userData.caloriesGoal,
     caloriesRecommanded: +userData.caloriesRecommanded,
-    waterGoal: +userData.targetWater,
+    waterGoal: +userData.waterGoal,
     userBMI: +userData.userBMI,
     userBFP: +userData.userBFP,
     userBMR: +userData.userBMR,
@@ -432,7 +426,7 @@ app.post('/api/register', async (req, res) => {
     createdTime: new Date(),
 
   });
-  console.log('hi11111');
+  console.log('User Register Info: ', userData)
   try {
     await userReg.save();
     res.sendStatus(201);
@@ -449,7 +443,7 @@ app.get("/api/fetchUser", async (req, res) => {
     res.status(200);
     res.send(result);
   } catch (err) {
-    res.status(501);
+    res.status(500);
     res.send(err);
   }
 });
