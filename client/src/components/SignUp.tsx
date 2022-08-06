@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import { sha512 } from 'js-sha512';
 import axios from 'axios';
-import { Typography, Input, Box, Button, TextField } from "@mui/material";
+import { Typography, Box, Button, TextField } from "@mui/material";
 import Container from "@mui/material/Container";
-import { ThemeProvider } from '@mui/material/styles';
+// import { ThemeProvider } from '@mui/material/styles';
 import "../../src/components/UserProfileComponents/userRegistration.scss";
 
 export interface inputData {
