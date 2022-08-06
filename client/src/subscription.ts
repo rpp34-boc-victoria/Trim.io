@@ -14,7 +14,9 @@ function urlBase64ToUint8Array(base64String: string) {
   return outputArray
 }
 
-function sendSubscription(subscription : any) {
+function sendSubscription(subscription : any, user_id : any) {
+  subscription['user_id'] = user_id;
+  console.log(subscription)
   return fetch(`/notifications/subscribe`, {
     method: 'POST',
     body: JSON.stringify(subscription),
@@ -24,7 +26,7 @@ function sendSubscription(subscription : any) {
   })
 }
 
-export function subscribeUser() {
+export function subscribeUser(user_id: any) {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.ready.then(function(registration) {
       if (!registration.pushManager) {
@@ -40,7 +42,7 @@ export function subscribeUser() {
             userVisibleOnly: true,
           }).then(function(newSubscription) {
             console.log('New subscription added.')
-            sendSubscription(newSubscription)
+            sendSubscription(newSubscription, user_id)
           }).catch(function(e) {
             if (Notification.permission !== 'granted') {
               console.log('Permission was not granted.')
@@ -50,7 +52,7 @@ export function subscribeUser() {
           })
         } else {
           console.log('Existed notification subscription detected.')
-          sendSubscription(existedSubscription)
+          // sendSubscription(existedSubscription, user_id)
         }
       })
     })

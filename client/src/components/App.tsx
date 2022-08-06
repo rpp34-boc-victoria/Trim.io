@@ -14,6 +14,7 @@ import Incrementer from './dailyEntries/Incrementer';
 import { ThemeProvider } from '@mui/material/styles';
 import { Divider } from '@mui/material';
 import theme from '../theme';
+import { subscribeUser } from '../subscription';
 import ToastNotification from './ToastNotification/ToastNotification';
 import './App.scss'
 
@@ -65,6 +66,7 @@ export default function App(props: any) {
       </Container>
     );
   } else {
+    subscribeUser(user_id);
     return (
       <ThemeProvider theme={theme}>
         <Container maxWidth="sm">

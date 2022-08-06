@@ -1,5 +1,5 @@
 import { createTheme, experimental_sx as sx, } from '@mui/material/styles';
-import {orange, red } from '@mui/material/colors';
+import { teal, red } from '@mui/material/colors';
 
 // A custom theme for this app
 const theme = createTheme({
@@ -7,10 +7,10 @@ const theme = createTheme({
 
   palette: {
     primary: {
-      main: orange[800],
-      50: orange[50],
-      100: orange[100],
-      200: orange[200]
+      main: teal[800],
+      50: teal[50],
+      100: teal[100],
+      200: teal[200]
     },
     secondary: {
       main: '#19857b',

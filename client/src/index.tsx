@@ -5,7 +5,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
-import { subscribeUser } from './subscription';
 import LoggedInOrNot from './LoggedInOrNot';
 
 const root = ReactDOM.createRoot(
@@ -24,4 +23,3 @@ root.render(
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://cra.link/PWA
 serviceWorkerRegistration.register();
-subscribeUser();

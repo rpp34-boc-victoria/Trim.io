@@ -331,16 +331,7 @@ app.get("/api/register", async (req, res) => {
     gender: "M",
     email: 'asd@fas.com',
     phoneNumber: 124123,
-    webPushSubscriptions: [
-      {
-        endpoint: 'https://fcm.googleapis.com/fcm/send/dY2vomoPgS8:APA91bEqP3EsCkTlUwoE5WtZxE9SmJZJv3aBwMQWn4wkRgP5aRQU18AsbsNnp_RqYJuzK_gRkUuLuTEDDNqfgpY5tk4yQHqopjxRu2Y6VwsqvPPcS7q0E8dK2uGdhLnq_oOz4PpIcb3K',
-        expirationTime: null,
-        keys: {
-          p256dh: 'BMaslJakEW0Zu2o2mGhqjVB2XPTWQD67ird8EIfSy8pxMcuSyX6wm5AuvnKmM-5H1NWJ2BC5wmTHPAXljvQN2bI',
-          auth: 'wZxamv5cgcsv5UU04_plkw'
-        }
-      }
-    ]
+    webPushSubscriptions: []
   })
   try {
     await user.save();
@@ -349,7 +340,6 @@ app.get("/api/register", async (req, res) => {
     res.status(501);
     res.send(err);
   }
-
 });
 
 app.post("/auth/login", async (req, res) => {

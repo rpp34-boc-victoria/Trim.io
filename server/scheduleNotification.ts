@@ -1,7 +1,6 @@
 import schedule from 'node-schedule';
 import webpush from 'web-push';
 import * as dotenv from 'dotenv';
-import mongoConnection from './db/connect';
 import {
   userEntriesModel,
   dailyEntriesModel
@@ -14,11 +13,12 @@ webpush.setVapidDetails(process.env.WEB_PUSH_CONTACT, process.env.PUBLIC_VAPID_K
 // loop through all subscript and process/send out custom notifications
 export function startSchedule() {
   const job = schedule.scheduleJob('* * * * *', async () => {
+    console.log('ran schedule')
     const allUsers = await userEntriesModel.find();
     for (const user of allUsers) {
       const subscriptions = user['webPushSubscriptions'];
       if (subscriptions.length > 0) {
-        const message = await getUserResultsFromYesterday(user._id, user.caloriesGoal);
+        const message = await getUserResultsFromYesterday(user.user_id, user.caloriesGoal);
         if (message === null) {
           continue;
         }
