@@ -31,6 +31,7 @@
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@mui/material": "^5.9.3",
+    "all": "^0.0.0",
     "axios": "^0.27.2",
     "cors": "^2.8.5",
     "date-fns": "^2.29.1",
