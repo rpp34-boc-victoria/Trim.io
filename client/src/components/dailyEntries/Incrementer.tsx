@@ -17,12 +17,13 @@ type IncrementerProps = {
 };
 
 const Incrementer = ({labelText, defaultAmount, active, handleClick,route, user_id }: IncrementerProps) => {
-  let initialCount = defaultAmount;
+  let initialCount = Number(defaultAmount);
   const [count, setCount] = React.useState(initialCount);
 
   let counterText = active === true ? "text.primary" : count !== initialCount ? "text.primary" : "text.secondary";
 
   let handleChange = (changeAmount: string )=>{
+    console.log('count', count);
     changeAmount === '1' ? setCount(count + 1) : count > 0 ? setCount(count - 1) : setCount(count);
 
     if (handleClick) {handleClick(changeAmount)}
