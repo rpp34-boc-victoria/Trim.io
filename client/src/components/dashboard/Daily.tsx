@@ -1,26 +1,26 @@
 
 import React, { useEffect } from "react";
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Typography} from "@mui/material";
 import CalorieBar from "./calorieBar";
 import ExceedBar from './exceedBar';
 import './daily.scss';
 import { calcTotalCal } from '../utilFuncs';
 
 const defaultCalorieGoal = 2000;
-const defaultWaterGoal = 8;
+const defaultWaterGoal = 10;
 
 const Daily = (props: any) => {
 
-  const { handleDailyUpdate, dailyData, userInfo, submitModalOn, toggleSubmit } = props;
-  const calorieGoal = userInfo?.caloriesGoal || defaultCalorieGoal;
-  const waterGoal = userInfo?.waterGoal || defaultWaterGoal;
-  const calorie = dailyData?.foodItems ? calcTotalCal(dailyData.foodItems) : null;
-  const water = dailyData?.waterAmount || 0;
+  var { handleDailyUpdate, dailyData, userInfo} = props;
+  var calorieGoal = userInfo?.caloriesGoal || defaultCalorieGoal;
+  var waterGoal = userInfo?.waterGoal || defaultWaterGoal;
+  var calorie = dailyData?.foodItems ? calcTotalCal(dailyData.foodItems) : null;
+  var water = dailyData?.waterAmount || 0;
 
   useEffect(() => {
     handleDailyUpdate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userInfo]);
+  }, [props.userInfo]);
 
   if (dailyData !== undefined) {
     return (
@@ -41,7 +41,7 @@ const Daily = (props: any) => {
               data={[{ value: water, goal: waterGoal }]} />
           </Box>
         </Box>
-        <Box sx={{ height: '30px' }}></Box>
+        {/* <Box sx={{ height: '30px' }}></Box>
         <Box>
           {
             submitModalOn ? null :
@@ -51,7 +51,7 @@ const Daily = (props: any) => {
                 + Add Food Item
               </Button>
           }
-        </Box>
+        </Box> */}
       </Box>
     )
   }

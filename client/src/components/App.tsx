@@ -22,11 +22,14 @@ export default function App(props: any) {
 
   /********************* State Hooks At App Level ******************/
 
-  const [dailyData, setDailyData] = useState(() => undefined);
-  const [activeIndex, setActiveIndex] = useState("daliy");
+
   const user_id = props.data.username;
   const [signUp, setSignedUp] = useState(props.signedUp);
-  const [userInfo, setUserInfo] = useState(() => undefined);
+  const [weightAmount, setWeightAmount] = useState(0);
+  const [waterAmount, setWaterAmount] = useState(0);
+  const [dailyData, setDailyData] = useState({});
+  const [activeIndex, setActiveIndex] = useState("daliy");
+  const [userInfo, setUserInfo] = useState(undefined);
   const [submitModalOn, toggleSubmit] = useState(false);
 
   /*****************************************************************/
@@ -38,7 +41,14 @@ export default function App(props: any) {
   async function handleDailyUpdate() {
     try {
       let data = await getDaily(user_id);
+      if (data.weightAmount === 0) {
+        let info = await getUserInfo(user_id);
+        data.weightAmount = info.weight;
+      }
       setDailyData(data);
+      console.log('daily data, ', data);
+      setWaterAmount(data.waterAmount);
+      setWeightAmount(data.weightAmount);
     } catch (err: any) {
       throw err;
     }
@@ -47,18 +57,41 @@ export default function App(props: any) {
   async function updateUserInfo(user_id: String) {
     let info = await getUserInfo(user_id);
     setUserInfo(info);
+    console.log('USER INFO: ', info);
   }
+
+
+  // async function handleDailyUpdate() {
+  //   try {
+  //     let data = await getDaily(user_id);
+  //     setDailyData(data);
+  //     console.log('daily data, ', data);
+  //     setWaterAmount(data.waterAmount);
+  //     setWeightAmount(data.weightAmount);
+  //   } catch (err: any) {
+  //     throw err;
+  //   }
+  // };
+
+  // async function updateUserInfo(user_id: String) {
+  //   let info = await getUserInfo(user_id);
+  //   setUserInfo(info);
+  //   console.log('USER INFO: ', info);
+  // }
 
   useEffect(() => {
     updateUserInfo(user_id);
+    handleDailyUpdate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user_id]);
+
 
   if (signUp === 'newAccount') {
     return (
       <Container maxWidth="sm">
         <Box sx={{ my: 4 }}>
           <Box>
-            <UserReg setSignUp={setSignedUp} setUserInfomation={setUserInfo} userID={user_id}/>
+            <UserReg setSignUp={setSignedUp} setUserInfomation={setUserInfo} userID={user_id} />
           </Box>
         </Box>
       </Container>
@@ -102,15 +135,23 @@ export default function App(props: any) {
                 <Weekly />
               }
             </Box>
-            {submitModalOn ?
-              <Box>
-                <Incrementer labelText='Water (cups)' />
-                <Divider sx={{ mb: '16px' }} />
-                <Incrementer labelText='Body weight' />
-                <AddEntry toggleSubmit={toggleSubmit} handleDailyUpdate={handleDailyUpdate} ></AddEntry>
-              </Box> :
-              null}
           </Box>
+          <Incrementer
+            labelText='Water (cups)'
+            route="water"
+            user_id={user_id}
+            defaultAmount={waterAmount}
+          />
+          <Divider sx={{ mb: '16px' }} />
+          <Incrementer
+            labelText='Body weight'
+            route="weight"
+            user_id={user_id}
+            defaultAmount={weightAmount}
+          />
+          <AddEntry
+            user_id={user_id}
+          />
           <ToastNotification />
         </Container>
       </ThemeProvider>

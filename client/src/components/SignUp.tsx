@@ -131,7 +131,7 @@ export default function SignUp(props: any) {
         <button className={eyeVisible2} onClick={togglePassword} value='eye2'></button>
         {(matchingPasswords) ? null : (<div> Your Passwords Don't Match!</div>)}
       </label>
-      <Button onClick={handleSubmit}>Subimt</Button>
+      <Button onClick={handleSubmit}>Submit</Button>
     </form>
     </Box>
   )

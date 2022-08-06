@@ -1,6 +1,6 @@
-import { sha512 } from 'js-sha512';
-import React, { useState } from 'react';
-import axios from 'axios';
+import { sha512 } from "js-sha512";
+import React, { useState } from "react";
+import axios from "axios";
 import { Typography, Input, Box, Button, Container } from "@mui/material";
 
 export interface inputData {
@@ -16,72 +16,121 @@ export interface setInputField {
 }
 
 export default function Login(props: any) {
-
   const [inputField, setInputField] = useState<inputData | any>({
-    username: '',
-    password: '',
+    username: "",
+    password: "",
   });
 
   const inputsHandler = (e: any) => {
-    setInputField({ ...inputField, [e.target.name]: e.target.value })
-  }
-  const [eyeVisible, updateEye] = useState<string>('bi bi-eye-slash');
-  const [showPass, updatePass] = useState<string>('password')
+    setInputField({ ...inputField, [e.target.name]: e.target.value });
+  };
+  const [eyeVisible, updateEye] = useState<string>("bi bi-eye-slash");
+  const [showPass, updatePass] = useState<string>("password");
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    axios.post('/auth/login', {
-      'username': inputField.username
-    })
+    axios
+      .post("/auth/login", {
+        username: inputField.username,
+      })
       .then((result) => {
         if (result.data.length === 0) {
-        } else {
+          console.log("No data recieved onsubmit");
           console.log(result);
-          localStorage.setItem('userInfo',JSON.stringify(result.data.userInfo))
-
-          const salt = result.data.accountInfo['salt'];
-          const hashpass = result.data.accountInfo['hashpass'];
-          const username = result.data.accountInfo['username'];
-          const _id = result.data.accountInfo['_id'];
+        } else {
+          console.log(result.data);
+          const salt = result.data[0]["salt"];
+          const hashpass = result.data[0]["hashpass"];
+          const username = result.data[0]["user_id"]; // here was the bugg... it was `username`, which no longer gets returned
+          const _id = result.data[0]["_id"];
 
           const hashedPass = sha512(inputField.password + salt.toString());
           if (hashpass === hashedPass) {
             props.onSubmit({
               username: username,
               userId: _id,
-              login: true
-            })
+              login: true,
+            });
           } else {
-            alert('Incorrect Username or Password!')
+            alert("Incorrect Username or Password!");
           }
         }
       })
-  }
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const togglePassword = (e: any) => {
     e.preventDefault();
-    const input = (eyeVisible === 'bi bi-eye-slash') ? 'bi bi-eye' : 'bi bi-eye-slash';
+    const input =
+      eyeVisible === "bi bi-eye-slash" ? "bi bi-eye" : "bi bi-eye-slash";
     updateEye(input);
-    (input === 'bi bi-eye-slash') ? updatePass('password') : updatePass('text');
-  }
+    input === "bi bi-eye-slash" ? updatePass("password") : updatePass("text");
+  };
 
   return (
-    <Container maxWidth="sm" sx={{ padding: '25%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignContent: 'center' }}>
-      <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-        <Typography variant="h4" align='center' >Log In</Typography>
-        <form style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center' }}>
+    <Container
+      maxWidth="sm"
+      sx={{
+        padding: "25%",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignContent: "center",
+      }}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+        }}
+      >
+        <Typography variant="h4" align="center">
+          Log In
+        </Typography>
+        <form
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            textAlign: "center",
+          }}
+        >
           <label>
-            <Input type='text' name='username' placeholder='Username' onChange={inputsHandler} value={inputField?.username}></Input>
-            <button className={eyeVisible} style={{ visibility: 'hidden' }}></button>
+            <Input
+              type="text"
+              name="username"
+              placeholder="Username"
+              onChange={inputsHandler}
+              value={inputField?.username}
+            ></Input>
+            <button
+              className={eyeVisible}
+              style={{ visibility: "hidden" }}
+            ></button>
           </label>
           <br></br>
           <label>
-            <Input type={showPass} name='password' placeholder='Password' onChange={inputsHandler} value={inputField?.password}></Input>
-            <button className={eyeVisible} onClick={togglePassword} id="togglePassword"></button>
+            <Input
+              type={showPass}
+              name="password"
+              placeholder="Password"
+              onChange={inputsHandler}
+              value={inputField?.password}
+            ></Input>
+            <button
+              className={eyeVisible}
+              onClick={togglePassword}
+              id="togglePassword"
+            ></button>
           </label>
-          <Button variant="contained" onClick={handleSubmit}>Subimt</Button>
+          <Button variant="contained" onClick={handleSubmit}>
+            Submit
+          </Button>
         </form>
       </Box>
-    </Container >
-  )
+    </Container>
+  );
 }
