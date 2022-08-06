@@ -26,6 +26,7 @@ interface IFormInput {
   userRecommandedWaterIntake: number;
 }
 
+
 export default function UserRegistration(props: any) {
 
   const { control, handleSubmit } = useForm<IFormInput>();
