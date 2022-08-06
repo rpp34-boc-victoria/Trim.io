@@ -12,8 +12,8 @@ const defaultWaterGoal = 10;
 const Daily = (props: any) => {
 
   var { handleDailyUpdate, dailyData, userInfo, submitModalOn, toggleSubmit } = props;
-  var calorieGoal = userInfo.caloriesGoal || defaultCalorieGoal;
-  var waterGoal = userInfo.waterGoal || defaultWaterGoal;
+  var calorieGoal = userInfo?.caloriesGoal || defaultCalorieGoal;
+  var waterGoal = userInfo?.waterGoal || defaultWaterGoal;
   var calorie = dailyData?.foodItems ? calcTotalCal(dailyData.foodItems) : null;
   var water = dailyData?.waterAmount || 0;
 

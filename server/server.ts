@@ -13,7 +13,6 @@ import dayjs from "dayjs";
 import cors from 'cors';
 import { format, compareAsc, parseISO } from 'date-fns';
 dotenv.config();
-
 import mongoose from 'mongoose';
 
 dotenv.config();
@@ -354,8 +353,6 @@ app.get("/api/register", async (req, res) => {
 });
 
 app.post("/auth/login", async (req, res) => {
-  // const data = null;
-
   let username = req.body.username;
   const query = {
     user_id: username
@@ -370,8 +367,6 @@ app.post("/auth/login", async (req, res) => {
 /******************** AUTH ROUTES ***********************/
 
 app.post("/auth/checkUser", (req, res) => {
-  // const data = null;
-
   let user_id = req.body.username;
   const query = {
     user_id: user_id

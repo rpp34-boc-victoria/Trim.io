@@ -35,10 +35,12 @@ export default function Login(props: any) {
     })
       .then((result) => {
         if (result.data.length === 0) {
+          console.log('No data recieved onsubmit')
+          console.log(result);
         } else {
           const salt = result.data[0]['salt'];
           const hashpass = result.data[0]['hashpass'];
-          const username = result.data[0]['username'];
+          const username = result.data[0]['user_id']; // here was the bugg... it was `username`, which no longer gets returned
           const _id = result.data[0]['_id'];
 
           const hashedPass = sha512(inputField.password + salt.toString());
@@ -52,6 +54,8 @@ export default function Login(props: any) {
             alert('Incorrect Username or Password!')
           }
         }
+      }).catch(err => {
+        console.log(err);
       })
   }
 
