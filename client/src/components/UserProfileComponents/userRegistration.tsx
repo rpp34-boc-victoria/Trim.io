@@ -45,7 +45,6 @@ export default function UserRegistration(props: any) {
       console.log(data)
       alert(`User Creation NOT Succssful: ${err.message}`);
     });
-
   };
 
   return (
