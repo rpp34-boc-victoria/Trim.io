@@ -425,9 +425,9 @@ app.post("/api/register", async (req, res) => {
     phoneNumber: userData.phoneNumber,
     height: +userData.height,
     weight: +userData.weight,
-    caloriesGoal: +userData.targetCalories,
+    caloriesGoal: +userData.caloriesGoal,
     caloriesRecommanded: +userData.caloriesRecommanded,
-    waterGoal: +userData.targetWater,
+    waterGoal: +userData.waterGoal,
     userBMI: +userData.userBMI,
     userBFP: +userData.userBFP,
     userBMR: +userData.userBMR,
@@ -435,6 +435,7 @@ app.post("/api/register", async (req, res) => {
     userRecommandedWaterIntake: +userData.userRecommandedWaterIntake,
     createdTime: new Date(),
   });
+  console.log('User Register Info: ', userData)
   try {
     await userReg.save();
     res.sendStatus(201);
@@ -451,7 +452,7 @@ app.get("/api/fetchUser", async (req, res) => {
     res.status(200);
     res.send(result);
   } catch (err) {
-    res.status(501);
+    res.status(500);
     res.send(err);
   }
 });

@@ -15,8 +15,8 @@ interface IFormInput {
   gender: { label: string; value: string };
   height: number;
   weight: number;
-  targetCalories: number;
-  targetWater: number;
+  caloriesGoal: number;
+  waterGoal: number;
   user_id: any;
   userBMI: number;
   userBFP: number;
@@ -25,15 +25,12 @@ interface IFormInput {
   userRecommandedWaterIntake: number;
 }
 
-interface UserRegistrationProps {
-  userID: any;
-}
 
-export default function UserRegistration(props: any, { userID }: UserRegistrationProps) {
+export default function UserRegistration(props: any) {
   const { control, handleSubmit } = useForm<IFormInput>();
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    data.user_id = userID;
+    data.user_id = props.userID;
     data.userBMI = BMIcal(data.weight, data.height);
     data.userBFP = BFPcal(data.gender.value, data.weight, data.height, data.age);
     data.userBMR = BMRcal(data.gender.value, data.weight, data.height, data.age);
@@ -139,7 +136,7 @@ export default function UserRegistration(props: any, { userID }: UserRegistratio
           <sub>Target Daily Calories Goal (kcal)</sub>
         </Typography>
         <Controller
-          name="targetCalories"
+          name="caloriesGoal"
           control={control}
           defaultValue={0}
           render={({ field }) => <Input {...field} />}
@@ -153,7 +150,7 @@ export default function UserRegistration(props: any, { userID }: UserRegistratio
           <sub>Target Daily Water Intake Goal (cup)</sub>
         </Typography>
         <Controller
-          name="targetWater"
+          name="waterGoal"
           control={control}
           defaultValue={0}
           render={({ field }) => <Input {...field} />}
