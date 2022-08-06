@@ -37,12 +37,12 @@ export default function Login(props: any) {
         if (result.data.length === 0) {
         } else {
           console.log(result);
-          localStorage.setItem('userInfo',JSON.stringify(result.data[0]))
+          localStorage.setItem('userInfo',JSON.stringify(result.data.userInfo))
 
-          const salt = result.data[0]['salt'];
-          const hashpass = result.data[0]['hashpass'];
-          const username = result.data[0]['username'];
-          const _id = result.data[0]['_id'];
+          const salt = result.data.accountInfo['salt'];
+          const hashpass = result.data.accountInfo['hashpass'];
+          const username = result.data.accountInfo['username'];
+          const _id = result.data.accountInfo['_id'];
 
           const hashedPass = sha512(inputField.password + salt.toString());
           if (hashpass === hashedPass) {

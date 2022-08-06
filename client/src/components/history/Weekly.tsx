@@ -79,13 +79,13 @@ const Weekly = () => {
         <Box className="chart_wrap">
           <MyBarChart
             data={weeklyData.map((item) => ({
-              value: item.foodItems.reduce((total: any, num: any) => {
+              value: item.foodItems.length ? item.foodItems.reduce((total: any, num: any) => {
                 if (typeof total === "number") {
                   return total + num.nutrients.ENERC_KCAL;
                 } else {
                   return total.nutrients.ENERC_KCAL + num.nutrients.ENERC_KCAL;
                 }
-              }),
+              }) : 0,
             }))}
           />
         </Box>
