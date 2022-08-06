@@ -18,7 +18,7 @@ import mongoose from 'mongoose';
 dotenv.config();
 const PORT = process.env.PORT || 8000;
 dbConnection();
-startSchedule();
+// startSchedule();
 
 if (process.env.ENVIRONMENT !== 'DEV') {
   const { exec } = require("child_process");
@@ -109,7 +109,6 @@ app.post("/water", async (req, res) => {
   let update = {
     $inc: { 'waterAmount': changeAmount },
   };
-
   dailyEntriesModel.findOneAndUpdate(filter, update, { new: true, upsert: true })
     .then((data) => { res.status(201).send(data); })
     .catch((err) => { res.sendStatus(500); });
@@ -144,12 +143,13 @@ app.post("/foodItem", async (req, res) => {
     gramsPerServing: gramsPerServing,
     servings: servings
   };
-
+  console.log('new food item', newFoodItem);
   dailyEntriesModel.findOneAndUpdate(filter, { $push: { 'foodItems': newFoodItem } }, { new: true })
     .then((data) => {
       res.status(201).send(data);
     })
     .catch((err) => {
+      console.log('post food item err', err);
       res.sendStatus(500);
     });
 });
