@@ -1,5 +1,5 @@
-import * as React from "react";
-import { apiPost } from "../../api";
+// import * as React from "react";
+// import { apiPost } from "../../api";
 import "./userRegistration.scss";
 import { Typography, Input, Box } from "@mui/material";
 import Select from "react-select";
@@ -26,6 +26,7 @@ interface IFormInput {
   userRecommandedWaterIntake: number;
 }
 
+
 export default function UserRegistration(props: any) {
 
   const { control, handleSubmit } = useForm<IFormInput>();
@@ -45,7 +46,6 @@ export default function UserRegistration(props: any) {
       console.log(data)
       alert(`User Creation NOT Succssful: ${err.message}`);
     });
-
   };
 
   return (
