@@ -36,6 +36,9 @@ export default function Login(props: any) {
       .then((result) => {
         if (result.data.length === 0) {
         } else {
+          console.log(result);
+          localStorage.setItem('userInfo',JSON.stringify(result.data[0]))
+
           const salt = result.data[0]['salt'];
           const hashpass = result.data[0]['hashpass'];
           const username = result.data[0]['username'];

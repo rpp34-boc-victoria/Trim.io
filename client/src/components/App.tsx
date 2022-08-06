@@ -22,19 +22,12 @@ export default function App(props: any) {
 
   /********************* State Hooks At App Level ******************/
 
-<<<<<<< HEAD
   const [dailyData, setDailyData] = useState(() => undefined);
   const [activeIndex, setActiveIndex] = useState("daliy");
   const user_id = props.data.username;
   const [signUp, setSignedUp] = useState(props.signedUp);
   const [userInfo, setUserInfo] = useState(() => undefined);
   const [submitModalOn, toggleSubmit] = useState(false);
-=======
-  const [dailyData, setDailyData] = useState(async () => undefined);
-  const [activeIndex, setActiveIndex] = useState("daily");
->>>>>>> 39f47bd (backup)
-
-  const user_id = props.data.username;
 
   /*****************************************************************/
 
@@ -60,7 +53,6 @@ export default function App(props: any) {
     updateUserInfo(user_id);
   }, [user_id]);
 
-<<<<<<< HEAD
   if (signUp === 'newAccount') {
     return (
       <Container maxWidth="sm">
@@ -68,43 +60,6 @@ export default function App(props: any) {
           <Box>
             <UserReg setSignUp={setSignedUp} setUserInfomation={setUserInfo} />
           </Box>
-=======
-  return (
-    <Container maxWidth="sm">
-      <Box sx={{ my: 4 }}>
-        <Typography variant="h3" component="h1"
-          gutterBottom align="center" fontWeight="bold">
-          Trim.io
-        </Typography>
-        {/* <ProTip /> */}
-        {/* <History /> */}
-        <Box className="history">
-          <Box className="tab_wrap">
-            <Box className="tab">
-              <Typography
-                className={`tab_item ${activeIndex === "daily" ? "active" : ""
-                  }`}
-                onClick={() => handleChangeTab("daily")}
-              >
-                Daily
-              </Typography>
-              <Typography
-                className={`tab_item ${activeIndex === "weekly" ? "active" : ""
-                  }`}
-                onClick={() => handleChangeTab("weekly")}
-              >
-                Weekly
-              </Typography>
-            </Box>
-          </Box>
-          {activeIndex === "daily" ?
-            <Daily dailyData={dailyData} handleDailyUpdate={handleDailyUpdate} /> :
-            <Weekly />
-          }
-        </Box>
-        <Box>
-          <UserReg />
->>>>>>> 39f47bd (backup)
         </Box>
       </Container>
     );
