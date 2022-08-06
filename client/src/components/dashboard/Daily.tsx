@@ -41,7 +41,7 @@ const Daily = (props: any) => {
               data={[{ value: water, goal: waterGoal }]} />
           </Box>
         </Box>
-        <Box sx={{ height: '30px' }}></Box>
+        {/* <Box sx={{ height: '30px' }}></Box>
         <Box>
           {
             submitModalOn ? null :
@@ -51,7 +51,7 @@ const Daily = (props: any) => {
                 + Add Food Item
               </Button>
           }
-        </Box>
+        </Box> */}
       </Box>
     )
   }

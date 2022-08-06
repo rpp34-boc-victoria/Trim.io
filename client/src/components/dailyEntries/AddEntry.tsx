@@ -7,6 +7,7 @@ import {useForm, Controller} from 'react-hook-form';
 import { apiGet, apiPost } from "../../api";
 import LabelWithText from "./LabelWithText";
 import Incrementer from './Incrementer';
+import AddIcon from '@mui/icons-material/Add';
 
 
 const AddEntry = (user_id: any) => {
@@ -83,7 +84,9 @@ const AddEntry = (user_id: any) => {
       <Button
         onClick={handleOpen}
         variant="outlined"
+        sx={{ width: '100%' }}
       >
+        <AddIcon sx={{ fontSize: '1rem' }}/>
         Add a food item
       </Button>
       <Modal
@@ -105,9 +108,9 @@ const AddEntry = (user_id: any) => {
         }}
       >
         <Typography
-          variant="h4"
+          variant="h5"
           color="text.primary"
-          sx={{mb: 4}}
+          sx={{mb: 4, fontWeight:500}}
         >
           Add a food item
         </Typography>
@@ -206,18 +209,18 @@ const AddEntry = (user_id: any) => {
               type="submit"
               sx={{mt: '8px !important'}}
               onClick={() => {
-                reset({
-                  entryDate: new Date(),
-                  foodItem: null,
-                  calories: null
-                }, {
-                  keepErrors: true,
-                  keepDirty: true,
-                  keepIsSubmitted: false,
-                  keepTouched: false,
-                  keepIsValid: false,
-                  keepSubmitCount: false,
-                });
+                // reset({
+                //   entryDate: new Date(),
+                //   foodItem: null,
+                //   calories: null
+                // }, {
+                //   keepErrors: true,
+                //   keepDirty: true,
+                //   keepIsSubmitted: false,
+                //   keepTouched: false,
+                //   keepIsValid: false,
+                //   keepSubmitCount: false,
+                // });
               }}
             >
               Submit

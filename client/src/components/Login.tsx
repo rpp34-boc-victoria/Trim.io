@@ -63,22 +63,6 @@ export default function Login(props: any) {
   }
 
   return (
-<<<<<<< HEAD
-    <Card>
-      <Typography variant="h4">Log In</Typography>
-    <form >
-      <label>
-        <Input type='text' name='username' placeholder='Username' onChange={inputsHandler} value={inputField?.username}></Input>
-      </label>
-      <br></br>
-      <label>
-        <Input type={showPass} name='password' placeholder='Password' onChange={inputsHandler} value={inputField?.password}></Input>
-        <button className={eyeVisible} onClick={togglePassword} id="togglePassword"></button>
-      </label>
-      <Button onClick={handleSubmit}>Submit</Button>
-    </form>
-    </Card>
-=======
     <Container maxWidth="sm" sx={{ padding: '25%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignContent: 'center' }}>
       <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
         <Typography variant="h4" align='center' >Log In</Typography>
@@ -96,6 +80,5 @@ export default function Login(props: any) {
         </form>
       </Box>
     </Container >
->>>>>>> origin
   )
 }

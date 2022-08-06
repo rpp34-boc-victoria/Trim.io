@@ -50,7 +50,7 @@ const theme = createTheme({
       },
       styleOverrides: {
         root: sx({
-          textTransform: 'none'
+          textTransform: 'none !important'
         })
       }
     },
