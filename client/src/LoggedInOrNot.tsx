@@ -60,10 +60,11 @@ export default function LoggedInOrNot() {
     if (loginOrCreateNewUser === 'notLoggedIn') {
       return (
         <Container maxWidth="sm" sx={{
-          'padding': '25%',
+          'padding': '10% 25% 0% 25%',
           'display': 'flex',
           'flexDirection': 'column',
-          'justifyContent': 'center'
+          'justifyContent': 'center',
+          'alignContent': 'flex-start'
         }}>
           <Typography variant="h3" component="h1"
             gutterBottom align="center" fontWeight="bold">

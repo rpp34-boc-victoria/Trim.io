@@ -9,8 +9,11 @@ import LabelWithText from "./LabelWithText";
 import Incrementer from './Incrementer';
 import AddIcon from '@mui/icons-material/Add';
 
+type AddEntryProps = {
+  user_id: string
+};
 
-const AddEntry = (user_id: any) => {
+const AddEntry = ({user_id}: AddEntryProps) => {
   const {register, control, handleSubmit, reset} = useForm();
   const [autocompleteItems, setAutocompleteItems] = React.useState([]);
   const [autocompleteItemSelected, setAutocompleteItem] = React.useState(false);
@@ -118,19 +121,14 @@ const AddEntry = (user_id: any) => {
           handleSubmit(({entryDate, foodItem, calories})=> {
             alert(JSON.stringify([entryDate, foodItem, calories]));
             let data = {
-              "user_id": "007",
+              "user_id": user_id,
               "entryDate": entryDate,
-              "foodItem": "potatoe",
-              "nutrients": {
-                "ENERC_KCAL": 371.0,
-                "PROCNT": 13.04,
-                "FAT": 1.51,
-                "CHOCDF": 74.67,
-                "FIBTG": 3.2
-              },
-              "gramsPerServing": "60",
-              "servings": "2"
+              "foodItem": foodItem,
+              "nutrients": nutrientsPerServing,
+              "gramsPerServing": gramsPerServing,
+              "servings": servings
             }
+            console.log('post item data fe', data);
             apiPost("http://localhost:8000/foodItem", data)
             .then(()=>{
               setAutocompleteItem(false);

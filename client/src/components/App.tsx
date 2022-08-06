@@ -22,13 +22,14 @@ export default function App(props: any) {
 
   /********************* State Hooks At App Level ******************/
 
-  const [dailyData, setDailyData] = useState(() => undefined);
-  const [activeIndex, setActiveIndex] = useState("daliy");
+
   const user_id = props.data.username;
   const [signUp, setSignedUp] = useState(props.signedUp);
   const [weightAmount, setWeightAmount] = useState(0);
   const [waterAmount, setWaterAmount] = useState(0);
-  const [userInfo, setUserInfo] = useState(() => undefined);
+  const [dailyData, setDailyData] = useState(() => undefined);
+  const [activeIndex, setActiveIndex] = useState("daliy");
+  const [userInfo, setUserInfo] = useState(undefined);
   const [submitModalOn, toggleSubmit] = useState(false);
 
   /*****************************************************************/
@@ -41,6 +42,7 @@ export default function App(props: any) {
     try {
       let data = await getDaily(user_id);
       setDailyData(data);
+      console.log('daily data, ', data);
       setWaterAmount(data.waterAmount);
       setWeightAmount(data.weightAmount);
     } catch (err: any) {
@@ -51,6 +53,7 @@ export default function App(props: any) {
   async function updateUserInfo(user_id: String) {
     let info = await getUserInfo(user_id);
     setUserInfo(info);
+    console.log('USER INFO: ', info);
   }
 
   useEffect(() => {
