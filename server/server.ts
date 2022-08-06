@@ -357,14 +357,9 @@ app.post("/auth/login", async (req, res) => {
   const query = {
     user_id: username
   };
-  // check auth
-  authModel.findOne(query, (error, result) => {
+  authModel.find(query, (error, result) => {
     if (error) res.send('Failed');
-
-    // use user_id from auth check user_entries
-    userEntriesModel.findOne({user_id: username}, (err, userInfo) =>{
-      res.send({accountInfo:result, userInfo});
-    })
+    res.send(result);
   })
 })
 

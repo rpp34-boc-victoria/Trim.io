@@ -1,8 +1,7 @@
 import {
   Bar,
   ResponsiveContainer,
-  BarChart,
-  Tooltip
+  BarChart
 } from "recharts";
 
 interface IProps{
@@ -16,7 +15,6 @@ export default function MyBarChart(props:IProps) {
     <ResponsiveContainer width="100%" height="100%">
       <BarChart width={150} height={40} data={data}>
         <Bar dataKey="value" width={1} fill="#d9d9d9" background={{ fill: '#f2f2f2' }} barSize={14} />
-        <Tooltip />
       </BarChart>
     </ResponsiveContainer>
   );
