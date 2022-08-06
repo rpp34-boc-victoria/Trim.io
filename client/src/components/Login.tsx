@@ -68,9 +68,10 @@ export default function Login(props: any) {
     <ThemeProvider theme={theme}>
       <br></br><br></br><br></br><br></br>
       <Typography variant="h3" component="h1"
-        gutterBottom align="center" fontWeight="bold" sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center', paddingRight: '5%' }}>
-        Trim.io
-      </Typography>
+            gutterBottom align="center" fontWeight="bold">
+            Trim.io
+            <Button className={eyeVisible} style={{ visibility: 'hidden' }}></Button>
+          </Typography>
     <Container maxWidth="sm" sx={{ padding: '10%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignContent: 'center' }}>
       <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
         <Typography variant="h2" sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center', paddingRight: '15%' }}>Log In</Typography>

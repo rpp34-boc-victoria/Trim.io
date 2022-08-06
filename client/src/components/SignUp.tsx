@@ -109,10 +109,11 @@ export default function SignUp(props: any) {
   return (
    <div>
      <br></br><br></br><br></br><br></br><br></br><br></br><br></br>
-        <Typography variant="h3" component="h1"
-          gutterBottom align="center" fontWeight="bold" style={{paddingRight: '10%'}}>
-          Trim.io
-        </Typography>
+     <Typography variant="h3" component="h1"
+            gutterBottom align="center" fontWeight="bold">
+            Trim.io
+            <Button className={eyeVisible1} style={{ visibility: 'hidden' }}></Button>
+          </Typography>
       <Container maxWidth="sm" sx={{ padding: '10%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignContent: 'center' }}>
           <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
           <Typography variant="h2" sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center', paddingRight: '15%' }}>Log In</Typography>
