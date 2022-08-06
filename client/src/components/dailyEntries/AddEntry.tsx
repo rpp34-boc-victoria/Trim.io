@@ -43,13 +43,12 @@ const AddEntry = (user_id: any) => {
 
 
   const handleAutoCompleteSelection = (event: React.SyntheticEvent, value: string | null): void =>{
-    console.log('autocomplete change event: ', event);
-    console.log('autocomplete change event: ', value);
     apiGet(`https://api.edamam.com/api/food-database/v2/parser?ingr=${value}&app_id=6a35cc72&app_key=a18f0cdf128302c9b05501ed1f9b9838`)
     .then((data)=>{
       let nutrients = data.hints[0].food.nutrients;
       let measures = data.hints[0].measures;
       let gramsPerServing: number = 1;
+
       measures.forEach((measure: measureProps)=>{
         if (measure.label === 'Serving') {
           gramsPerServing = measure.weight;
@@ -147,7 +146,7 @@ const AddEntry = (user_id: any) => {
                 defaultValue={new Date()}
                 render={({ field: { onChange, onBlur, value, ref } }) => (
                   <DatePicker
-                    onChange={(value)=>{console.log('change', this); onChange(value)}}
+                    onChange={(value)=>{onChange(value)}}
                     value={value}
                     label="Date"
                     renderInput={(params) => {return (<TextField {...params} />)}}

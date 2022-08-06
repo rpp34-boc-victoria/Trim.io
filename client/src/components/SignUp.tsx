@@ -81,8 +81,8 @@ export default function SignUp(props: any) {
           .then((result) => {
             const sendData = {
               login: true,
-              username: result.data.username,
-              userId: result.data.userId,
+              username: inputField.username,
+              userId: inputField.username,
             }
             props.onSubmit(sendData);
           })

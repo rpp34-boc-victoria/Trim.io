@@ -66,19 +66,21 @@ const webPushSchema = new mongoose.Schema({
 const userSchema = new mongoose.Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
+  user_id: { type: String, required: true, unique: true, index: true },
   age: { type: Number, required: true },
-  gender: {
-    type: String,
-    enum: "M" || "F" || "N",
-    remark: 'F is female, M is male, N is non-binary'
-  },
+  gender: { type: String, required: true },
   email: { type: String, required: true },
-  phoneNumber: { type: Number, required: true },
+  phoneNumber: { type: String, required: true },
   height: { type: Number, required: true, remark: "height in cm" },
   weight: { type: Number, required: true, remark: "weight in kg" },
   caloriesGoal: { type: Number, default: 0, remark: "daily Calories Goal in kcal" },
   caloriesRecommanded: { type: Number, default: 0, remark: "Recommanded daily Calories in kcal" },
   waterGoal: { type: Number, default: 0, remark: "daily Water intake Goal in cups" },
+  userBMI: { type: Number, default: 0, remark: "user's BMI" },
+  userBFP: { type: Number, default: 0, remark: "user's body fat percentage" },
+  userBMR: { type: Number, default: 0, remark: "user's basal metabolic rate" },
+  userRecommandedCaloIntake: { type: Number, default: 0, remark: "recommanded calories intake" },
+  userRecommandedWaterIntake: { type: Number, default: 0, remark: "recommanded water intake" },
   createdTime:{type:Date, default:new Date()},
   webPushSubscriptions: {
     type: [webPushSchema],
@@ -103,7 +105,7 @@ export const foodEntriesModel = mongoose.model(
 )
 
 const authSchema = new mongoose.Schema({
-  username: { type: String, required: true },
+  user_id: { type: String, required: true },
   salt: { type: Number, required: true },
   email: { type: String, required: true },
   hashpass: { type: String, required: true }

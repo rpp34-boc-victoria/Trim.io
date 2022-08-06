@@ -19,21 +19,21 @@ type IncrementerProps = {
 const Incrementer = ({labelText, defaultAmount, active, handleClick,route, user_id }: IncrementerProps) => {
   let initialCount = defaultAmount;
   const [count, setCount] = React.useState(initialCount);
+
   let counterText = active === true ? "text.primary" : count !== initialCount ? "text.primary" : "text.secondary";
 
   let handleChange = (changeAmount: string )=>{
-  changeAmount === '1' ? setCount(count + 1) : count > 0 ? setCount(count - 1) : setCount(count);
+    changeAmount === '1' ? setCount(count + 1) : count > 0 ? setCount(count - 1) : setCount(count);
 
-  if (handleClick) {handleClick(changeAmount)}
-  else {
-    let data = {
-      user_id: user_id,
-      entryDate: format(new Date(), 'yyyy-MM-dd'),
-      changeAmount: changeAmount
+    if (handleClick) {handleClick(changeAmount)}
+    else {
+      let data = {
+        user_id: user_id,
+        entryDate: format(new Date(), 'yyyy-MM-dd'),
+        changeAmount: changeAmount
+      }
+      apiPost(`/${route}`, data);
     }
-    apiPost(`/${route}`, data);
-  }
-
   };
 
   // handleClick = handleClick ? handleClick: postClick;
@@ -52,8 +52,7 @@ const Incrementer = ({labelText, defaultAmount, active, handleClick,route, user_
         }}
       >
         <Fab size="small" onClick={()=>{handleChange('-1')}}>
-          <RemoveIcon
-           sx={{ fontSize: '1rem' }}/>
+          <RemoveIcon sx={{ fontSize: '1rem' }}/>
         </ Fab>
         <Typography
           variant="h5"
@@ -63,8 +62,7 @@ const Incrementer = ({labelText, defaultAmount, active, handleClick,route, user_
           {count}
         </Typography>
         <Fab onClick={()=>{handleChange('1')}}>
-          <AddIcon
-          sx={{ fontSize: '1rem' }}/>
+          <AddIcon sx={{ fontSize: '1rem' }}/>
         </ Fab>
       </Box>
     </Box>

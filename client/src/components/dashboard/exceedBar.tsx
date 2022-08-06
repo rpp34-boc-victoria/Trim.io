@@ -10,8 +10,10 @@ interface IProps {
   data: { value: any, goal: any }[],
 }
 
-const goodColor = "#a5f08d";
-const medColor = '#f2d285';
+// const goodColor = "#a5f08d";
+// const medColor = '#f2d285';
+const lightBlue = '#b7e9f7';
+const darkBlue = '#4dd2f7';
 // const badColor = "#e87676";
 const nonColor = '#f2f2f2';
 const spacerColor = '#404040';
@@ -35,11 +37,11 @@ export default function ExceedBar(props: IProps) {
     padding2: (padding2 - spacer / 2),
     over,
     spacer,
-    valColor: over ? goodColor : medColor,
-    pad2Color: over ? goodColor : nonColor,
+    valColor: over ? darkBlue : lightBlue,
+    pad2Color: over ? darkBlue : nonColor,
     max,
   }
-  console.log(dataPoint);
+  // console.log(dataPoint);
   return (
     <ResponsiveContainer width="100%" height="100%">
       <BarChart layout='vertical' data={[dataPoint]}>
