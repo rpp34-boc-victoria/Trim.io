@@ -360,9 +360,8 @@ app.post("/auth/login", async (req, res) => {
   // const data = null;
 
   let username = req.body.username;
-  console.log('Username: ', username);
   const query = {
-    username: username
+    user_id: username
   };
   authModel.find(query, (error, result) => {
     if (error) res.send('Failed');
@@ -376,9 +375,9 @@ app.post("/auth/login", async (req, res) => {
 app.post("/auth/checkUser", (req, res) => {
   // const data = null;
 
-  let username = req.body.username;
+  let user_id = req.body.username;
   const query = {
-    username: username
+    user_id: user_id
   };
   authModel.find(query, (error, result) => {
     if (error) res.send('Failed');
@@ -387,16 +386,13 @@ app.post("/auth/checkUser", (req, res) => {
 })
 
 app.post("/auth/CreateUser", (req, res) => {
-  // const data = null;
-  console.log(req.body)
 
   let username = req.body.username;
   let email = req.body.email;
   let hashedFunction = req.body.hashedFunction;
   let salt = req.body.salt;
-  console.log(username, salt, hashedFunction, email)
   const query = {
-    username: username,
+    user_id: username,
     email: email,
     salt: salt,
     hashpass: hashedFunction
@@ -412,9 +408,11 @@ app.post("/auth/CreateUser", (req, res) => {
 /******************** USER Routes ***********************/
 
 //Below is a post request for the users to register
-app.post("/api/register", async (req, res) => {
+app.post('/api/register', async (req, res) => {
   let userData = req.body;
   userData.caloriesRecommanded = "2000"; // THIS NEEDS TO BE CALCULATED!!
+  console.log('hi')
+  console.log(userData.user_id);
   let userReg = new userEntriesModel({
     user_id: userData.user_id,
     firstName: userData.firstName,
@@ -434,14 +432,15 @@ app.post("/api/register", async (req, res) => {
     userRecommandedCaloIntake: +userData.userRecommandedCaloIntake,
     userRecommandedWaterIntake: +userData.userRecommandedWaterIntake,
     createdTime: new Date(),
+
   });
   console.log('User Register Info: ', userData)
   try {
     await userReg.save();
     res.sendStatus(201);
   } catch (err) {
-    res.status(501);
-    res.send(err);
+    res.sendStatus(501);
+    // res.send(err);
   }
 });
 

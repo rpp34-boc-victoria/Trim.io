@@ -59,7 +59,7 @@ export default function App(props: any) {
       <Container maxWidth="sm">
         <Box sx={{ my: 4 }}>
           <Box>
-            <UserReg setSignUp={setSignedUp} setUserInfomation={setUserInfo} userID={user_id} />
+            <UserReg setSignUp={setSignedUp} setUserInfomation={setUserInfo} userID={user_id}/>
           </Box>
         </Box>
       </Container>

@@ -1,10 +1,11 @@
-import * as React from "react";
-import { apiPost } from "../../api";
+// import * as React from "react";
+// import { apiPost } from "../../api";
 import "./userRegistration.scss";
 import { Typography, Input, Box } from "@mui/material";
 import Select from "react-select";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { BMIcal, BFPcal, BMRcal, RecommandedCaloIntakecal, RecommandedWaterIntakecal } from './calculators';
+import axios from "axios";
 
 interface IFormInput {
   firstName: string;
@@ -27,24 +28,24 @@ interface IFormInput {
 
 
 export default function UserRegistration(props: any) {
-  const { control, handleSubmit } = useForm<IFormInput>();
 
+  const { control, handleSubmit } = useForm<IFormInput>();
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
+    console.log(props.userID)
     data.user_id = props.userID;
     data.userBMI = BMIcal(data.weight, data.height);
     data.userBFP = BFPcal(data.gender.value, data.weight, data.height, data.age);
     data.userBMR = BMRcal(data.gender.value, data.weight, data.height, data.age);
     data.userRecommandedCaloIntake = RecommandedCaloIntakecal(data.gender.value, data.height, data.weight, data.age);
     data.userRecommandedWaterIntake = RecommandedWaterIntakecal(data.weight);
-    //console.log(data);
-    apiPost("/api/register", data).then((res) => {
+    axios.post("/api/register", data).then((res) => {
       //console.log("user successfully posted something, :", res);
       props.setSignUp('SignedUp')
       props.setUserInfomation(data);
     }).catch(err => {
+      console.log(data)
       alert(`User Creation NOT Succssful: ${err.message}`);
     });
-
   };
 
   return (
