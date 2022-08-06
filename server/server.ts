@@ -13,10 +13,7 @@ import dayjs from "dayjs";
 import cors from 'cors';
 import { format, compareAsc, parseISO } from 'date-fns';
 dotenv.config();
-// var bodyParser = require('body-parser');
-// import bodyParser from "body-parser";
-import { resolveAny } from "dns";
-import { LEGAL_TCP_SOCKET_OPTIONS } from 'mongodb';
+
 import mongoose from 'mongoose';
 
 dotenv.config();
