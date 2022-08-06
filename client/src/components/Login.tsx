@@ -92,8 +92,9 @@ export default function Login(props: any) {
           </Typography>
           <br></br><br></br><br></br><br></br>
           <Typography>
-          <Button variant="contained" onClick={handleSubmit} style={{display:'flex', width:'90%',fontSize: '150%', paddingRight:'8.5%'}}>Subimt</Button>
+          <Button variant="contained" onClick={handleSubmit} style={{display:'flex', width:'90%',fontSize: '150%', paddingRight:'8.5%'}}>Submit</Button>
           </Typography>
+
         </form>
       </Box>
     </Container >

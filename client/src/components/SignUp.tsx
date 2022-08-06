@@ -139,11 +139,12 @@ export default function SignUp(props: any) {
             {(matchingPasswords) ? null : (<div> Your Passwords Don't Match!</div>)}
           </Typography>
           <br></br><br></br><br></br>
-          <Button variant="contained" onClick={handleSubmit} style={{display:'flex', width:'90%',fontSize: '150%', paddingRight:'8.5%'}}>Subimt</Button>
+          <Button variant="contained" onClick={handleSubmit} style={{display:'flex', width:'90%',fontSize: '150%', paddingRight:'8.5%'}}>Submit</Button>
         </form>
         </Box>
       </Container>
       </div>
+
   )
 
 

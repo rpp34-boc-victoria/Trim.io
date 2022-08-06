@@ -2,220 +2,258 @@ import * as React from 'react';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { Autocomplete, Box, Button, Stack, TextField } from '@mui/material';
-import { useForm, Controller } from 'react-hook-form'
+import {Autocomplete, Box, Button, Container, Modal, Stack, TextField, Typography} from '@mui/material';
+import {useForm, Controller} from 'react-hook-form';
+import { apiGet, apiPost } from "../../api";
+import LabelWithText from "./LabelWithText";
+import Incrementer from './Incrementer';
+import AddIcon from '@mui/icons-material/Add';
+
+type AddEntryProps = {
+  user_id: string
+};
+
+const AddEntry = ({user_id}: AddEntryProps) => {
+  const {register, control, handleSubmit, reset} = useForm();
+  const [autocompleteItems, setAutocompleteItems] = React.useState([]);
+  const [autocompleteItemSelected, setAutocompleteItem] = React.useState(false);
+  const [servings, setServings] = React.useState(1);
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () =>{
+    setOpen(false);
+    setAutocompleteItem(false);
+    setAutocompleteItems([]);
+    setServings(1);
+    setGramsPerServing(0);
+    setNutrientsPerServing({
+      ENERC_KCAL: 0,
+      PROCNT: 0,
+      FAT: 0,
+      CHOCDF: 0,
+      FIBTG: 0
+    });
+
+    reset({
+      entryDate: new Date(),
+      foodItem: null,
+      calories: null
+    }, {
+      keepErrors: true,
+      keepDirty: true,
+      keepIsSubmitted: false,
+      keepTouched: false,
+      keepIsValid: false,
+      keepSubmitCount: false,
+    });
+  };
+
+  interface Inutrients {
+    ENERC_KCAL: number,
+    PROCNT: number,
+    FAT: number,
+    CHOCDF: number,
+    FIBTG: number
+  }
+  const [nutrientsPerServing, setNutrientsPerServing] = React.useState<Inutrients>({
+    ENERC_KCAL: 0,
+    PROCNT: 0,
+    FAT: 0,
+    CHOCDF: 0,
+    FIBTG: 0
+  });
+  const [gramsPerServing, setGramsPerServing] = React.useState(0);
+
+  type measureProps = {
+    uri: string,
+    label: string,
+    weight: number
+  }
 
 
-const AddEntry = (props?: any) => {
-  const { handleDailyUpdate, toggleSubmit } = props;
-  const { register, control, handleSubmit } = useForm();
+  const handleAutoCompleteSelection = (event: React.SyntheticEvent, value: string | null): void =>{
+    apiGet(`https://api.edamam.com/api/food-database/v2/parser?ingr=${value}&app_id=6a35cc72&app_key=a18f0cdf128302c9b05501ed1f9b9838`)
+    .then((data)=>{
+      let nutrients = data.hints[0].food.nutrients;
+      let measures = data.hints[0].measures;
+      let gramsPerServing: number = 1;
 
-  const foodItems = [
-    { title: 'The Shawshank Redemption', year: 1994 },
-    { title: 'The Godfather', year: 1972 },
-    { title: 'The Godfather: Part II', year: 1974 },
-    { title: 'The Dark Knight', year: 2008 },
-    { title: '12 Angry Men', year: 1957 },
-    { title: "Schindler's List", year: 1993 },
-    { title: 'Pulp Fiction', year: 1994 },
-    {
-      title: 'The Lord of the Rings: The Return of the King',
-      year: 2003,
-    },
-    { title: 'The Good, the Bad and the Ugly', year: 1966 },
-    { title: 'Fight Club', year: 1999 },
-    {
-      title: 'The Lord of the Rings: The Fellowship of the Ring',
-      year: 2001,
-    },
-    {
-      title: 'Star Wars: Episode V - The Empire Strikes Back',
-      year: 1980,
-    },
-    { title: 'Forrest Gump', year: 1994 },
-    { title: 'Inception', year: 2010 },
-    {
-      title: 'The Lord of the Rings: The Two Towers',
-      year: 2002,
-    },
-    { title: "One Flew Over the Cuckoo's Nest", year: 1975 },
-    { title: 'Goodfellas', year: 1990 },
-    { title: 'The Matrix', year: 1999 },
-    { title: 'Seven Samurai', year: 1954 },
-    {
-      title: 'Star Wars: Episode IV - A New Hope',
-      year: 1977,
-    },
-    { title: 'City of God', year: 2002 },
-    { title: 'Se7en', year: 1995 },
-    { title: 'The Silence of the Lambs', year: 1991 },
-    { title: "It's a Wonderful Life", year: 1946 },
-    { title: 'Life Is Beautiful', year: 1997 },
-    { title: 'The Usual Suspects', year: 1995 },
-    { title: 'Léon: The Professional', year: 1994 },
-    { title: 'Spirited Away', year: 2001 },
-    { title: 'Saving Private Ryan', year: 1998 },
-    { title: 'Once Upon a Time in the West', year: 1968 },
-    { title: 'American History X', year: 1998 },
-    { title: 'Interstellar', year: 2014 },
-    { title: 'Casablanca', year: 1942 },
-    { title: 'City Lights', year: 1931 },
-    { title: 'Psycho', year: 1960 },
-    { title: 'The Green Mile', year: 1999 },
-    { title: 'The Intouchables', year: 2011 },
-    { title: 'Modern Times', year: 1936 },
-    { title: 'Raiders of the Lost Ark', year: 1981 },
-    { title: 'Rear Window', year: 1954 },
-    { title: 'The Pianist', year: 2002 },
-    { title: 'The Departed', year: 2006 },
-    { title: 'Terminator 2: Judgment Day', year: 1991 },
-    { title: 'Back to the Future', year: 1985 },
-    { title: 'Whiplash', year: 2014 },
-    { title: 'Gladiator', year: 2000 },
-    { title: 'Memento', year: 2000 },
-    { title: 'The Prestige', year: 2006 },
-    { title: 'The Lion King', year: 1994 },
-    { title: 'Apocalypse Now', year: 1979 },
-    { title: 'Alien', year: 1979 },
-    { title: 'Sunset Boulevard', year: 1950 },
-    {
-      title: 'Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb',
-      year: 1964,
-    },
-    { title: 'The Great Dictator', year: 1940 },
-    { title: 'Cinema Paradiso', year: 1988 },
-    { title: 'The Lives of Others', year: 2006 },
-    { title: 'Grave of the Fireflies', year: 1988 },
-    { title: 'Paths of Glory', year: 1957 },
-    { title: 'Django Unchained', year: 2012 },
-    { title: 'The Shining', year: 1980 },
-    { title: 'WALL·E', year: 2008 },
-    { title: 'American Beauty', year: 1999 },
-    { title: 'The Dark Knight Rises', year: 2012 },
-    { title: 'Princess Mononoke', year: 1997 },
-    { title: 'Aliens', year: 1986 },
-    { title: 'Oldboy', year: 2003 },
-    { title: 'Once Upon a Time in America', year: 1984 },
-    { title: 'Witness for the Prosecution', year: 1957 },
-    { title: 'Das Boot', year: 1981 },
-    { title: 'Citizen Kane', year: 1941 },
-    { title: 'North by Northwest', year: 1959 },
-    { title: 'Vertigo', year: 1958 },
-    {
-      title: 'Star Wars: Episode VI - Return of the Jedi',
-      year: 1983,
-    },
-    { title: 'Reservoir Dogs', year: 1992 },
-    { title: 'Braveheart', year: 1995 },
-    { title: 'M', year: 1931 },
-    { title: 'Requiem for a Dream', year: 2000 },
-    { title: 'Amélie', year: 2001 },
-    { title: 'A Clockwork Orange', year: 1971 },
-    { title: 'Like Stars on Earth', year: 2007 },
-    { title: 'Taxi Driver', year: 1976 },
-    { title: 'Lawrence of Arabia', year: 1962 },
-    { title: 'Double Indemnity', year: 1944 },
-    {
-      title: 'Eternal Sunshine of the Spotless Mind',
-      year: 2004,
-    },
-    { title: 'Amadeus', year: 1984 },
-    { title: 'To Kill a Mockingbird', year: 1962 },
-    { title: 'Toy Story 3', year: 2010 },
-    { title: 'Logan', year: 2017 },
-    { title: 'Full Metal Jacket', year: 1987 },
-    { title: 'Dangal', year: 2016 },
-    { title: 'The Sting', year: 1973 },
-    { title: '2001: A Space Odyssey', year: 1968 },
-    { title: "Singin' in the Rain", year: 1952 },
-    { title: 'Toy Story', year: 1995 },
-    { title: 'Bicycle Thieves', year: 1948 },
-    { title: 'The Kid', year: 1921 },
-    { title: 'Inglourious Basterds', year: 2009 },
-    { title: 'Snatch', year: 2000 },
-    { title: '3 Idiots', year: 2009 },
-    { title: 'Monty Python and the Holy Grail', year: 1975 },
-  ];
+      measures.forEach((measure: measureProps)=>{
+        if (measure.label === 'Serving') {
+          gramsPerServing = measure.weight;
+        }
+      });
+      for (let key in nutrients) {
+        nutrients[key] = (nutrients[key] * gramsPerServing)/100;
+      }
+
+      setNutrientsPerServing(nutrients);
+      setGramsPerServing(gramsPerServing);
+
+      setAutocompleteItem(true);
+    })
+    .catch((err)=>{console.log('err auto complete get', err)})
+  };
+
+  const handleAutoCompleteTyping = (event: React.SyntheticEvent, value: string | null): void =>{
+    apiGet(`https://api.edamam.com/auto-complete?app_id=6a35cc72&app_key=
+    a18f0cdf128302c9b05501ed1f9b9838&q=${value}&limit=100`)
+    .then((data)=>{
+      setAutocompleteItems(data);
+    })
+  };
+
+  const handleChangeServing = (changeAmount: string)=>{
+    changeAmount === '1' ? setServings(servings + 1) : servings > 0 ? setServings(servings - 1) : setServings(servings);
+  }
 
   return (
     <Box>
-      <form onSubmit={handleSubmit(async (data) => {
-        alert(JSON.stringify(data));
-        try {
-          await handleDailyUpdate(); // @ Slava, This this the function that will update the Daily DashBoard
-          toggleSubmit(false);
-        } catch (err) {
-          alert(`Submit Unsuccessful: ${err}`);
-        }
-      })}>
+      <Button
+        onClick={handleOpen}
+        variant="outlined"
+        sx={{ width: '100%' }}
+      >
+        <AddIcon sx={{ fontSize: '1rem' }}/>
+        Add a food item
+      </Button>
+      <Modal
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="Add entry"
+      aria-describedby="Add a food item and its related calories"
+      >
+      <Container
+        sx={{
+          position: 'absolute' as 'absolute',
+          borderRadius: '12px',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          maxWidth: "sm",
+          bgcolor: 'background.paper',
+          p: 5,
+        }}
+      >
+        <Typography
+          variant="h5"
+          color="text.primary"
+          sx={{mb: 4, fontWeight:500}}
+        >
+          Add a food item
+        </Typography>
+        <form onSubmit={
+          handleSubmit(({entryDate, foodItem, calories})=> {
+            alert(JSON.stringify([entryDate, foodItem, calories]));
+            let data = {
+              "user_id": user_id,
+              "entryDate": entryDate,
+              "foodItem": foodItem,
+              "nutrients": nutrientsPerServing,
+              "gramsPerServing": gramsPerServing,
+              "servings": servings
+            }
+            console.log('post item data fe', data);
+            apiPost("http://localhost:8000/foodItem", data)
+            .then(()=>{
+              setAutocompleteItem(false);
+              setAutocompleteItems([]);
+              handleClose();
+            })
+          })
+        }>
 
-        <Stack spacing={2}>
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <Controller
-              control={control}
-              name="date"
-              defaultValue={new Date()}
+          <Stack spacing={3}>
 
-              render={({ field: { onChange, onBlur, value, ref } }) => (
-                <DatePicker
-                  onChange={(value) => { console.log('change', this); onChange(value) }}
-                  value={value}
-                  label="Date"
-                  renderInput={(params) => { console.log('params', params); return (<TextField {...params} />) }}
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <Controller
+                control={control}
+                name="entryDate"
+                defaultValue={new Date()}
+                render={({ field: { onChange, onBlur, value, ref } }) => (
+                  <DatePicker
+                    onChange={(value)=>{onChange(value)}}
+                    value={value}
+                    label="Date"
+                    renderInput={(params) => {return (<TextField {...params} />)}}
+                  />
+                )}
+              />
+            </LocalizationProvider>
+
+            <Autocomplete
+              freeSolo
+              disableClearable
+              onChange={handleAutoCompleteSelection}
+              onInputChange={handleAutoCompleteTyping}
+              options={autocompleteItems}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  {...register('foodItem')}
+                  label="Food item"
+                  InputProps={{
+                    ...params.InputProps,
+                    type: 'search'
+                  }}
                 />
               )}
             />
-            {/* <Controller
-            control={control}
-            name="date"
-            defaultValue={new Date()}
-            render={({ field: { onChange, onBlur, value, ref } }) => (
-              <DatePicker
-                // onChange={()=>{console.log('change')}}
-                onChange={(value)=>{console.log('change', this); onChange(value)}}
-                value={new Date()}
-                label="Date"
-                renderInput={(params) => {console.log('params', params); return (<TextField {...params} />)}}
-              />
-            )}
-          /> */}
-          </LocalizationProvider>
 
-          <Autocomplete
-            freeSolo
-            options={foodItems.map((option) => option.title)}
-            renderInput={(params) => (
+            {autocompleteItemSelected && (
+              <Stack direction="row" spacing={4} alignItems="">
+                <Incrementer
+                  labelText='Servings'
+                  defaultAmount={1}
+                  active={true}
+                  handleClick={handleChangeServing}
+                ></Incrementer>
+                <LabelWithText
+                  labelText="Total calories"
+                  mainText={Math.round(nutrientsPerServing.ENERC_KCAL * servings)}
+                />
+                <LabelWithText
+                  labelText="Total grams"
+                  mainText={gramsPerServing * servings}
+                />
+              </Stack>
+            )}
+
+            {!autocompleteItemSelected && (
               <TextField
-                {...params}
-                {...register('foodItem')}
-                label="Food item"
-                InputProps={{
-                  ...params.InputProps,
-                  type: 'search',
-                }}
+                type="tel"
+                label="Calories"
+                {...register('calories')}
               />
             )}
 
-          />
-          <TextField
-            type="tel"
-            label="Calories"
-            {...register('calories')}
-          />
-          <Button
-            variant="contained"
-            type="submit"
-          >
-            Submit
-          </Button>
-          <Button
-            variant="contained"
-            onClick={() => { toggleSubmit(false) }}
-          >
-            Cancel
-          </Button>
-        </Stack>
-      </form>
+            <Button
+              variant="contained"
+              type="submit"
+              sx={{mt: '8px !important'}}
+              onClick={() => {
+                // reset({
+                //   entryDate: new Date(),
+                //   foodItem: null,
+                //   calories: null
+                // }, {
+                //   keepErrors: true,
+                //   keepDirty: true,
+                //   keepIsSubmitted: false,
+                //   keepTouched: false,
+                //   keepIsValid: false,
+                //   keepSubmitCount: false,
+                // });
+              }}
+            >
+              Submit
+            </Button>
+
+          </Stack>
+        </form>
+      </Container>
+      </Modal>
     </Box>
   );
 }
