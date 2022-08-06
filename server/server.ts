@@ -432,12 +432,13 @@ app.post('/api/register', async (req, res) => {
     createdTime: new Date(),
 
   });
+  console.log('hi11111');
   try {
     await userReg.save();
     res.sendStatus(201);
   } catch (err) {
-    res.status(501);
-    res.send(err);
+    res.sendStatus(501);
+    // res.send(err);
   }
 });
 
