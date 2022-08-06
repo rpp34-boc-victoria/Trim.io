@@ -14,7 +14,7 @@ type AddEntryProps = {
 };
 
 const AddEntry = ({user_id}: AddEntryProps) => {
-  const {register, control, handleSubmit, reset} = useForm();
+  const {register, control, handleSubmit} = useForm();
   const [autocompleteItems, setAutocompleteItems] = React.useState([]);
   const [autocompleteItemSelected, setAutocompleteItem] = React.useState(false);
   const [servings, setServings] = React.useState(1);

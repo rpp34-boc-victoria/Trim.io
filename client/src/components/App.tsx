@@ -82,7 +82,9 @@ export default function App(props: any) {
   useEffect(() => {
     updateUserInfo(user_id);
     handleDailyUpdate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user_id]);
+
 
   if (signUp === 'newAccount') {
     return (
