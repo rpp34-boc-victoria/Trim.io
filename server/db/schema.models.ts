@@ -68,11 +68,7 @@ const userSchema = new mongoose.Schema({
   lastName: { type: String, required: true },
   user_id: { type: String, required: true, unique: true, index: true },
   age: { type: Number, required: true },
-  gender: {
-    type: String,
-    enum: "M" || "F" || "N",
-    remark: 'F is female, M is male, N is non-binary'
-  },
+  gender: { type: String, required: true },
   email: { type: String, required: true },
   phoneNumber: { type: String, required: true },
   height: { type: Number, required: true, remark: "height in cm" },
@@ -109,7 +105,7 @@ export const foodEntriesModel = mongoose.model(
 )
 
 const authSchema = new mongoose.Schema({
-  username: { type: String, required: true },
+  user_id: { type: String, required: true },
   salt: { type: Number, required: true },
   email: { type: String, required: true },
   hashpass: { type: String, required: true }
