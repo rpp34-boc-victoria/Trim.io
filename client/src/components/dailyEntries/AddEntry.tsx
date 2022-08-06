@@ -14,14 +14,40 @@ type AddEntryProps = {
 };
 
 const AddEntry = ({user_id}: AddEntryProps) => {
-  const {register, control, handleSubmit} = useForm();
+  const {register, control, handleSubmit, reset} = useForm();
   const [autocompleteItems, setAutocompleteItems] = React.useState([]);
   const [autocompleteItemSelected, setAutocompleteItem] = React.useState(false);
   const [servings, setServings] = React.useState(1);
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () =>{
+    setOpen(false);
+    setAutocompleteItem(false);
+    setAutocompleteItems([]);
+    setServings(1);
+    setGramsPerServing(0);
+    setNutrientsPerServing({
+      ENERC_KCAL: 0,
+      PROCNT: 0,
+      FAT: 0,
+      CHOCDF: 0,
+      FIBTG: 0
+    });
+
+    reset({
+      entryDate: new Date(),
+      foodItem: null,
+      calories: null
+    }, {
+      keepErrors: true,
+      keepDirty: true,
+      keepIsSubmitted: false,
+      keepTouched: false,
+      keepIsValid: false,
+      keepSubmitCount: false,
+    });
+  };
 
   interface Inutrients {
     ENERC_KCAL: number,

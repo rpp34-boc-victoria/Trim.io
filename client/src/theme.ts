@@ -1,5 +1,5 @@
 import { createTheme, experimental_sx as sx, } from '@mui/material/styles';
-import {green, orange, red } from '@mui/material/colors';
+import {green, red } from '@mui/material/colors';
 
 // A custom theme for this app
 const theme = createTheme({
