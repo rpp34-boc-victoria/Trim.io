@@ -75,7 +75,7 @@ export default function Login(props : any) {
         <Input type={showPass} name='password' placeholder='Password' onChange={inputsHandler} value={inputField?.password}></Input>
         <button className={eyeVisible} onClick={togglePassword} id="togglePassword"></button>
       </label>
-      <Button onClick={handleSubmit}>Subimt</Button>
+      <Button onClick={handleSubmit}>Submit</Button>
     </form>
     </Card>
   )

@@ -42,7 +42,8 @@ export default function App(props: any) {
   const user_id = props.data.username;
   // const userId = props.data.userId;
   const [signUp, setSignedUp] = useState(props.signedUp);
-
+  const [weightAmount, setWeightAmount] = useState(0);
+  const [waterAmount, setWaterAmount] = useState(0);
   /*****************************************************************/
 
   const handleChangeTab = (type: string) => {
@@ -51,9 +52,12 @@ export default function App(props: any) {
 
   async function handleDailyUpdate() {
     try {
-      console.log(user_id);
+      console.log('USER ID', user_id);
       let data = await getDaily();
+      console.log('DAILY DATA', data);
       setDailyData(data);
+      setWaterAmount(data.waterAmount);
+      setWeightAmount(data.weightAmount);
     } catch (err: any) {
       throw err;
     }
@@ -104,10 +108,22 @@ export default function App(props: any) {
               <Weekly />
             }
           </Box>
-          <Incrementer labelText='Water (cups)' route="water"/>
+          <Incrementer
+            labelText='Water (cups)'
+            route="water"
+            user_id={user_id}
+            defaultAmount={waterAmount}
+          />
           <Divider sx={{mb: '16px'}} />
-          <Incrementer labelText='Body weight' route="weight"/>
-          <AddEntry></AddEntry>
+          <Incrementer
+            labelText='Body weight'
+            route="weight"
+            user_id={user_id}
+            defaultAmount={weightAmount}
+          />
+          <AddEntry
+            user_id={user_id}
+          />
           <Copyright />
         </Box>
         <ToastNotification />

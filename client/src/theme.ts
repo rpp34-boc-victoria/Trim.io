@@ -1,16 +1,14 @@
 import { createTheme, experimental_sx as sx, } from '@mui/material/styles';
-import {orange, red } from '@mui/material/colors';
+import {green, orange, red } from '@mui/material/colors';
 
 // A custom theme for this app
 const theme = createTheme({
-
-
   palette: {
     primary: {
-      main: orange[800],
-      50: orange[50],
-      100: orange[100],
-      200: orange[200]
+      main: green[800],
+      50: green[50],
+      100: green[100],
+      200: green[200]
     },
     secondary: {
       main: '#19857b',
@@ -44,13 +42,17 @@ const theme = createTheme({
             }
         })
       }
-
     },
     MuiButtonBase: {
       defaultProps: {
         // The props to apply
         disableRipple: true, // No more ripple, on the whole application 💣!
       },
+      styleOverrides: {
+        root: sx({
+          textTransform: 'none'
+        })
+      }
     },
   }
 });
